@@ -1,0 +1,1 @@
+--Scrip para la base de datos de una tienda de abarrotes--
