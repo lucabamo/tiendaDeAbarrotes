@@ -6,36 +6,40 @@ CREATE SCHEMA Empresa
 CREATE SCHEMA Transaccion
 CREATE SCHEMA Inventario
 
+--Tabla Empleado--
 CREATE TABLE Empresa.Empleado(
 	IdEmpleado BIGINT IDENTITY(1,1) NOT NULL,
 	Nombre VARCHAR(200) NOT NULL,
 	Domicilio VARCHAR(200) NOT NULL,
 	FechaNac DATE NOT NULL,
-	Edad INT,
+	Edad INT, --Usado en trigger calcula edad--
 	Usuario VARCHAR(200) NOT NULL,
 	Contrasenia VARCHAR(100) NOT NULL,
 	CONSTRAINT PK_EMPLEADO PRIMARY KEY(IdEmpleado)
 )
 
+--Tabla proveedor--
 CREATE TABLE Empresa.Proveedor(
 	IdProveedor BIGINT IDENTITY(1,1) NOT NULL,
 	Nombre VARCHAR(200) NOT NULL,
-	RFC VARCHAR(80) NOT NULL,
 	Telefono VARCHAR(80) NOT NULL,
 	Email VARCHAR(200) NOT NULL,
+	RFC VARCHAR(100) NOT NULL,
 	DomicilioFiscal VARCHAR(200) NOT NULL,
 	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor)
 )
 
+--Tabla Producto--
 CREATE TABLE Inventario.Producto(
 	IdProducto BIGINT IDENTITY(1,1) NOT NULL,
 	Nombre VARCHAR(200) NOT NULL,
-	Existencia REAL NOT NULL,
+	Existencia REAL NOT NULL, --Aquí está bien este tipo de dato?--
 	CostroProveedor REAL NOT NULL,
 	CostoVenta REAL NOT NULL,
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(IdProducto),
 )
 
+--Tabla Venta--
 CREATE TABLE Transaccion.Venta(
 	IdVenta BIGINT IDENTITY(1,1) NOT NULL,
 	IdEmpleado BIGINT NOT NULL,
@@ -45,12 +49,13 @@ CREATE TABLE Transaccion.Venta(
 	CONSTRAINT FK_EMPLEADO1 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado)
 )
 
+--Tabla detalle venta--
 CREATE TABLE Transaccion.DetalleVenta(
 	IdVenta BIGINT NOT NULL,
 	IdPromocion BIGINT NOT NULL,
 	IdProducto BIGINT NOT NULL,
 	Cantidad INT NOT NULL,
-	Subtotal REAL,
+	Subtotal REAL, --Usado para calcular subtotal--
 	CONSTRAINT FK_VENTA2 FOREIGN KEY(IdVenta) REFERENCES Transaccion.Venta(IdVenta),
 	CONSTRAINT FK_PROMOCION FOREIGN KEY(IdPromocion) REFERENCES Transaccion.Promocion(IdPromocion),
 	CONSTRAINT FK_PRODUCTO1 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
@@ -117,4 +122,20 @@ CREATE TABLE Transaccion.Entrega(
 	CONSTRAINT FK_EMPLEADO3 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado),
 	CONSTRAINT FK_DEVOLUCION2 FOREIGN KEY(IdDevolucion) REFERENCES Transaccion.Devolucion(IdDevolucion)
 )
-
+--Disparador para calcular la edad de un empleado al momento de la inserción--
+CREATE TRIGGER Empresa.calculaEdad
+ON Empresaa.Empleado
+AFTER INSERT, UPDATE
+AS 
+BEGIN 
+	SET NOCOUNT ON
+	DECLARE @ID AS BIGINT
+	DECLARE @Edad AS INT
+	SELECT @ID = idEmpleado FROM inserted 
+	UPDATE Empresa.Empleado set Edad = CASE 
+	WHEN dateadd(year, datediff (year, FechaNac, getdate()), FechaNac) > getdate()
+            THEN datediff(year, FechaNac, getdate()) - 1
+            ELSE datediff(year, FechaNac, getdate())
+	END
+	WHERE idEmpleado = @ID
+END
