@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,31 @@ namespace sistemaTiendaAbarrotes
 {
     public partial class Form1 : Form
     {
+        SqlConnection conexion;
         public Form1()
         {
             InitializeComponent();
+            conectar();
+
         }
 
-        private void GroupBox1_Enter(object sender, EventArgs e)
+        private void conectar()
         {
+            string connectionString = null;
+            //Cadena de conexión
+            connectionString = "Server=LAPTOP-M8A5375A\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
+            conexion = new SqlConnection(connectionString);
+            try
+            {
+                conexion.Open();
+                MessageBox.Show("Conexión correcta");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo conectar");
+            }
         }
+
     }
 }

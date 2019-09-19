@@ -33,7 +33,7 @@ CREATE TABLE Empresa.Proveedor(
 CREATE TABLE Inventario.Producto(
 	IdProducto BIGINT IDENTITY(1,1) NOT NULL,
 	Nombre VARCHAR(200) NOT NULL,
-	Existencia REAL NOT NULL, --Aquí está bien este tipo de dato?--
+	Existencia INT NOT NULL, --Aquí está bien este tipo de dato?--
 	CostroProveedor REAL NOT NULL,
 	CostoVenta REAL NOT NULL,
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(IdProducto),
@@ -49,6 +49,18 @@ CREATE TABLE Transaccion.Venta(
 	CONSTRAINT FK_EMPLEADO1 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado)
 )
 
+
+CREATE TABLE Transaccion.Promocion(
+	IdPromocion BIGINT IDENTITY(1,1) NOT NULL,
+	IdProducto BIGINT NOT NULL,
+	FechaInicio DATE NOT NULL,
+	FechaFinal DATE NOT NULL,
+	Descuento REAL NOT NULL, --Preguntar a la maestra--
+	CONSTRAINT PK_PROMOCION PRIMARY KEY(IdPromocion),
+	CONSTRAINT FK_PRODUCTO2 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
+)
+
+
 --Tabla detalle venta--
 CREATE TABLE Transaccion.DetalleVenta(
 	IdVenta BIGINT NOT NULL,
@@ -59,16 +71,6 @@ CREATE TABLE Transaccion.DetalleVenta(
 	CONSTRAINT FK_VENTA2 FOREIGN KEY(IdVenta) REFERENCES Transaccion.Venta(IdVenta),
 	CONSTRAINT FK_PROMOCION FOREIGN KEY(IdPromocion) REFERENCES Transaccion.Promocion(IdPromocion),
 	CONSTRAINT FK_PRODUCTO1 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
-)
-
-CREATE TABLE Transaccion.Promocion(
-	IdPromocion BIGINT IDENTITY(1,1) NOT NULL,
-	IdProducto BIGINT NOT NULL,
-	FechaInicio DATE NOT NULL,
-	FechaFinal DATE NOT NULL,
-	Descuento REAL NOT NULL,
-	CONSTRAINT PK_PROMOCION PRIMARY KEY(IdPromocion),
-	CONSTRAINT FK_PRODUCTO2 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
 
 CREATE TABLE Transaccion.Compra(
@@ -116,15 +118,16 @@ CREATE TABLE Transaccion.Entrega(
 	IdProveedor BIGINT NOT NULL,
 	IdEmpleado BIGINT NOT NULL,
 	IdDevolucion BIGINT NOT NULL,
-	FechaEntrega DATE,
+	FechaEntrega DATE NOT NULL,
 	CONSTRAINT PK_ENTREGA PRIMARY KEY(IdEntrega),
 	CONSTRAINT FK_PROVEEDOR2 FOREIGN KEY(IdProveedor) REFERENCES Empresa.Proveedor(IdProveedor),
-	CONSTRAINT FK_EMPLEADO3 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado),
+	CONSTRAINT FK_EMPLEADO4 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado),
 	CONSTRAINT FK_DEVOLUCION2 FOREIGN KEY(IdDevolucion) REFERENCES Transaccion.Devolucion(IdDevolucion)
 )
+
 --Disparador para calcular la edad de un empleado al momento de la inserción--
 CREATE TRIGGER Empresa.calculaEdad
-ON Empresaa.Empleado
+ON Empresa.Empleado
 AFTER INSERT, UPDATE
 AS 
 BEGIN 
@@ -139,3 +142,4 @@ BEGIN
 	END
 	WHERE idEmpleado = @ID
 END
+

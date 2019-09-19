@@ -1,0 +1,10 @@
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe.config
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.pdb
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csprojAssemblyReference.cache
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Form1.resources
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Properties.Resources.resources
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.GenerateResource.cache
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.CoreCompileInputs.cache
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
