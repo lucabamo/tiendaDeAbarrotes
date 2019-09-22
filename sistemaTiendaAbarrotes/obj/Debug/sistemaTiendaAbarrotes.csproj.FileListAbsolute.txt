@@ -8,3 +8,13 @@ C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrote
 C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.CoreCompileInputs.cache
 C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
 C:\Users\Luis Bacasehua\Documents\GitHub\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe.config
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.pdb
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csprojAssemblyReference.cache
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Form1.resources
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Properties.Resources.resources
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.GenerateResource.cache
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.CoreCompileInputs.cache
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
