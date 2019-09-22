@@ -15,10 +15,12 @@ namespace sistemaTiendaAbarrotes
     {
         SqlConnection conexion;
         Venta venta;
+        Promocion promocion;
         public Form1()
         {
             InitializeComponent();
             venta = new Venta();
+            promocion = new Promocion();
             conectar();
 
         }
@@ -87,6 +89,56 @@ namespace sistemaTiendaAbarrotes
             tbIdEmpleado.Text = "";
             tbFechaVenta.Text = "";
             tbTotal.Text = "";
+        }
+
+        private void btAgregarPromocion_Click(object sender, EventArgs e)
+        {
+            dgPromocion.DataSource = "";
+            promocion.insertPromocion(conexion, tbIdProducto.Text, tbFechaInicio.Text, tbFechaFinal.Text, tbDescuento.Text);
+            dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            resetTabPromocion();
+        }
+
+        private void btModificarPromocion_Click(object sender, EventArgs e)
+        {
+            dgPromocion.DataSource = "";
+            promocion.updatePromocion(conexion, tbIdProducto.Text, tbFechaInicio.Text, tbFechaFinal.Text, tbDescuento.Text, promocion.IdPromocion);
+            dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            resetTabPromocion();
+        }
+
+        private void btEliminarPromocion_Click(object sender, EventArgs e)
+        {
+            dgPromocion.DataSource = "";
+            promocion.deletePromocion(conexion, promocion.IdPromocion);
+            dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            resetTabPromocion();
+        }
+
+        private void dgPromocion_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < dgPromocion.Rows.Count - 1 && dgPromocion.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                promocion.IdPromocion = dgPromocion.Rows[e.RowIndex].Cells[0].Value.ToString();
+                tbIdProducto.Text = dgPromocion.Rows[e.RowIndex].Cells[1].Value.ToString();
+                tbFechaInicio.Text = dgPromocion.Rows[e.RowIndex].Cells[2].Value.ToString();
+                tbFechaFinal.Text = dgPromocion.Rows[e.RowIndex].Cells[3].Value.ToString();
+                tbDescuento.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+            }
+        }
+
+        private void tabPromocion_Enter(object sender, EventArgs e)
+        {
+            dgPromocion.DataSource = "";
+            dgPromocion.DataSource = promocion.selectPromocion(conexion);
+        }
+
+        private void resetTabPromocion()
+        {
+            tbIdProducto.Text = "";
+            tbFechaInicio.Text = "";
+            tbFechaFinal.Text = "";
+            tbDescuento.Text = "";
         }
     }
 }

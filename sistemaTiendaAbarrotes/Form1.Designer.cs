@@ -325,6 +325,7 @@
             this.tabPromocion.TabIndex = 4;
             this.tabPromocion.Text = "Promociones";
             this.tabPromocion.UseVisualStyleBackColor = true;
+            this.tabPromocion.Enter += new System.EventHandler(this.tabPromocion_Enter);
             // 
             // tabDetalleVenta
             // 
@@ -500,6 +501,7 @@
             this.dgPromocion.Name = "dgPromocion";
             this.dgPromocion.Size = new System.Drawing.Size(769, 310);
             this.dgPromocion.TabIndex = 16;
+            this.dgPromocion.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPromocion_CellClick);
             // 
             // btEliminarPromocion
             // 
@@ -509,6 +511,7 @@
             this.btEliminarPromocion.TabIndex = 15;
             this.btEliminarPromocion.Text = "Eliminar";
             this.btEliminarPromocion.UseVisualStyleBackColor = true;
+            this.btEliminarPromocion.Click += new System.EventHandler(this.btEliminarPromocion_Click);
             // 
             // btModificarPromocion
             // 
@@ -518,6 +521,7 @@
             this.btModificarPromocion.TabIndex = 14;
             this.btModificarPromocion.Text = "Modificar";
             this.btModificarPromocion.UseVisualStyleBackColor = true;
+            this.btModificarPromocion.Click += new System.EventHandler(this.btModificarPromocion_Click);
             // 
             // btAgregarPromocion
             // 
@@ -527,6 +531,7 @@
             this.btAgregarPromocion.TabIndex = 13;
             this.btAgregarPromocion.Text = "Agregar";
             this.btAgregarPromocion.UseVisualStyleBackColor = true;
+            this.btAgregarPromocion.Click += new System.EventHandler(this.btAgregarPromocion_Click);
             // 
             // tbDescuento
             // 
