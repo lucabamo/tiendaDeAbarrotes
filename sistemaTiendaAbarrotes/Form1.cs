@@ -16,6 +16,7 @@ namespace sistemaTiendaAbarrotes
         SqlConnection conexion;
         Venta venta;
         Promocion promocion;
+        DetalleVenta detalleVenta;
         public Form1()
         {
             InitializeComponent();
@@ -140,5 +141,61 @@ namespace sistemaTiendaAbarrotes
             tbFechaFinal.Text = "";
             tbDescuento.Text = "";
         }
+
+        private void btAgregarDetalleVenta_Click(object sender, EventArgs e)
+        {
+            dgDetalleVenta.DataSource = "";
+            detalleVenta.insertDetalleVenta(conexion, tbIdVenta.Text, tbIdPromocion.Text, tbIdProducto2.Text, tbCantidad.Text, tbSubtotal.Text);
+            dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
+            resetTabDetalleVenta();
+            
+        }
+
+        private void btModificarDetalleVenta_Click(object sender, EventArgs e)
+        {
+            dgDetalleVenta.DataSource = "";
+            detalleVenta.updateDetalleVenta(conexion, tbIdVenta.Text, tbIdPromocion.Text, tbIdProducto2.Text, tbCantidad.Text, tbSubtotal.Text);
+            dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
+            resetTabDetalleVenta();
+        }
+
+        private void btEliminarDetalleVenta_Click(object sender, EventArgs e)
+        {
+            dgDetalleVenta.DataSource = "";
+            detalleVenta.deleteDetalleVenta(conexion);
+            dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
+            resetTabDetalleVenta();
+        }
+
+        private void dgDetalleVenta_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < dgDetalleVenta.Rows.Count - 1 && dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                //promocion.IdPromocion = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value.ToString();
+                tbIdVenta.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value.ToString();
+                tbIdPromocion.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[1].Value.ToString();
+                tbIdProducto2.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[2].Value.ToString();
+                tbCantidad.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[3].Value.ToString();
+                tbSubtotal.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[4].Value.ToString();
+            }
+        }
+
+        private void tabDetalleVenta_Enter(object sender, EventArgs e)
+        {
+            dgDetalleVenta.DataSource = "";
+            dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
+            resetTabDetalleVenta();
+        }
+
+        private void resetTabDetalleVenta()
+        {
+            tbIdVenta.Text = "";
+            tbIdPromocion.Text = "";
+            tbIdProducto2.Text = "";
+            tbCantidad.Text = "";
+            tbSubtotal.Text = "";
+        }
+
+        
     }
 }

@@ -89,7 +89,7 @@
             this.tbIdProducto2 = new System.Windows.Forms.TextBox();
             this.tbIdPromocion = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.tbIdVenta2 = new System.Windows.Forms.TextBox();
+            this.tbIdVenta = new System.Windows.Forms.TextBox();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             this.tabVenta.SuspendLayout();
@@ -330,7 +330,7 @@
             // tabDetalleVenta
             // 
             this.tabDetalleVenta.Controls.Add(this.label17);
-            this.tabDetalleVenta.Controls.Add(this.tbIdVenta2);
+            this.tabDetalleVenta.Controls.Add(this.tbIdVenta);
             this.tabDetalleVenta.Controls.Add(this.label13);
             this.tabDetalleVenta.Controls.Add(this.label14);
             this.tabDetalleVenta.Controls.Add(this.label15);
@@ -351,6 +351,7 @@
             this.tabDetalleVenta.TabIndex = 5;
             this.tabDetalleVenta.Text = "Detalle Ventas";
             this.tabDetalleVenta.UseVisualStyleBackColor = true;
+            this.tabDetalleVenta.Enter += new System.EventHandler(this.tabDetalleVenta_Enter);
             // 
             // tabCompra
             // 
@@ -647,6 +648,7 @@
             this.dgDetalleVenta.Name = "dgDetalleVenta";
             this.dgDetalleVenta.Size = new System.Drawing.Size(769, 310);
             this.dgDetalleVenta.TabIndex = 28;
+            this.dgDetalleVenta.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDetalleVenta_CellClick);
             // 
             // btEliminarDetalleVenta
             // 
@@ -656,6 +658,7 @@
             this.btEliminarDetalleVenta.TabIndex = 27;
             this.btEliminarDetalleVenta.Text = "Eliminar";
             this.btEliminarDetalleVenta.UseVisualStyleBackColor = true;
+            this.btEliminarDetalleVenta.Click += new System.EventHandler(this.btEliminarDetalleVenta_Click);
             // 
             // btModificarDetalleVenta
             // 
@@ -665,6 +668,7 @@
             this.btModificarDetalleVenta.TabIndex = 26;
             this.btModificarDetalleVenta.Text = "Modificar";
             this.btModificarDetalleVenta.UseVisualStyleBackColor = true;
+            this.btModificarDetalleVenta.Click += new System.EventHandler(this.btModificarDetalleVenta_Click);
             // 
             // btAgregarDetalleVenta
             // 
@@ -674,6 +678,7 @@
             this.btAgregarDetalleVenta.TabIndex = 25;
             this.btAgregarDetalleVenta.Text = "Agregar";
             this.btAgregarDetalleVenta.UseVisualStyleBackColor = true;
+            this.btAgregarDetalleVenta.Click += new System.EventHandler(this.btAgregarDetalleVenta_Click);
             // 
             // tbSubtotal
             // 
@@ -705,12 +710,12 @@
             this.label17.TabIndex = 35;
             this.label17.Text = "IdVenta";
             // 
-            // tbIdVenta2
+            // tbIdVenta
             // 
-            this.tbIdVenta2.Location = new System.Drawing.Point(9, 28);
-            this.tbIdVenta2.Name = "tbIdVenta2";
-            this.tbIdVenta2.Size = new System.Drawing.Size(100, 20);
-            this.tbIdVenta2.TabIndex = 34;
+            this.tbIdVenta.Location = new System.Drawing.Point(9, 28);
+            this.tbIdVenta.Name = "tbIdVenta";
+            this.tbIdVenta.Size = new System.Drawing.Size(100, 20);
+            this.tbIdVenta.TabIndex = 34;
             // 
             // Form1
             // 
@@ -787,7 +792,7 @@
         private System.Windows.Forms.TextBox tbFechaInicio;
         private System.Windows.Forms.TextBox tbIdProducto;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox tbIdVenta2;
+        private System.Windows.Forms.TextBox tbIdVenta;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
