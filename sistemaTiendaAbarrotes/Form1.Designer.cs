@@ -53,21 +53,22 @@
             this.tabDetalleCompra = new System.Windows.Forms.TabPage();
             this.tabDevolucion = new System.Windows.Forms.TabPage();
             this.tabDetalleDevolucion = new System.Windows.Forms.TabPage();
-            this.tabEntrega = new System.Windows.Forms.TabPage();
             this.dGDetalleDevoluciones = new System.Windows.Forms.DataGridView();
-            this.dGEntregas = new System.Windows.Forms.DataGridView();
-            this.cBIdProveedor = new System.Windows.Forms.ComboBox();
-            this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
-            this.cBIdDevolucion = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.tabEntrega = new System.Windows.Forms.TabPage();
+            this.bAgregarEntrega = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dTFechaEntrega = new System.Windows.Forms.DateTimePicker();
+            this.cBIdDevolucion = new System.Windows.Forms.ComboBox();
+            this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
+            this.cBIdProveedor = new System.Windows.Forms.ComboBox();
+            this.dGEntregas = new System.Windows.Forms.DataGridView();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             this.tabDetalleDevolucion.SuspendLayout();
-            this.tabEntrega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGDetalleDevoluciones)).BeginInit();
+            this.tabEntrega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGEntregas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -318,12 +319,23 @@
             this.tabDetalleDevolucion.Text = "Detalle Devoluciones";
             this.tabDetalleDevolucion.UseVisualStyleBackColor = true;
             // 
+            // dGDetalleDevoluciones
+            // 
+            this.dGDetalleDevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(28, 49);
+            this.dGDetalleDevoluciones.Name = "dGDetalleDevoluciones";
+            this.dGDetalleDevoluciones.RowHeadersWidth = 51;
+            this.dGDetalleDevoluciones.RowTemplate.Height = 24;
+            this.dGDetalleDevoluciones.Size = new System.Drawing.Size(970, 452);
+            this.dGDetalleDevoluciones.TabIndex = 0;
+            // 
             // tabEntrega
             // 
+            this.tabEntrega.Controls.Add(this.bAgregarEntrega);
             this.tabEntrega.Controls.Add(this.label8);
             this.tabEntrega.Controls.Add(this.label7);
             this.tabEntrega.Controls.Add(this.label6);
-            this.tabEntrega.Controls.Add(this.dateTimePicker1);
+            this.tabEntrega.Controls.Add(this.dTFechaEntrega);
             this.tabEntrega.Controls.Add(this.cBIdDevolucion);
             this.tabEntrega.Controls.Add(this.cBIdEmpleado);
             this.tabEntrega.Controls.Add(this.cBIdProveedor);
@@ -336,15 +348,75 @@
             this.tabEntrega.Text = "Entregas";
             this.tabEntrega.UseVisualStyleBackColor = true;
             // 
-            // dGDetalleDevoluciones
+            // bAgregarEntrega
             // 
-            this.dGDetalleDevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(28, 49);
-            this.dGDetalleDevoluciones.Name = "dGDetalleDevoluciones";
-            this.dGDetalleDevoluciones.RowHeadersWidth = 51;
-            this.dGDetalleDevoluciones.RowTemplate.Height = 24;
-            this.dGDetalleDevoluciones.Size = new System.Drawing.Size(970, 452);
-            this.dGDetalleDevoluciones.TabIndex = 0;
+            this.bAgregarEntrega.Location = new System.Drawing.Point(554, 43);
+            this.bAgregarEntrega.Name = "bAgregarEntrega";
+            this.bAgregarEntrega.Size = new System.Drawing.Size(85, 41);
+            this.bAgregarEntrega.TabIndex = 8;
+            this.bAgregarEntrega.Text = "Agregar";
+            this.bAgregarEntrega.UseVisualStyleBackColor = true;
+            this.bAgregarEntrega.Click += new System.EventHandler(this.BAgregarEntrega_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(54, 86);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(78, 17);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Devolucion";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(282, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(124, 17);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Nombre empleado";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(54, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(127, 17);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Nombre proveedor";
+            // 
+            // dTFechaEntrega
+            // 
+            this.dTFechaEntrega.Location = new System.Drawing.Point(57, 179);
+            this.dTFechaEntrega.Name = "dTFechaEntrega";
+            this.dTFechaEntrega.Size = new System.Drawing.Size(200, 22);
+            this.dTFechaEntrega.TabIndex = 4;
+            // 
+            // cBIdDevolucion
+            // 
+            this.cBIdDevolucion.DropDownHeight = 206;
+            this.cBIdDevolucion.FormattingEnabled = true;
+            this.cBIdDevolucion.IntegralHeight = false;
+            this.cBIdDevolucion.Location = new System.Drawing.Point(57, 122);
+            this.cBIdDevolucion.Name = "cBIdDevolucion";
+            this.cBIdDevolucion.Size = new System.Drawing.Size(408, 24);
+            this.cBIdDevolucion.TabIndex = 3;
+            // 
+            // cBIdEmpleado
+            // 
+            this.cBIdEmpleado.FormattingEnabled = true;
+            this.cBIdEmpleado.Location = new System.Drawing.Point(285, 52);
+            this.cBIdEmpleado.Name = "cBIdEmpleado";
+            this.cBIdEmpleado.Size = new System.Drawing.Size(180, 24);
+            this.cBIdEmpleado.TabIndex = 2;
+            // 
+            // cBIdProveedor
+            // 
+            this.cBIdProveedor.FormattingEnabled = true;
+            this.cBIdProveedor.Location = new System.Drawing.Point(57, 52);
+            this.cBIdProveedor.Name = "cBIdProveedor";
+            this.cBIdProveedor.Size = new System.Drawing.Size(177, 24);
+            this.cBIdProveedor.TabIndex = 1;
             // 
             // dGEntregas
             // 
@@ -353,66 +425,8 @@
             this.dGEntregas.Name = "dGEntregas";
             this.dGEntregas.RowHeadersWidth = 51;
             this.dGEntregas.RowTemplate.Height = 24;
-            this.dGEntregas.Size = new System.Drawing.Size(989, 137);
+            this.dGEntregas.Size = new System.Drawing.Size(989, 347);
             this.dGEntregas.TabIndex = 0;
-            // 
-            // cBIdProveedor
-            // 
-            this.cBIdProveedor.FormattingEnabled = true;
-            this.cBIdProveedor.Location = new System.Drawing.Point(57, 52);
-            this.cBIdProveedor.Name = "cBIdProveedor";
-            this.cBIdProveedor.Size = new System.Drawing.Size(121, 24);
-            this.cBIdProveedor.TabIndex = 1;
-            // 
-            // cBIdEmpleado
-            // 
-            this.cBIdEmpleado.FormattingEnabled = true;
-            this.cBIdEmpleado.Location = new System.Drawing.Point(220, 52);
-            this.cBIdEmpleado.Name = "cBIdEmpleado";
-            this.cBIdEmpleado.Size = new System.Drawing.Size(121, 24);
-            this.cBIdEmpleado.TabIndex = 2;
-            // 
-            // cBIdDevolucion
-            // 
-            this.cBIdDevolucion.FormattingEnabled = true;
-            this.cBIdDevolucion.Location = new System.Drawing.Point(381, 52);
-            this.cBIdDevolucion.Name = "cBIdDevolucion";
-            this.cBIdDevolucion.Size = new System.Drawing.Size(121, 24);
-            this.cBIdDevolucion.TabIndex = 3;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(612, 155);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 4;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(54, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 17);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Proveedor";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(217, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(71, 17);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Empleado";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(378, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 17);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Devolucion";
             // 
             // Form1
             // 
@@ -427,9 +441,9 @@
             this.tabEmpleado.ResumeLayout(false);
             this.tabEmpleado.PerformLayout();
             this.tabDetalleDevolucion.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dGDetalleDevoluciones)).EndInit();
             this.tabEntrega.ResumeLayout(false);
             this.tabEntrega.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dGDetalleDevoluciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dGEntregas)).EndInit();
             this.ResumeLayout(false);
 
@@ -467,9 +481,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dTFechaEntrega;
         private System.Windows.Forms.ComboBox cBIdDevolucion;
         private System.Windows.Forms.ComboBox cBIdEmpleado;
+        private System.Windows.Forms.Button bAgregarEntrega;
         private System.Windows.Forms.ComboBox cBIdProveedor;
     }
 }

@@ -14,10 +14,14 @@ namespace sistemaTiendaAbarrotes
     public partial class Form1 : Form
     {
         SqlConnection conexion;
+        DetalleDevolucion detalleDevolucion;
+        Entrega entrega;
         public Form1()
         {
             InitializeComponent();
             conectar();
+            detalleDevolucion = new DetalleDevolucion(conexion);
+            entrega = new Entrega(conexion);
 
         }
 
@@ -38,35 +42,16 @@ namespace sistemaTiendaAbarrotes
                 MessageBox.Show("No se pudo conectar");
             }
         }
-
-        private void consultaTablaDetalleDevolucion() {
-            string consulta = "SELECT * FROM Transaccion.DetalleDevolucion";
-            SqlCommand comando = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptador = new SqlDataAdapter(comando);
-            DataTable tabla = new DataTable();
-            adaptador.Fill(tabla);
-            dGDetalleDevoluciones.DataSource = tabla;
-        }
-
-        private void consultaTablaEntrega() {
-            string consulta = "SELECT * FROM Transaccion.Entrega";
-            SqlCommand comando = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptador = new SqlDataAdapter(comando);
-            DataTable tabla = new DataTable();
-            adaptador.Fill(tabla);
-            dGEntregas.DataSource = tabla;
-        }
-
         private void TabVistas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (tabVistas.SelectedIndex) {
+            switch (tabVistas.SelectedIndex)
+            {
                 case 9:
-                    DetalleDevolucion detalleDevolucion = new DetalleDevolucion(conexion);
                     detalleDevolucion.Consulta(dGDetalleDevoluciones);
                     break;
                 case 10:
-                    Entrega entrega = new Entrega(conexion);
                     entrega.Consulta(dGEntregas);
+                    entrega.llenaComboBox(cBIdProveedor, cBIdDevolucion, cBIdEmpleado);
                     break;
             }
         }
@@ -95,11 +80,6 @@ namespace sistemaTiendaAbarrotes
                             existencia = (int)reader["Existencia"];
                         }
                     }
-                  /*  tbIdProducto.Text = idProducto.ToString();
-                    tbNombre.Text = nombreProducto;
-                    tbPrecioVenta.Text = precioVenta.ToString();
-                    tbPrecioCompra.Text = precioCompra.ToString();
-                    tbExistencia.Text = existencia.ToString();*/
                 }
             }
             catch (Exception e)
@@ -107,64 +87,11 @@ namespace sistemaTiendaAbarrotes
 
             }
         }
-        private void insertaEntrega()
+
+        private void BAgregarEntrega_Click(object sender, EventArgs e)
         {
-            //Int64 IdProveedor = 0;
-            Int64 IdEmpleado = 0;
-            Int64 IdDevolucion = 0;
-
-            string consulta = "";
-            consulta = "SELECT * FROM Empresa.Proveedor";
-
-            using (var command = new SqlCommand(consulta, conexion))
-            {
-                Int64 IdProveedor = 0;
-                string nombreProveedor = "";
-                // Process results
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        IdProveedor = (Int64)reader["IdProveedor"];
-                        nombreProveedor = (string)reader["Nombre"];
-                        cBIdProveedor.Items.Add(nombreProveedor);
-                    }
-                }
-
-            }
-
-                /*
-
-                string query = "INSERT INTO Inventario.Producto (Nombre, PrecioVenta, PrecioCompra, Existencia) " +
-                        "VALUES (@nombre, @precioventa,@preciocompra,@existencia)";
-
-                SqlCommand comando = new SqlCommand(query, conexion);
-                comando.Parameters.AddWithValue("@nombre", tbNombre.Text);
-                comando.Parameters.AddWithValue("@precioventa", tbPrecioVenta.Text);
-                comando.Parameters.AddWithValue("@preciocompra", tbPrecioCompra.Text);
-                comando.Parameters.AddWithValue("@existencia", tbExistencia.Text);
-                try
-                {
-                    comando.ExecuteNonQuery();
-                    if (enEdicion)
-                    {
-                        //MessageBox.Show("Edición Correcta");
-                        enEdicion = false;
-                    }
-                    else
-                    {
-                        // MessageBox.Show("Inserción correcta");
-
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("ERROR" + ex.Message);
-                }
-                refrescaTodo();
-                */
-            }
-
+            entrega.Inserta(cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntrega);
+            entrega.Consulta(dGEntregas);
+        }
     }
 }

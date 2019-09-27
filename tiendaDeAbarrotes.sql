@@ -143,3 +143,36 @@ BEGIN
 	WHERE idEmpleado = @ID
 END
 
+SELECT * FROM Empresa.Proveedor
+SELECT * FROM Empresa.Empleado
+INSERT INTO Empresa.Proveedor (Nombre,RFC,Telefono,Email,DomicilioFiscal) 
+VALUES('Luis','df3dsf','54353','luca@gmail.com','Calle')
+
+INSERT INTO Empresa.Proveedor (Nombre,RFC,Telefono,Email,DomicilioFiscal) 
+VALUES('Carlos','df3ddsasf','543321353','lucaba@gmail.com','Calle 22')
+
+INSERT INTO Empresa.Empleado (Nombre,Domicilio,FechaNac,Edad,Usuario,Contrasenia)
+VALUES ('Carlos','Colonia','10-10-1995',NULL,'luca','pass')
+
+INSERT INTO Transaccion.Venta (IdEmpleado,FechaVenta,Total)
+VALUES (1,'09-10-2019',200.00)
+INSERT INTO Transaccion.Venta (IdEmpleado,FechaVenta,Total)
+VALUES (1,'08-10-2019',250.00)
+
+INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
+VALUES (1,1,'10-10-2019','El producto estaba pasado',200.00)
+
+INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
+VALUES (1,2,'10-10-2019','El producto estaba super mal',250.00)
+
+INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
+VALUES (1,2,'10-10-2019','El producto estaba  mas o menos super mal',250.00)
+
+INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
+VALUES (1,2,'10-10-2019','El producto otro motivo',250.00)
+
+DELETE FROM Transaccion.Devolucion WHERE IdDevolucion = 2
+
+SELECT * FROM Transaccion.Devolucion
+
+SELECT * FROM Transaccion.Entrega
