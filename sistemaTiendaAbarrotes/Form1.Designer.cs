@@ -64,6 +64,7 @@
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
+            this.bEliminaEntrega = new System.Windows.Forms.Button();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             this.tabDetalleDevolucion.SuspendLayout();
@@ -331,6 +332,7 @@
             // 
             // tabEntrega
             // 
+            this.tabEntrega.Controls.Add(this.bEliminaEntrega);
             this.tabEntrega.Controls.Add(this.bAgregarEntrega);
             this.tabEntrega.Controls.Add(this.label8);
             this.tabEntrega.Controls.Add(this.label7);
@@ -427,6 +429,17 @@
             this.dGEntregas.RowTemplate.Height = 24;
             this.dGEntregas.Size = new System.Drawing.Size(989, 347);
             this.dGEntregas.TabIndex = 0;
+            this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
+            // 
+            // bEliminaEntrega
+            // 
+            this.bEliminaEntrega.Location = new System.Drawing.Point(662, 43);
+            this.bEliminaEntrega.Name = "bEliminaEntrega";
+            this.bEliminaEntrega.Size = new System.Drawing.Size(89, 41);
+            this.bEliminaEntrega.TabIndex = 9;
+            this.bEliminaEntrega.Text = "Elimina";
+            this.bEliminaEntrega.UseVisualStyleBackColor = true;
+            this.bEliminaEntrega.Click += new System.EventHandler(this.BEliminaEntrega_Click);
             // 
             // Form1
             // 
@@ -486,6 +499,7 @@
         private System.Windows.Forms.ComboBox cBIdEmpleado;
         private System.Windows.Forms.Button bAgregarEntrega;
         private System.Windows.Forms.ComboBox cBIdProveedor;
+        private System.Windows.Forms.Button bEliminaEntrega;
     }
 }
 

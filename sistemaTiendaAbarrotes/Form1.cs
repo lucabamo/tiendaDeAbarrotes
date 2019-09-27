@@ -21,7 +21,7 @@ namespace sistemaTiendaAbarrotes
             InitializeComponent();
             conectar();
             detalleDevolucion = new DetalleDevolucion(conexion);
-            entrega = new Entrega(conexion);
+            entrega = new Entrega(conexion,cBIdProveedor,cBIdDevolucion,cBIdEmpleado,dTFechaEntrega);
 
         }
 
@@ -51,7 +51,6 @@ namespace sistemaTiendaAbarrotes
                     break;
                 case 10:
                     entrega.Consulta(dGEntregas);
-                    entrega.llenaComboBox(cBIdProveedor, cBIdDevolucion, cBIdEmpleado);
                     break;
             }
         }
@@ -92,6 +91,20 @@ namespace sistemaTiendaAbarrotes
         {
             entrega.Inserta(cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntrega);
             entrega.Consulta(dGEntregas);
+        }
+
+        private void DGEntregas_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            string ID = dGEntregas.Rows[e.RowIndex].Cells[0].Value.ToString();
+            entrega.AccesoIdEntregaSeleccionada = ID;
+           // MessageBox.Show(ID);
+            entrega.cargaRegistroSeleccionado();
+        }
+
+        private void BEliminaEntrega_Click(object sender, EventArgs e)
+        {
+            entrega.eliminaRegistroSeleccionado();
         }
     }
 }
