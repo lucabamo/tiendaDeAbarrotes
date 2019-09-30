@@ -75,11 +75,11 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void deleteDetalleVenta(SqlConnection connection)
+        public void deleteDetalleVenta(SqlConnection connection, string idVenta)
         {
-            string query = "DELETE FROM Transaccion.DetalleVenta WHERE ";
+            string query = "DELETE FROM Transaccion.DetalleVenta WHERE IdVenta = @IdVenta";
             SqlCommand command = new SqlCommand(query, connection);
-            //command.Parameters.AddWithValue();
+            command.Parameters.AddWithValue("@IdVenta", idVenta);
 
             try
             {

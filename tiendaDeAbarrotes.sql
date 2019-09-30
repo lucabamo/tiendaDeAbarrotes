@@ -39,6 +39,10 @@ CREATE TABLE Inventario.Producto(
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(IdProducto),
 )
 
+DROP TABLE Inventario.Producto
+
+
+
 --Tabla Venta--
 CREATE TABLE Transaccion.Venta(
 	IdVenta BIGINT IDENTITY(1,1) NOT NULL,
@@ -59,7 +63,6 @@ CREATE TABLE Transaccion.Promocion(
 	CONSTRAINT PK_PROMOCION PRIMARY KEY(IdPromocion),
 	CONSTRAINT FK_PRODUCTO2 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
-
 
 --Tabla detalle venta--
 CREATE TABLE Transaccion.DetalleVenta(
@@ -143,3 +146,40 @@ BEGIN
 	WHERE idEmpleado = @ID
 END
 
+INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Park Jimin', 'Seoul', '1995-10-13', null, 'parkChimChim', '12345')
+INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Jung Hoseok', 'Seoul', '1994-02-18', null, 'J-hope', '12345')
+INSERT INTO Inventario.Producto (Nombre, Existencia, CostroProveedor, CostoVenta) VALUES ('Agua', 2, 3.00, 5.00)
+
+SELECT * FROM Transaccion.Venta;
+SELECT * FROM Empresa.Empleado
+
+
+---Trigger para actualizar el inventario cuando se realiza una compra
+CREATE TRIGGER Transaccion.ActualizarExistencias
+	ON Transaccion.DetalleCompra
+	AFTER INSERT
+AS
+BEGIN
+	DECLARE @ID AS BIGINT
+	DECLARE @Cantidad AS INT
+	DECLARE @Existencias AS INT
+	DECLARE @Resultado AS INT
+	SELECT @ID = IdProducto, @Cantidad = Cantidad FROM inserted
+	SELECT @Existencias = Existencia FROM Inventario.Producto WHERE IdProducto = @ID
+	SELECT @Resultado = @Existencias + @Cantidad
+	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
+END
+
+SELECT * FROM Inventario.Producto
+
+SELECT * FROM Transaccion.DetalleCompra
+INSERT INTO Transaccion.DetalleCompra (IdCompra,IdProducto, Cantidad, Subtotal) VALUES (1,1,6,100)
+SELECT * FROM Transaccion.Compra
+
+SELECT * FROM Empresa.Proveedor
+SELECT * FROM Empresa.Empleado
+INSERT INTO Empresa.Proveedor (Nombre, Telefono, Email, RFC, DomicilioFiscal) VALUES ('Kim Namjoon', 252525, 'moonchild@gmail.com', 'sfsfsfsfsac', 'domicilio')
+INSERT INTO Transaccion.Compra (IdProveedor, IdEmpleado, Fecha, Total) VALUES (1,1, '2019-01-01', 100)
+SELECT * FROM Transaccion.Venta
+
+SELECT * FROM Transaccion.Promocion

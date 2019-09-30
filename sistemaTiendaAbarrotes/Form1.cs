@@ -22,6 +22,7 @@ namespace sistemaTiendaAbarrotes
             InitializeComponent();
             venta = new Venta();
             promocion = new Promocion();
+            detalleVenta = new DetalleVenta();
             conectar();
 
         }
@@ -162,7 +163,7 @@ namespace sistemaTiendaAbarrotes
         private void btEliminarDetalleVenta_Click(object sender, EventArgs e)
         {
             dgDetalleVenta.DataSource = "";
-            detalleVenta.deleteDetalleVenta(conexion);
+            detalleVenta.deleteDetalleVenta(conexion, tbIdVenta.Text);
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             resetTabDetalleVenta();
         }
