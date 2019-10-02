@@ -20,7 +20,8 @@ namespace sistemaTiendaAbarrotes
         {
             InitializeComponent();
             conectar();
-            detalleDevolucion = new DetalleDevolucion(conexion);
+            detalleDevolucion = new DetalleDevolucion(conexion,cbIdDevolucionDetalleDevo,cbIdProductoDetalleDevo,
+                tbCantidadDetalleDevo);
             entrega = new Entrega(conexion,cBIdProveedor,cBIdDevolucion,cBIdEmpleado,dTFechaEntrega);
 
         }
@@ -55,56 +56,36 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        private void editarRegistro(string sidProducto)
-        {
-            string consulta = "SELECT * FROM Inventario.Producto WHERE idProducto = " + sidProducto;
-            try
-            {
-                using (var command = new SqlCommand(consulta, conexion))
-                {
-                    Int64 idProducto = 0;
-                    string nombreProducto = "";
-                    double precioVenta = 0.0;
-                    double precioCompra = 0.0;
-                    int existencia = 0;
-                    // Process results
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            idProducto = (Int64)reader["idProducto"];
-                            nombreProducto = (string)reader["Nombre"];
-                            precioVenta = (double)reader["PrecioVenta"];
-                            precioCompra = (double)reader["PrecioCompra"];
-                            existencia = (int)reader["Existencia"];
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
         private void BAgregarEntrega_Click(object sender, EventArgs e)
         {
-            entrega.Inserta(cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntrega);
+            entrega.Inserta();
             entrega.Consulta(dGEntregas);
         }
 
         private void DGEntregas_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
+        {      
             string ID = dGEntregas.Rows[e.RowIndex].Cells[0].Value.ToString();
             entrega.AccesoIdEntregaSeleccionada = ID;
-           // MessageBox.Show(ID);
             entrega.cargaRegistroSeleccionado();
         }
 
         private void BEliminaEntrega_Click(object sender, EventArgs e)
         {
             entrega.eliminaRegistroSeleccionado();
+            entrega.Consulta(dGEntregas);
+        }
+
+        private void BEditarEntrega_Click(object sender, EventArgs e)
+        {
+            entrega.editaRegistroSeleccionado();
+            entrega.Consulta(dGEntregas);
+        }
+
+        private void DGDetalleDevoluciones_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ID = dGDetalleDevoluciones.Rows[e.RowIndex].Cells[0].Value.ToString();
+            detalleDevolucion.accesoIdDevolucion = ID;
+            detalleDevolucion.cargaRegistroSeleccionado();
         }
     }
 }

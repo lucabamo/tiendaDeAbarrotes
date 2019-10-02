@@ -18,6 +18,7 @@ namespace sistemaTiendaAbarrotes
         ComboBox cbIdDevolucionI;
         ComboBox cbIdEmpleadoI;
         DateTimePicker dtFechaEntregaI;
+
         public Entrega(SqlConnection conexion, ComboBox cbIdProveedor, ComboBox cbIdDevolucion, 
             ComboBox cbIdEmpleado, DateTimePicker dtFechaEntrega) {
             this.conexion = conexion;
@@ -37,7 +38,11 @@ namespace sistemaTiendaAbarrotes
         public void Consulta(DataGridView dGEntrega)
         {
             tablaEntrega.Clear();
-            string consulta = "SELECT * FROM Transaccion.Entrega";
+            string consulta = "SELECT IdEntrega,Proveedor.Nombre,Devolucion.Motivo,Empleado.Nombre, " +
+                "FechaEntrega FROM Transaccion.Entrega Entrega " +
+                "INNER JOIN Empresa.Proveedor Proveedor ON Entrega.IdProveedor = Proveedor.IdProveedor " +
+                "INNER JOIN Transaccion.Devolucion Devolucion ON Entrega.IdDevolucion = Devolucion.IdDevolucion " +
+                "INNER JOIN Empresa.Empleado Empleado ON Entrega.IdEmpleado = Empleado.IdEmpleado";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaEntrega);
@@ -116,22 +121,18 @@ namespace sistemaTiendaAbarrotes
         /// <summary>
         /// Método para insertar una tupla de la tabla Entrega
         /// </summary>
-        /// <param name="cBIdProveedor">ComboBox para el ID del proveedor</param>
-        /// <param name="cBIdDevolucion">ComboBox para el ID de la Devolución</param>
-        /// <param name="cBIdEmpleado">ComboBox para el ID del Empleado</param>
-        /// <param name="dTFechaEntrega">DateTimePicker para la fecha seleccionada</param>
-        public void Inserta(ComboBox cBIdProveedor, ComboBox cBIdDevolucion, ComboBox cBIdEmpleado, DateTimePicker dTFechaEntrega)
+        public void Inserta()
         {
             try
             {
                 //DataRowView es el tipo de dato para leer una tupla que se inserto en algún lugar con anterioridad
-                DataRowView Proveedor = (DataRowView)cBIdProveedor.SelectedItem; 
-                DataRowView Devolucion = (DataRowView)cBIdDevolucion.SelectedItem;
-                DataRowView Empleado = (DataRowView)cBIdEmpleado.SelectedItem;
+                DataRowView Proveedor = (DataRowView)cbIdProveedorI.SelectedItem; 
+                DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+                DataRowView Empleado = (DataRowView)cbIdEmpleadoI.SelectedItem;
                 Int64 IdProveedor = (Int64)Proveedor.Row.ItemArray[0]; //Nuestro elemento de la posición 0 es el ID
                 Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
                 Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
-                DateTime FechaEntrega = dTFechaEntrega.Value.Date;
+                DateTime FechaEntrega = dtFechaEntregaI.Value.Date;
                 string query = "";
                 query = "INSERT INTO Transaccion.Entrega (IdProveedor, IdDevolucion, IdEmpleado, FechaEntrega) " +
                         "VALUES (@IdProveedor, @IdDevolucion,@IdEmpleado,@FechaEntrega)";
@@ -150,14 +151,17 @@ namespace sistemaTiendaAbarrotes
                 {
                     MessageBox.Show("Hubo un error en la inserción");
                 }
-                limpiaFormulario(cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntrega);
+                limpiaFormulario();
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Todos los campos son requeridos");
+                MessageBox.Show("Todos los campos son necesarios");
             }
         }
 
+        /// <summary>
+        /// Método para la eliminación de un registro que ha sido seleccionado.
+        /// </summary>
         public void eliminaRegistroSeleccionado() {
             if (IdEntregaSeleccionada != "")
             {
@@ -167,7 +171,7 @@ namespace sistemaTiendaAbarrotes
                 {
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
-                    limpiaFormulario(cbIdProveedorI,cbIdDevolucionI,cbIdEmpleadoI,dtFechaEntregaI);
+                    limpiaFormulario();
                 }
                 catch (Exception e)
                 {
@@ -181,6 +185,53 @@ namespace sistemaTiendaAbarrotes
 
         }
 
+        /// <summary>
+        /// Método para editar un registro que ha sido cargado dentro del formulario
+        /// </summary>
+        public void editaRegistroSeleccionado() {
+            try {
+                //DataRowView es el tipo de dato para leer una tupla que se inserto en algún lugar con anterioridad
+                DataRowView Proveedor = (DataRowView)cbIdProveedorI.SelectedItem;
+                DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+                DataRowView Empleado = (DataRowView)cbIdEmpleadoI.SelectedItem;
+                Int64 IdProveedor = (Int64)Proveedor.Row.ItemArray[0]; //Nuestro elemento de la posición 0 es el ID
+                Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
+                Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
+                DateTime FechaEntrega = dtFechaEntregaI.Value.Date;
+
+                string queryEdita = "UPDATE Transaccion.Entrega SET IdProveedor = @IdProveedor, " +
+                    "IdDevolucion = @IdDevolucion, IdEmpleado = @IdEmpleado, FechaEntrega = @FechaEntrega " +
+                    "WHERE IdEntrega = " + IdEntregaSeleccionada;
+
+                SqlCommand comando = new SqlCommand(queryEdita, conexion);
+
+                comando.Parameters.AddWithValue("@IdProveedor", IdProveedor);
+                comando.Parameters.AddWithValue("@IdDevolucion", IdDevolucion);
+                comando.Parameters.AddWithValue("@IdEmpleado", IdEmpleado);
+                comando.Parameters.AddWithValue("@FechaEntrega", FechaEntrega);
+                try
+                {
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Edición correcta");
+                    limpiaFormulario();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Hubo un error en la edición");
+                }
+            }
+            catch (Exception e) 
+                {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
+
+        }
+
+
+        /// <summary>
+        /// Método para cargar los datos de un registro en el formulario,
+        /// que ha sido seleccionado desde el DataGridView
+        /// </summary>
         public void cargaRegistroSeleccionado()
         {
             //Se toma la tupla seleccionada buscando dentro de la tablaEntrega con un Select buscando en el atributo
@@ -199,15 +250,17 @@ namespace sistemaTiendaAbarrotes
             dtFechaEntregaI.Value = FechaEntrega;
         }
 
-        private void limpiaFormulario(ComboBox cbProveedores, ComboBox cbDevoluciones,
-            ComboBox cbEmpelados, DateTimePicker dTFechaEntrega) {
-            cbDevoluciones.Text = "";
-            cbDevoluciones.SelectedIndex = -1;
-            cbEmpelados.Text = "";
-            cbEmpelados.SelectedIndex = -1;
-            cbProveedores.Text = "";
-            cbProveedores.SelectedIndex = -1;
-            dTFechaEntrega.Value = System.DateTime.Now;
+        /// <summary>
+        /// Método para limpiar el formulario donde se reciben los datos de una entrega
+        /// </summary>
+        private void limpiaFormulario() {
+            cbIdDevolucionI.Text = "";
+            cbIdDevolucionI.SelectedIndex = -1;
+            cbIdEmpleadoI.Text = "";
+            cbIdEmpleadoI.SelectedIndex = -1;
+            cbIdProveedorI.Text = "";
+            cbIdProveedorI.SelectedIndex = -1;
+            dtFechaEntregaI.Value = System.DateTime.Now;
         }
 
     }

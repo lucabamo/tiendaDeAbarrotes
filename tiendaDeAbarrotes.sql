@@ -143,36 +143,56 @@ BEGIN
 	WHERE idEmpleado = @ID
 END
 
-SELECT * FROM Empresa.Proveedor
-SELECT * FROM Empresa.Empleado
-INSERT INTO Empresa.Proveedor (Nombre,RFC,Telefono,Email,DomicilioFiscal) 
-VALUES('Luis','df3dsf','54353','luca@gmail.com','Calle')
+--Disparador para insertar un detalle devolución después de haber insertado una devolución
+CREATE TRIGGER Transaccion.creaDetalleDevolucion
+ON Transaccion.Devolucion
+AFTER INSERT
+AS 
+BEGIN 
+	SET NOCOUNT ON
+	DECLARE @IdDevolucion AS BIGINT
+	DECLARE @IdProducto AS BIGINT
+	DECLARE @Cantidad AS INT 
+	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto,
+	@Cantidad = DetalleVenta.Cantidad FROM inserted Insertada
+	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
+	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
+END
 
-INSERT INTO Empresa.Proveedor (Nombre,RFC,Telefono,Email,DomicilioFiscal) 
-VALUES('Carlos','df3ddsasf','543321353','lucaba@gmail.com','Calle 22')
+--Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad
+CREATE TRIGGER Transaccion.calculaSubtotal
+ON Transaccion.DetalleVenta
+AFTER INSERT,UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdVenta AS BIGINT
+	DECLARE @IdProducto AS BIGINT
+	DECLARE @Cantidad AS INT
+	DECLARE @CostoVenta AS REAL
+	SELECT @IdVenta = Insertada.IdVenta, @IdProducto = Insertada.IdProducto,
+	@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta FROM inserted Insertada
+	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
+	UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad)
+	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto
+END
 
-INSERT INTO Empresa.Empleado (Nombre,Domicilio,FechaNac,Edad,Usuario,Contrasenia)
-VALUES ('Carlos','Colonia','10-10-1995',NULL,'luca','pass')
-
-INSERT INTO Transaccion.Venta (IdEmpleado,FechaVenta,Total)
-VALUES (1,'09-10-2019',200.00)
-INSERT INTO Transaccion.Venta (IdEmpleado,FechaVenta,Total)
-VALUES (1,'08-10-2019',250.00)
-
-INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
-VALUES (1,1,'10-10-2019','El producto estaba pasado',200.00)
-
-INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
-VALUES (1,2,'10-10-2019','El producto estaba super mal',250.00)
-
-INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
-VALUES (1,2,'10-10-2019','El producto estaba  mas o menos super mal',250.00)
-
-INSERT INTO Transaccion.Devolucion (IdEmpleado,IdVenta,Fecha,Motivo,Monto)
-VALUES (1,2,'10-10-2019','El producto otro motivo',250.00)
-
-DELETE FROM Transaccion.Devolucion WHERE IdDevolucion = 2
-
-SELECT * FROM Transaccion.Devolucion
-
-SELECT * FROM Transaccion.Entrega
+--Trigger para actualizar la existencia del producto después de una devolución
+CREATE TRIGGER Transaccion.existenciaProductoDevolucion
+ON Transaccion.Devolucion
+AFTER INSERT,UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdDevolucion AS BIGINT
+	DECLARE @IdProducto AS BIGINT 
+	DECLARE @Cantidad AS INT
+	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto , 
+	@Cantidad = DetalleDevolucion.Cantidad  FROM inserted Insertada 
+	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
+	INNER JOIN Transaccion.DetalleDevolucion DetalleDevolucion 
+	ON DetalleVenta.IdProducto = DetalleDevolucion.IdProducto 
+	AND Insertada.IdDevolucion = DetalleDevolucion.IdDevolucion
+	UPDATE Inventario.Producto SET Existencia = Existencia+@Cantidad
+	WHERE IdProducto = @IdProducto
+END

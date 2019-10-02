@@ -53,8 +53,13 @@
             this.tabDetalleCompra = new System.Windows.Forms.TabPage();
             this.tabDevolucion = new System.Windows.Forms.TabPage();
             this.tabDetalleDevolucion = new System.Windows.Forms.TabPage();
+            this.tbCantidadDetalleDevo = new System.Windows.Forms.TextBox();
+            this.cbIdProductoDetalleDevo = new System.Windows.Forms.ComboBox();
+            this.cbIdDevolucionDetalleDevo = new System.Windows.Forms.ComboBox();
             this.dGDetalleDevoluciones = new System.Windows.Forms.DataGridView();
             this.tabEntrega = new System.Windows.Forms.TabPage();
+            this.bEditarEntrega = new System.Windows.Forms.Button();
+            this.bEliminaEntrega = new System.Windows.Forms.Button();
             this.bAgregarEntrega = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -64,7 +69,9 @@
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
-            this.bEliminaEntrega = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             this.tabDetalleDevolucion.SuspendLayout();
@@ -311,6 +318,12 @@
             // 
             // tabDetalleDevolucion
             // 
+            this.tabDetalleDevolucion.Controls.Add(this.label11);
+            this.tabDetalleDevolucion.Controls.Add(this.label10);
+            this.tabDetalleDevolucion.Controls.Add(this.label9);
+            this.tabDetalleDevolucion.Controls.Add(this.tbCantidadDetalleDevo);
+            this.tabDetalleDevolucion.Controls.Add(this.cbIdProductoDetalleDevo);
+            this.tabDetalleDevolucion.Controls.Add(this.cbIdDevolucionDetalleDevo);
             this.tabDetalleDevolucion.Controls.Add(this.dGDetalleDevoluciones);
             this.tabDetalleDevolucion.Location = new System.Drawing.Point(4, 25);
             this.tabDetalleDevolucion.Name = "tabDetalleDevolucion";
@@ -320,18 +333,43 @@
             this.tabDetalleDevolucion.Text = "Detalle Devoluciones";
             this.tabDetalleDevolucion.UseVisualStyleBackColor = true;
             // 
+            // tbCantidadDetalleDevo
+            // 
+            this.tbCantidadDetalleDevo.Location = new System.Drawing.Point(661, 49);
+            this.tbCantidadDetalleDevo.Name = "tbCantidadDetalleDevo";
+            this.tbCantidadDetalleDevo.Size = new System.Drawing.Size(100, 22);
+            this.tbCantidadDetalleDevo.TabIndex = 3;
+            // 
+            // cbIdProductoDetalleDevo
+            // 
+            this.cbIdProductoDetalleDevo.FormattingEnabled = true;
+            this.cbIdProductoDetalleDevo.Location = new System.Drawing.Point(421, 49);
+            this.cbIdProductoDetalleDevo.Name = "cbIdProductoDetalleDevo";
+            this.cbIdProductoDetalleDevo.Size = new System.Drawing.Size(121, 24);
+            this.cbIdProductoDetalleDevo.TabIndex = 2;
+            // 
+            // cbIdDevolucionDetalleDevo
+            // 
+            this.cbIdDevolucionDetalleDevo.FormattingEnabled = true;
+            this.cbIdDevolucionDetalleDevo.Location = new System.Drawing.Point(45, 49);
+            this.cbIdDevolucionDetalleDevo.Name = "cbIdDevolucionDetalleDevo";
+            this.cbIdDevolucionDetalleDevo.Size = new System.Drawing.Size(293, 24);
+            this.cbIdDevolucionDetalleDevo.TabIndex = 1;
+            // 
             // dGDetalleDevoluciones
             // 
             this.dGDetalleDevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(28, 49);
+            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(28, 150);
             this.dGDetalleDevoluciones.Name = "dGDetalleDevoluciones";
             this.dGDetalleDevoluciones.RowHeadersWidth = 51;
             this.dGDetalleDevoluciones.RowTemplate.Height = 24;
             this.dGDetalleDevoluciones.Size = new System.Drawing.Size(970, 452);
             this.dGDetalleDevoluciones.TabIndex = 0;
+            this.dGDetalleDevoluciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGDetalleDevoluciones_CellClick);
             // 
             // tabEntrega
             // 
+            this.tabEntrega.Controls.Add(this.bEditarEntrega);
             this.tabEntrega.Controls.Add(this.bEliminaEntrega);
             this.tabEntrega.Controls.Add(this.bAgregarEntrega);
             this.tabEntrega.Controls.Add(this.label8);
@@ -349,6 +387,26 @@
             this.tabEntrega.TabIndex = 10;
             this.tabEntrega.Text = "Entregas";
             this.tabEntrega.UseVisualStyleBackColor = true;
+            // 
+            // bEditarEntrega
+            // 
+            this.bEditarEntrega.Location = new System.Drawing.Point(554, 90);
+            this.bEditarEntrega.Name = "bEditarEntrega";
+            this.bEditarEntrega.Size = new System.Drawing.Size(85, 41);
+            this.bEditarEntrega.TabIndex = 10;
+            this.bEditarEntrega.Text = "Editar";
+            this.bEditarEntrega.UseVisualStyleBackColor = true;
+            this.bEditarEntrega.Click += new System.EventHandler(this.BEditarEntrega_Click);
+            // 
+            // bEliminaEntrega
+            // 
+            this.bEliminaEntrega.Location = new System.Drawing.Point(662, 43);
+            this.bEliminaEntrega.Name = "bEliminaEntrega";
+            this.bEliminaEntrega.Size = new System.Drawing.Size(89, 41);
+            this.bEliminaEntrega.TabIndex = 9;
+            this.bEliminaEntrega.Text = "Elimina";
+            this.bEliminaEntrega.UseVisualStyleBackColor = true;
+            this.bEliminaEntrega.Click += new System.EventHandler(this.BEliminaEntrega_Click);
             // 
             // bAgregarEntrega
             // 
@@ -397,6 +455,7 @@
             // cBIdDevolucion
             // 
             this.cBIdDevolucion.DropDownHeight = 206;
+            this.cBIdDevolucion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdDevolucion.FormattingEnabled = true;
             this.cBIdDevolucion.IntegralHeight = false;
             this.cBIdDevolucion.Location = new System.Drawing.Point(57, 122);
@@ -406,6 +465,7 @@
             // 
             // cBIdEmpleado
             // 
+            this.cBIdEmpleado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdEmpleado.FormattingEnabled = true;
             this.cBIdEmpleado.Location = new System.Drawing.Point(285, 52);
             this.cBIdEmpleado.Name = "cBIdEmpleado";
@@ -414,6 +474,7 @@
             // 
             // cBIdProveedor
             // 
+            this.cBIdProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdProveedor.FormattingEnabled = true;
             this.cBIdProveedor.Location = new System.Drawing.Point(57, 52);
             this.cBIdProveedor.Name = "cBIdProveedor";
@@ -431,15 +492,32 @@
             this.dGEntregas.TabIndex = 0;
             this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
             // 
-            // bEliminaEntrega
+            // label9
             // 
-            this.bEliminaEntrega.Location = new System.Drawing.Point(662, 43);
-            this.bEliminaEntrega.Name = "bEliminaEntrega";
-            this.bEliminaEntrega.Size = new System.Drawing.Size(89, 41);
-            this.bEliminaEntrega.TabIndex = 9;
-            this.bEliminaEntrega.Text = "Elimina";
-            this.bEliminaEntrega.UseVisualStyleBackColor = true;
-            this.bEliminaEntrega.Click += new System.EventHandler(this.BEliminaEntrega_Click);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(45, 26);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(121, 17);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Motivo devolución";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(421, 26);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 17);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Producto";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(658, 26);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(64, 17);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Cantidad";
             // 
             // Form1
             // 
@@ -454,6 +532,7 @@
             this.tabEmpleado.ResumeLayout(false);
             this.tabEmpleado.PerformLayout();
             this.tabDetalleDevolucion.ResumeLayout(false);
+            this.tabDetalleDevolucion.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGDetalleDevoluciones)).EndInit();
             this.tabEntrega.ResumeLayout(false);
             this.tabEntrega.PerformLayout();
@@ -500,6 +579,13 @@
         private System.Windows.Forms.Button bAgregarEntrega;
         private System.Windows.Forms.ComboBox cBIdProveedor;
         private System.Windows.Forms.Button bEliminaEntrega;
+        private System.Windows.Forms.Button bEditarEntrega;
+        private System.Windows.Forms.TextBox tbCantidadDetalleDevo;
+        private System.Windows.Forms.ComboBox cbIdProductoDetalleDevo;
+        private System.Windows.Forms.ComboBox cbIdDevolucionDetalleDevo;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
     }
 }
 
