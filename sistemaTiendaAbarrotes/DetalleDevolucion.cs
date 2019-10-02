@@ -27,6 +27,7 @@ namespace sistemaTiendaAbarrotes
             IdDevolucion = "";
         }
         public void Consulta(DataGridView dGDetalleDevoluciones) {
+            tablaDevolucion.Clear();
             string consulta = "SELECT Devolucion.Motivo, Producto.Nombre, DetalleVenta.Cantidad " +
                 "FROM Transaccion.DetalleDevolucion AS DetalleDevolucion " +
                 "INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion " +

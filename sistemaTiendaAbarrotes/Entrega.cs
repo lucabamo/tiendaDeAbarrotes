@@ -13,6 +13,7 @@ namespace sistemaTiendaAbarrotes
     {
         SqlConnection conexion;
         DataTable tablaEntrega;
+        DataTable tablaEntregaPura; //Donde no se muestran nombres si no IDs
         string IdEntregaSeleccionada;
         ComboBox cbIdProveedorI;
         ComboBox cbIdDevolucionI;
@@ -23,6 +24,7 @@ namespace sistemaTiendaAbarrotes
             ComboBox cbIdEmpleado, DateTimePicker dtFechaEntrega) {
             this.conexion = conexion;
             tablaEntrega = new DataTable();
+            tablaEntregaPura = new DataTable();
             this.cbIdProveedorI = cbIdProveedor;
             this.cbIdDevolucionI = cbIdDevolucion;
             this.cbIdEmpleadoI = cbIdEmpleado;
@@ -38,14 +40,20 @@ namespace sistemaTiendaAbarrotes
         public void Consulta(DataGridView dGEntrega)
         {
             tablaEntrega.Clear();
-            string consulta = "SELECT IdEntrega,Proveedor.Nombre,Devolucion.Motivo,Empleado.Nombre, " +
+            tablaEntregaPura.Clear();
+            string consulta = "SELECT IdEntrega,Proveedor.Nombre AS Nombre_Proveedor," +
+                "Empleado.Nombre AS Nombre_Empleado, Devolucion.Motivo AS Motivo_Devolución, " +
                 "FechaEntrega FROM Transaccion.Entrega Entrega " +
                 "INNER JOIN Empresa.Proveedor Proveedor ON Entrega.IdProveedor = Proveedor.IdProveedor " +
                 "INNER JOIN Transaccion.Devolucion Devolucion ON Entrega.IdDevolucion = Devolucion.IdDevolucion " +
                 "INNER JOIN Empresa.Empleado Empleado ON Entrega.IdEmpleado = Empleado.IdEmpleado";
+            string consultaDos = "SELECT * FROM Transaccion.Entrega";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaEntrega);
+            comando = new SqlCommand(consultaDos, conexion);
+            adaptador = new SqlDataAdapter(comando);
+            adaptador.Fill(tablaEntregaPura);
             dGEntrega.DataSource = tablaEntrega;
             llenaComboBox();
         }
@@ -236,13 +244,14 @@ namespace sistemaTiendaAbarrotes
         {
             //Se toma la tupla seleccionada buscando dentro de la tablaEntrega con un Select buscando en el atributo
             //[IdEntrega]
-            DataRow[] tuplaSeleccionada = tablaEntrega.Select("[IdEntrega] = " + IdEntregaSeleccionada);
+            DataRow[] tuplaSeleccionada = tablaEntregaPura.Select("[IdEntrega] = " + IdEntregaSeleccionada);
 
             //Una vez seleccionada la tupla buscamos cada uno de los atributos
             var IdProveedor = tuplaSeleccionada[0].ItemArray[1];
             var IdEmpleado = tuplaSeleccionada[0].ItemArray[2];
             var IdDevolucion = tuplaSeleccionada[0].ItemArray[3];
             var FechaEntrega = (DateTime)tuplaSeleccionada[0].ItemArray[4];
+            //cbIdProveedorI.SelectedValue = cbIdProveedorI.Items.IndexOf(IdEmpleado.ToString());
 
             cbIdProveedorI.SelectedValue = IdProveedor;
             cbIdEmpleadoI.SelectedValue = IdEmpleado;
