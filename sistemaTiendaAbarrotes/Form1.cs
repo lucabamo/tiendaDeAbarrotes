@@ -22,7 +22,7 @@ namespace sistemaTiendaAbarrotes
             conectar();
             detalleDevolucion = new DetalleDevolucion(conexion,cbIdDevolucionDetalleDevo,cbIdProductoDetalleDevo,
                 tbCantidadDetalleDevo);
-            entrega = new Entrega(conexion,cBIdProveedor,cBIdDevolucion,cBIdEmpleado,dTFechaEntrega);
+            entrega = new Entrega(conexion,cBIdProveedor,cBIdDevolucion,cBIdEmpleado,dTFechaEntregaEntregas);
 
         }
 

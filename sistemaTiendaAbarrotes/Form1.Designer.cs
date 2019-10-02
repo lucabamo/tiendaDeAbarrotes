@@ -53,6 +53,9 @@
             this.tabDetalleCompra = new System.Windows.Forms.TabPage();
             this.tabDevolucion = new System.Windows.Forms.TabPage();
             this.tabDetalleDevolucion = new System.Windows.Forms.TabPage();
+            this.labelCantiDetalledev = new System.Windows.Forms.Label();
+            this.labelProductoDetalleDev = new System.Windows.Forms.Label();
+            this.labelMotivoDevDetalledev = new System.Windows.Forms.Label();
             this.tbCantidadDetalleDevo = new System.Windows.Forms.TextBox();
             this.cbIdProductoDetalleDevo = new System.Windows.Forms.ComboBox();
             this.cbIdDevolucionDetalleDevo = new System.Windows.Forms.ComboBox();
@@ -62,16 +65,13 @@
             this.bEliminaEntrega = new System.Windows.Forms.Button();
             this.bAgregarEntrega = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dTFechaEntrega = new System.Windows.Forms.DateTimePicker();
+            this.labelNombreEmpleadoEntrega = new System.Windows.Forms.Label();
+            this.labelNombreProvEntrega = new System.Windows.Forms.Label();
+            this.dTFechaEntregaEntregas = new System.Windows.Forms.DateTimePicker();
             this.cBIdDevolucion = new System.Windows.Forms.ComboBox();
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             this.tabDetalleDevolucion.SuspendLayout();
@@ -318,9 +318,9 @@
             // 
             // tabDetalleDevolucion
             // 
-            this.tabDetalleDevolucion.Controls.Add(this.label11);
-            this.tabDetalleDevolucion.Controls.Add(this.label10);
-            this.tabDetalleDevolucion.Controls.Add(this.label9);
+            this.tabDetalleDevolucion.Controls.Add(this.labelCantiDetalledev);
+            this.tabDetalleDevolucion.Controls.Add(this.labelProductoDetalleDev);
+            this.tabDetalleDevolucion.Controls.Add(this.labelMotivoDevDetalledev);
             this.tabDetalleDevolucion.Controls.Add(this.tbCantidadDetalleDevo);
             this.tabDetalleDevolucion.Controls.Add(this.cbIdProductoDetalleDevo);
             this.tabDetalleDevolucion.Controls.Add(this.cbIdDevolucionDetalleDevo);
@@ -332,6 +332,33 @@
             this.tabDetalleDevolucion.TabIndex = 9;
             this.tabDetalleDevolucion.Text = "Detalle Devoluciones";
             this.tabDetalleDevolucion.UseVisualStyleBackColor = true;
+            // 
+            // labelCantiDetalledev
+            // 
+            this.labelCantiDetalledev.AutoSize = true;
+            this.labelCantiDetalledev.Location = new System.Drawing.Point(658, 26);
+            this.labelCantiDetalledev.Name = "labelCantiDetalledev";
+            this.labelCantiDetalledev.Size = new System.Drawing.Size(64, 17);
+            this.labelCantiDetalledev.TabIndex = 6;
+            this.labelCantiDetalledev.Text = "Cantidad";
+            // 
+            // labelProductoDetalleDev
+            // 
+            this.labelProductoDetalleDev.AutoSize = true;
+            this.labelProductoDetalleDev.Location = new System.Drawing.Point(421, 26);
+            this.labelProductoDetalleDev.Name = "labelProductoDetalleDev";
+            this.labelProductoDetalleDev.Size = new System.Drawing.Size(65, 17);
+            this.labelProductoDetalleDev.TabIndex = 5;
+            this.labelProductoDetalleDev.Text = "Producto";
+            // 
+            // labelMotivoDevDetalledev
+            // 
+            this.labelMotivoDevDetalledev.AutoSize = true;
+            this.labelMotivoDevDetalledev.Location = new System.Drawing.Point(45, 26);
+            this.labelMotivoDevDetalledev.Name = "labelMotivoDevDetalledev";
+            this.labelMotivoDevDetalledev.Size = new System.Drawing.Size(121, 17);
+            this.labelMotivoDevDetalledev.TabIndex = 4;
+            this.labelMotivoDevDetalledev.Text = "Motivo devolución";
             // 
             // tbCantidadDetalleDevo
             // 
@@ -373,9 +400,9 @@
             this.tabEntrega.Controls.Add(this.bEliminaEntrega);
             this.tabEntrega.Controls.Add(this.bAgregarEntrega);
             this.tabEntrega.Controls.Add(this.label8);
-            this.tabEntrega.Controls.Add(this.label7);
-            this.tabEntrega.Controls.Add(this.label6);
-            this.tabEntrega.Controls.Add(this.dTFechaEntrega);
+            this.tabEntrega.Controls.Add(this.labelNombreEmpleadoEntrega);
+            this.tabEntrega.Controls.Add(this.labelNombreProvEntrega);
+            this.tabEntrega.Controls.Add(this.dTFechaEntregaEntregas);
             this.tabEntrega.Controls.Add(this.cBIdDevolucion);
             this.tabEntrega.Controls.Add(this.cBIdEmpleado);
             this.tabEntrega.Controls.Add(this.cBIdProveedor);
@@ -427,30 +454,30 @@
             this.label8.TabIndex = 7;
             this.label8.Text = "Devolucion";
             // 
-            // label7
+            // labelNombreEmpleadoEntrega
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(282, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(124, 17);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Nombre empleado";
+            this.labelNombreEmpleadoEntrega.AutoSize = true;
+            this.labelNombreEmpleadoEntrega.Location = new System.Drawing.Point(282, 16);
+            this.labelNombreEmpleadoEntrega.Name = "labelNombreEmpleadoEntrega";
+            this.labelNombreEmpleadoEntrega.Size = new System.Drawing.Size(124, 17);
+            this.labelNombreEmpleadoEntrega.TabIndex = 6;
+            this.labelNombreEmpleadoEntrega.Text = "Nombre empleado";
             // 
-            // label6
+            // labelNombreProvEntrega
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(54, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(127, 17);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Nombre proveedor";
+            this.labelNombreProvEntrega.AutoSize = true;
+            this.labelNombreProvEntrega.Location = new System.Drawing.Point(54, 16);
+            this.labelNombreProvEntrega.Name = "labelNombreProvEntrega";
+            this.labelNombreProvEntrega.Size = new System.Drawing.Size(127, 17);
+            this.labelNombreProvEntrega.TabIndex = 5;
+            this.labelNombreProvEntrega.Text = "Nombre proveedor";
             // 
-            // dTFechaEntrega
+            // dTFechaEntregaEntregas
             // 
-            this.dTFechaEntrega.Location = new System.Drawing.Point(57, 179);
-            this.dTFechaEntrega.Name = "dTFechaEntrega";
-            this.dTFechaEntrega.Size = new System.Drawing.Size(200, 22);
-            this.dTFechaEntrega.TabIndex = 4;
+            this.dTFechaEntregaEntregas.Location = new System.Drawing.Point(57, 179);
+            this.dTFechaEntregaEntregas.Name = "dTFechaEntregaEntregas";
+            this.dTFechaEntregaEntregas.Size = new System.Drawing.Size(200, 22);
+            this.dTFechaEntregaEntregas.TabIndex = 4;
             // 
             // cBIdDevolucion
             // 
@@ -491,33 +518,6 @@
             this.dGEntregas.Size = new System.Drawing.Size(989, 347);
             this.dGEntregas.TabIndex = 0;
             this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(45, 26);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 17);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Motivo devolución";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(421, 26);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 17);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Producto";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(658, 26);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(64, 17);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "Cantidad";
             // 
             // Form1
             // 
@@ -571,9 +571,9 @@
         private System.Windows.Forms.DataGridView dGDetalleDevoluciones;
         private System.Windows.Forms.DataGridView dGEntregas;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DateTimePicker dTFechaEntrega;
+        private System.Windows.Forms.Label labelNombreEmpleadoEntrega;
+        private System.Windows.Forms.Label labelNombreProvEntrega;
+        private System.Windows.Forms.DateTimePicker dTFechaEntregaEntregas;
         private System.Windows.Forms.ComboBox cBIdDevolucion;
         private System.Windows.Forms.ComboBox cBIdEmpleado;
         private System.Windows.Forms.Button bAgregarEntrega;
@@ -583,9 +583,9 @@
         private System.Windows.Forms.TextBox tbCantidadDetalleDevo;
         private System.Windows.Forms.ComboBox cbIdProductoDetalleDevo;
         private System.Windows.Forms.ComboBox cbIdDevolucionDetalleDevo;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labelCantiDetalledev;
+        private System.Windows.Forms.Label labelProductoDetalleDev;
+        private System.Windows.Forms.Label labelMotivoDevDetalledev;
     }
 }
 
