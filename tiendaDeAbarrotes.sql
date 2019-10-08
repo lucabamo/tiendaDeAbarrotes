@@ -1,4 +1,4 @@
---Scrip para la base de datos de una tienda de abarrotes--
+--Script para la base de datos de una tienda de abarrotes--
 CREATE DATABASE TiendaAbarrotes
 USE TiendaAbarrotes
 
@@ -34,7 +34,7 @@ CREATE TABLE Inventario.Producto(
 	IdProducto BIGINT IDENTITY(1,1) NOT NULL,
 	Nombre VARCHAR(200) NOT NULL,
 	Existencia INT NOT NULL, --Aqu� est� bien este tipo de dato?--
-	CostroProveedor REAL NOT NULL,
+	CostoProveedor REAL NOT NULL,
 	CostoVenta REAL NOT NULL,
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(IdProducto),
 )
