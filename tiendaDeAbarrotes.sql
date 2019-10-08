@@ -199,6 +199,9 @@ BEGIN
 	UPDATE Inventario.Producto SET Existencia = Existencia+@Cantidad
 	WHERE IdProducto = @IdProducto
 END
+
+
+
 INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Park Jimin', 'Seoul', '1995-10-13', null, 'parkChimChim', '12345')
 INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Jung Hoseok', 'Seoul', '1994-02-18', null, 'J-hope', '12345')
 INSERT INTO Inventario.Producto (Nombre, Existencia, CostroProveedor, CostoVenta) VALUES ('Agua', 2, 3.00, 5.00)
@@ -206,13 +209,13 @@ INSERT INTO Inventario.Producto (Nombre, Existencia, CostroProveedor, CostoVenta
 SELECT * FROM Transaccion.Venta;
 SELECT * FROM Empresa.Empleado
 
-
----Trigger para actualizar el inventario cuando se realiza una compra
-CREATE TRIGGER Transaccion.ActualizarExistencias
+---Trigger para actualizar el inventario cuando se realiza una compra--
+CREATE TRIGGER Transaccion.ActualizarExistenciasCompra
 	ON Transaccion.DetalleCompra
 	AFTER INSERT
 AS
 BEGIN
+	SET NOCOUNT ON
 	DECLARE @ID AS BIGINT
 	DECLARE @Cantidad AS INT
 	DECLARE @Existencias AS INT
@@ -223,7 +226,32 @@ BEGIN
 	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
 END
 
+--Trigger para actualizar el inventario cuando se realiza una venta--
+CREATE TRIGGER Transaccion.ActualizarExistenciasVenta
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @ID AS BIGINT
+	DECLARE @Cantidad AS INT
+	DECLARE @Existencias AS INT
+	DECLARE @Resultado AS INT
+	SELECT @ID = IdProducto, @Cantidad = Cantidad FROM inserted
+	SELECT @Existencias = Existencia FROM Inventario.Producto WHERE IdProducto = @ID
+	SELECT @Resultado = @Existencias - @Cantidad
+	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
+END
+
+--Trigger para calcular el descuento de una promoción y validar la fecha--
+--CREATE TRIGGER Transaccion.validaPromocion
+--ON 
+
 SELECT * FROM Inventario.Producto
+
+SELECT * FROM Transaccion.DetalleVenta
+
+INSERT INTO Transaccion.DetalleVenta VALUES(1,1,1,10,200)
 
 SELECT * FROM Transaccion.DetalleCompra
 INSERT INTO Transaccion.DetalleCompra (IdCompra,IdProducto, Cantidad, Subtotal) VALUES (1,1,6,100)
