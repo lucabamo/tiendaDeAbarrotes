@@ -22,6 +22,8 @@ namespace sistemaTiendaAbarrotes
         Producto producto;
         Compra compra;
         DetalleCompra detalleCompra;
+        Empleado empleado;
+        Proveedor proveedor;
 
         public Form1()
         {
@@ -37,13 +39,17 @@ namespace sistemaTiendaAbarrotes
             producto = new Producto(conexion, tbNombreProducto, tbExistenciasProducto, tbCostoProvProducto, tbCostoVentaProducto, dtProducto);
             compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, tbTotalCompras, dtCompras);
             detalleCompra = new DetalleCompra(conexion, cbCompraDetalleCom, cbProductoDetalleCom, tbCantidadDetalleCom, tbSubtotalDetalleCom, dtDetalleCom);
+            empleado = new Empleado(conexion, tbEmpleadoNombre, tbEmpleadoUsuario, tbEmpleadoPass,
+                tbEmpleadoDomicilio, dTEmpleadoFN);
+            proveedor = new Proveedor(conexion, tbNombreProveedor, tbTelefonoProveedor, tbEmailProveedor,
+                tbRFCProveedor, tbDomicilioFiscal);
         }
 
         private void conectar()
         {
             string connectionString = null;
             //Cadena de conexión
-            connectionString = "Server=LAPTOP-R32V8BCP\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
+            connectionString = "Server=LAPTOP-M8A5375A\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
             conexion = new SqlConnection(connectionString);
             try
@@ -60,6 +66,12 @@ namespace sistemaTiendaAbarrotes
         {
             switch (tabVistas.SelectedIndex)
             {
+                case 0:
+                    empleado.Consulta(dGEmpleados);
+                    break;
+                case 1:
+                    proveedor.Consulta(dgProveedores);
+                    break;
                 case 9:
                     detalleDevolucion.Consulta(dGDetalleDevoluciones);
                     break;
@@ -227,7 +239,6 @@ namespace sistemaTiendaAbarrotes
         {
             if (e.RowIndex < dgDetalleVenta.Rows.Count - 1 && dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value != null)
             {
-                //promocion.IdPromocion = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value.ToString();
                 tbIdVenta.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value.ToString();
                 tbIdPromocion.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[1].Value.ToString();
                 tbIdProducto2.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -311,6 +322,56 @@ namespace sistemaTiendaAbarrotes
         private void btActualizarDetalleCom_Click(object sender, EventArgs e)
         {
             detalleCompra.modificarDetalleCompra();
+        }
+
+        private void BAgregarEmpleado_Click(object sender, EventArgs e)
+        {
+            empleado.Inserta();
+            empleado.Consulta(dGEmpleados);
+        }
+
+        private void BEliminarEmpleado_Click(object sender, EventArgs e)
+        {
+            empleado.eliminaRegistroSeleccionado();
+            empleado.Consulta(dGEmpleados);
+        }
+
+        private void DGEmpleados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ID = dGEmpleados.Rows[e.RowIndex].Cells[0].Value.ToString();
+            empleado.AccesoIdEmpleadoSeleccionado = ID;
+            empleado.cargaRegistroSeleccionado();
+        }
+
+        private void BEditarEmpleado_Click(object sender, EventArgs e)
+        {
+            empleado.editaRegistroSeleccionado();
+            empleado.Consulta(dGEmpleados);
+        }
+
+        private void BAgregarProveedor_Click(object sender, EventArgs e)
+        {
+            proveedor.Inserta();
+            proveedor.Consulta(dgProveedores);
+        }
+
+        private void DgProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ID = dgProveedores.Rows[e.RowIndex].Cells[0].Value.ToString();
+            proveedor.AccesoIdProveedorSeleccionado = ID;
+            proveedor.cargaRegistroSeleccionado();
+        }
+
+        private void BEditarProveedor_Click(object sender, EventArgs e)
+        {
+            proveedor.editaRegistroSeleccionado();
+            proveedor.Consulta(dgProveedores);
+        }
+
+        private void BEliminaProveedor_Click(object sender, EventArgs e)
+        {
+            proveedor.eliminaRegistroSeleccionado();
+            proveedor.Consulta(dgProveedores);
         }
     }
 }

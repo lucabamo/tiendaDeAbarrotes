@@ -13,6 +13,7 @@ namespace sistemaTiendaAbarrotes
     {
         SqlConnection conexion;
         DataTable tablaDevolucion;
+        DataTable tablaDevolucionPura;
         string IdDevolucion;
         ComboBox cbIdDevolucionI = new ComboBox();
         ComboBox cbIdProductoI = new ComboBox();
@@ -24,19 +25,32 @@ namespace sistemaTiendaAbarrotes
             cbIdProductoI = cbIdProducto;
             tbCantindadI = tbCantidad;
             tablaDevolucion = new DataTable();
+            tablaDevolucionPura = new DataTable();
             IdDevolucion = "";
         }
         public void Consulta(DataGridView dGDetalleDevoluciones) {
             tablaDevolucion.Clear();
+            tablaDevolucionPura.Clear();
             string consulta = "SELECT Devolucion.Motivo, Producto.Nombre, DetalleVenta.Cantidad " +
                 "FROM Transaccion.DetalleDevolucion AS DetalleDevolucion " +
                 "INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion " +
                 "INNER JOIN Transaccion.DetalleVenta AS DetalleVenta ON Devolucion.IdVenta = DetalleVenta.IdVenta " +
                 "INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleVenta.IdProducto";
+
+            string consulta2 = "SELECT * FROM Transaccion.DetalleDevolucion";
+
             SqlCommand comando = new SqlCommand(consulta, conexion);
+            SqlCommand comando2 = new SqlCommand(consulta2, conexion);
+
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
-           // DataTable tabla = new DataTable();
-            adaptador.Fill(tablaDevolucion);   
+
+            // DataTable tabla = new DataTable();
+            adaptador.Fill(tablaDevolucion);
+
+            adaptador = new SqlDataAdapter(comando2);
+
+            adaptador.Fill(tablaDevolucionPura); 
+
             dGDetalleDevoluciones.DataSource = tablaDevolucion;
         }
 
@@ -54,7 +68,7 @@ namespace sistemaTiendaAbarrotes
         {
             //Se toma la tupla seleccionada buscando dentro de la tablaEntrega con un Select buscando en el atributo
             //[IdEntrega]
-            DataRow[] tuplaSeleccionada = tablaDevolucion.Select("[IdDevolucion] = " + accesoIdDevolucion);
+            DataRow[] tuplaSeleccionada = tablaDevolucionPura.Select("[IdDevolucion] = " + accesoIdDevolucion);
 
             //Una vez seleccionada la tupla buscamos cada uno de los atributos
             var Motivo = tuplaSeleccionada[0].ItemArray[0];
