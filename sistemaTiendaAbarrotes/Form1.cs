@@ -24,6 +24,7 @@ namespace sistemaTiendaAbarrotes
         DetalleCompra detalleCompra;
         Empleado empleado;
         Proveedor proveedor;
+        Devolucion devolucion;
 
         public Form1()
         {
@@ -43,6 +44,8 @@ namespace sistemaTiendaAbarrotes
                 tbEmpleadoDomicilio, dTEmpleadoFN);
             proveedor = new Proveedor(conexion, tbNombreProveedor, tbTelefonoProveedor, tbEmailProveedor,
                 tbRFCProveedor, tbDomicilioFiscal);
+            devolucion = new Devolucion(conexion, cbNombreEmpleadosDevo, cbVentasDevo, tbMotivoDevolucionDevo,
+                dtFechaVentaDevo, tbCantidadDevo);
         }
 
         private void conectar()
@@ -71,6 +74,9 @@ namespace sistemaTiendaAbarrotes
                     break;
                 case 1:
                     proveedor.Consulta(dgProveedores);
+                    break;
+                case 8:
+                    devolucion.Consulta(dgDevoluciones);
                     break;
                 case 9:
                     detalleDevolucion.Consulta(dGDetalleDevoluciones);
@@ -372,6 +378,31 @@ namespace sistemaTiendaAbarrotes
         {
             proveedor.eliminaRegistroSeleccionado();
             proveedor.Consulta(dgProveedores);
+        }
+
+        private void BAgregarDevo_Click(object sender, EventArgs e)
+        {
+            devolucion.Inserta();
+            devolucion.Consulta(dgDevoluciones);
+        }
+
+        private void DgDevoluciones_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ID = dgDevoluciones.Rows[e.RowIndex].Cells[0].Value.ToString();
+            devolucion.AccesoIDevolucionSeleccionada = ID;
+            devolucion.cargaRegistroSeleccionado();
+        }
+
+        private void BEditarDevo_Click(object sender, EventArgs e)
+        {
+            devolucion.editaRegistroSeleccionado();
+            devolucion.Consulta(dgDevoluciones);
+        }
+
+        private void BEliminarDevo_Click(object sender, EventArgs e)
+        {
+            devolucion.eliminaRegistroSeleccionado();
+            devolucion.Consulta(dgDevoluciones);
         }
     }
 }
