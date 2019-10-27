@@ -118,7 +118,7 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreCompra()
         {
-            cbCompra.Items.Clear();
+            //cbCompra.Items.Clear();
 
             string consultaCompras = "SELECT IdCompra FROM Transaccion.Compra";
             using (var command = new SqlCommand(consultaCompras, conexion))
@@ -139,7 +139,7 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreProducto()
         {
-            cbProducto.Items.Clear();
+            //cbProducto.Items.Clear();
 
             string consultaProductos = "SELECT IdProducto, Nombre FROM Inventario.Producto";
             using (var command = new SqlCommand(consultaProductos, conexion))

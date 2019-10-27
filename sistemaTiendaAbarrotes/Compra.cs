@@ -149,8 +149,6 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreEmpleado()
         {
-            cbEmpleado.Items.Clear();
-
             string consultaEmpleados = "SELECT IdEmpleado, Nombre FROM Empresa.Empleado";
             using (var command = new SqlCommand(consultaEmpleados, conexion))
             {
@@ -170,13 +168,10 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreProveedor()
         {
-            cbProveedor.Items.Clear();
-
             string consultaProveedores = "SELECT IdProveedor, Nombre FROM Empresa.Proveedor";
             using (var command = new SqlCommand(consultaProveedores, conexion))
             {
                 DataTable tablaProveedor = new DataTable();
-                // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     tablaProveedor.Load(reader);
