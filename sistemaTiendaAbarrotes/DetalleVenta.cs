@@ -55,7 +55,7 @@ namespace sistemaTiendaAbarrotes
 
         public void updateDetalleVenta(SqlConnection connection, string idVenta, string idPromocion, string idProducto, string cantidad, string subtotal)
         {
-            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @IdCantidad, SubTotal = @Subtotal";
+            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @cantidad, SubTotal = @subtotal";
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@idVenta", idVenta);

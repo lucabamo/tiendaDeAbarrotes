@@ -52,7 +52,7 @@ namespace sistemaTiendaAbarrotes
         {
             string connectionString = null;
             //Cadena de conexión
-            connectionString = "Server=LAPTOP-M8A5375A\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
+            connectionString = "Server=DESKTOP-AP88PFE\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
             conexion = new SqlConnection(connectionString);
             try
@@ -121,7 +121,7 @@ namespace sistemaTiendaAbarrotes
         private void btAgregarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
-            venta.insertVenta(conexion, tbIdEmpleado.Text, tbFechaVenta.Text, tbTotal.Text);
+            venta.insertVenta(conexion, tbIdEmpleado.Text, dtpFechaVenta.Value.Date, tbTotal.Text);
             dgVentas.DataSource = venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -129,7 +129,7 @@ namespace sistemaTiendaAbarrotes
         private void btModificarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
-            venta.updateVenta(conexion, tbIdEmpleado.Text, tbFechaVenta.Text, tbTotal.Text, venta.IdVenta);
+            venta.updateVenta(conexion, tbIdEmpleado.Text, dtpFechaVenta.Value.Date, tbTotal.Text, venta.IdVenta);
             dgVentas.DataSource =  venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -148,7 +148,7 @@ namespace sistemaTiendaAbarrotes
             {
                 venta.IdVenta = dgVentas.Rows[e.RowIndex].Cells[0].Value.ToString();
                 tbIdEmpleado.Text = dgVentas.Rows[e.RowIndex].Cells[1].Value.ToString();
-                tbFechaVenta.Text = dgVentas.Rows[e.RowIndex].Cells[2].Value.ToString();
+                dtpFechaVenta.Value = (DateTime)dgVentas.Rows[e.RowIndex].Cells[2].Value;
                 tbTotal.Text = dgVentas.Rows[e.RowIndex].Cells[3].Value.ToString();
             }
         }
@@ -162,14 +162,13 @@ namespace sistemaTiendaAbarrotes
         private void resetTabVentas()
         {
             tbIdEmpleado.Text = "";
-            tbFechaVenta.Text = "";
             tbTotal.Text = "";
         }
 
         private void btAgregarPromocion_Click(object sender, EventArgs e)
         {
             dgPromocion.DataSource = "";
-            promocion.insertPromocion(conexion, tbIdProducto.Text, tbFechaInicio.Text, tbFechaFinal.Text, tbDescuento.Text);
+            promocion.insertPromocion(conexion, tbIdProducto.Text, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text);
             dgPromocion.DataSource = promocion.selectPromocion(conexion);
             resetTabPromocion();
         }
@@ -177,7 +176,7 @@ namespace sistemaTiendaAbarrotes
         private void btModificarPromocion_Click(object sender, EventArgs e)
         {
             dgPromocion.DataSource = "";
-            promocion.updatePromocion(conexion, tbIdProducto.Text, tbFechaInicio.Text, tbFechaFinal.Text, tbDescuento.Text, promocion.IdPromocion);
+            promocion.updatePromocion(conexion, tbIdProducto.Text, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text, promocion.IdPromocion);
             dgPromocion.DataSource = promocion.selectPromocion(conexion);
             resetTabPromocion();
         }
@@ -196,8 +195,8 @@ namespace sistemaTiendaAbarrotes
             {
                 promocion.IdPromocion = dgPromocion.Rows[e.RowIndex].Cells[0].Value.ToString();
                 tbIdProducto.Text = dgPromocion.Rows[e.RowIndex].Cells[1].Value.ToString();
-                tbFechaInicio.Text = dgPromocion.Rows[e.RowIndex].Cells[2].Value.ToString();
-                tbFechaFinal.Text = dgPromocion.Rows[e.RowIndex].Cells[3].Value.ToString();
+                dtpFechaInicioPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[2].Value;
+                dtpFechaFinalPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[3].Value;
                 tbDescuento.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
             }
         }
@@ -211,8 +210,6 @@ namespace sistemaTiendaAbarrotes
         private void resetTabPromocion()
         {
             tbIdProducto.Text = "";
-            tbFechaInicio.Text = "";
-            tbFechaFinal.Text = "";
             tbDescuento.Text = "";
         }
 

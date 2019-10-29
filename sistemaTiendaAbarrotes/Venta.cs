@@ -31,7 +31,7 @@ namespace sistemaTiendaAbarrotes
             return table; 
         }
 
-        public void insertVenta(SqlConnection connection,string idEmpleado, string fechaVenta, string total)
+        public void insertVenta(SqlConnection connection,string idEmpleado, DateTime fechaVenta, string total)
         {
             string query = "INSERT INTO Transaccion.Venta (IdEmpleado, FechaVenta, Total)" +
                 "VALUES (@idEmpleado, @fechaVenta, @total)";
@@ -53,7 +53,7 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void updateVenta(SqlConnection connection, string idEmpleado, string fechaVenta, string total, string idVenta)
+        public void updateVenta(SqlConnection connection, string idEmpleado, DateTime fechaVenta, string total, string idVenta)
         {
             string query = "UPDATE Transaccion.Venta SET IdEmpleado=@idEmpleado, FechaVenta = @fechaVenta, Total = @total WHERE IdVenta = @idVenta";
             SqlCommand command = new SqlCommand(query, connection);
