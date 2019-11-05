@@ -18,3 +18,6 @@ C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\t
 C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.CoreCompileInputs.cache
 C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
 C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe.config
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
