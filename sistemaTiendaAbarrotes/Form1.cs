@@ -401,5 +401,10 @@ namespace sistemaTiendaAbarrotes
             devolucion.eliminaRegistroSeleccionado();
             devolucion.Consulta(dgDevoluciones);
         }
+
+        private void dgPromocion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

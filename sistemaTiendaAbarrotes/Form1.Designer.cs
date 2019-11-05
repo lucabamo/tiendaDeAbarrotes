@@ -75,6 +75,8 @@
             this.tbNombreProducto = new System.Windows.Forms.TextBox();
             this.btInsertarProducto = new System.Windows.Forms.Button();
             this.tabVenta = new System.Windows.Forms.TabPage();
+            this.dtpFechaVenta = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
             this.dgVentas = new System.Windows.Forms.DataGridView();
             this.btEliminarVenta = new System.Windows.Forms.Button();
             this.btModificarVenta = new System.Windows.Forms.Button();
@@ -84,6 +86,8 @@
             this.tbTotal = new System.Windows.Forms.TextBox();
             this.tbIdEmpleado = new System.Windows.Forms.TextBox();
             this.tabPromocion = new System.Windows.Forms.TabPage();
+            this.dtpFechaFinalPromo = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaInicioPromo = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -169,10 +173,6 @@
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtpFechaVenta = new System.Windows.Forms.DateTimePicker();
-            this.dtpFechaInicioPromo = new System.Windows.Forms.DateTimePicker();
-            this.dtpFechaFinalPromo = new System.Windows.Forms.DateTimePicker();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGEmpleados)).BeginInit();
@@ -217,8 +217,9 @@
             this.tabVistas.Controls.Add(this.tabDevolucion);
             this.tabVistas.Controls.Add(this.tabDetalleDevolucion);
             this.tabVistas.Controls.Add(this.tabEntrega);
+            this.tabVistas.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabVistas.Location = new System.Drawing.Point(2, 8);
-            this.tabVistas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabVistas.Margin = new System.Windows.Forms.Padding(2);
             this.tabVistas.Name = "tabVistas";
             this.tabVistas.SelectedIndex = 0;
             this.tabVistas.Size = new System.Drawing.Size(899, 546);
@@ -227,6 +228,7 @@
             // 
             // tabEmpleado
             // 
+            this.tabEmpleado.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabEmpleado.Controls.Add(this.bEditarEmpleado);
             this.tabEmpleado.Controls.Add(this.dTEmpleadoFN);
             this.tabEmpleado.Controls.Add(this.dGEmpleados);
@@ -241,21 +243,23 @@
             this.tabEmpleado.Controls.Add(this.lEmpleadoDomicilio);
             this.tabEmpleado.Controls.Add(this.tbEmpleadoNombre);
             this.tabEmpleado.Controls.Add(this.lEmpleadoNombreEmpleado);
-            this.tabEmpleado.Location = new System.Drawing.Point(4, 22);
-            this.tabEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabEmpleado.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabEmpleado.Location = new System.Drawing.Point(4, 25);
+            this.tabEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.tabEmpleado.Name = "tabEmpleado";
-            this.tabEmpleado.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabEmpleado.Size = new System.Drawing.Size(891, 520);
+            this.tabEmpleado.Padding = new System.Windows.Forms.Padding(2);
+            this.tabEmpleado.Size = new System.Drawing.Size(891, 517);
             this.tabEmpleado.TabIndex = 0;
             this.tabEmpleado.Text = "Empleados";
-            this.tabEmpleado.UseVisualStyleBackColor = true;
             // 
             // bEditarEmpleado
             // 
-            this.bEditarEmpleado.Location = new System.Drawing.Point(647, 68);
-            this.bEditarEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEditarEmpleado.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bEditarEmpleado.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEditarEmpleado.Location = new System.Drawing.Point(672, 91);
+            this.bEditarEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.bEditarEmpleado.Name = "bEditarEmpleado";
-            this.bEditarEmpleado.Size = new System.Drawing.Size(78, 31);
+            this.bEditarEmpleado.Size = new System.Drawing.Size(75, 40);
             this.bEditarEmpleado.TabIndex = 14;
             this.bEditarEmpleado.Text = "Editar";
             this.bEditarEmpleado.UseVisualStyleBackColor = true;
@@ -263,30 +267,33 @@
             // 
             // dTEmpleadoFN
             // 
+            this.dTEmpleadoFN.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dTEmpleadoFN.Location = new System.Drawing.Point(276, 48);
-            this.dTEmpleadoFN.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dTEmpleadoFN.Margin = new System.Windows.Forms.Padding(2);
             this.dTEmpleadoFN.Name = "dTEmpleadoFN";
-            this.dTEmpleadoFN.Size = new System.Drawing.Size(151, 20);
+            this.dTEmpleadoFN.Size = new System.Drawing.Size(203, 22);
             this.dTEmpleadoFN.TabIndex = 13;
             // 
             // dGEmpleados
             // 
             this.dGEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGEmpleados.Location = new System.Drawing.Point(28, 250);
-            this.dGEmpleados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dGEmpleados.Location = new System.Drawing.Point(29, 226);
+            this.dGEmpleados.Margin = new System.Windows.Forms.Padding(2);
             this.dGEmpleados.Name = "dGEmpleados";
             this.dGEmpleados.RowHeadersWidth = 51;
             this.dGEmpleados.RowTemplate.Height = 24;
-            this.dGEmpleados.Size = new System.Drawing.Size(788, 254);
+            this.dGEmpleados.Size = new System.Drawing.Size(833, 254);
             this.dGEmpleados.TabIndex = 12;
             this.dGEmpleados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEmpleados_CellClick);
             // 
             // bEliminarEmpleado
             // 
-            this.bEliminarEmpleado.Location = new System.Drawing.Point(542, 120);
-            this.bEliminarEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEliminarEmpleado.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bEliminarEmpleado.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEliminarEmpleado.Location = new System.Drawing.Point(762, 68);
+            this.bEliminarEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.bEliminarEmpleado.Name = "bEliminarEmpleado";
-            this.bEliminarEmpleado.Size = new System.Drawing.Size(78, 31);
+            this.bEliminarEmpleado.Size = new System.Drawing.Size(75, 40);
             this.bEliminarEmpleado.TabIndex = 11;
             this.bEliminarEmpleado.Text = "Eliminar";
             this.bEliminarEmpleado.UseVisualStyleBackColor = true;
@@ -294,99 +301,117 @@
             // 
             // tbEmpleadoPass
             // 
-            this.tbEmpleadoPass.Location = new System.Drawing.Point(29, 180);
-            this.tbEmpleadoPass.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbEmpleadoPass.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmpleadoPass.Location = new System.Drawing.Point(29, 170);
+            this.tbEmpleadoPass.Margin = new System.Windows.Forms.Padding(2);
             this.tbEmpleadoPass.Name = "tbEmpleadoPass";
-            this.tbEmpleadoPass.Size = new System.Drawing.Size(183, 20);
+            this.tbEmpleadoPass.Size = new System.Drawing.Size(203, 22);
             this.tbEmpleadoPass.TabIndex = 10;
             // 
             // lEmpladoPass
             // 
             this.lEmpladoPass.AutoSize = true;
+            this.lEmpladoPass.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmpladoPass.ForeColor = System.Drawing.Color.DarkCyan;
             this.lEmpladoPass.Location = new System.Drawing.Point(26, 151);
             this.lEmpladoPass.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmpladoPass.Name = "lEmpladoPass";
-            this.lEmpladoPass.Size = new System.Drawing.Size(53, 13);
+            this.lEmpladoPass.Size = new System.Drawing.Size(72, 20);
             this.lEmpladoPass.TabIndex = 9;
-            this.lEmpladoPass.Text = "Password";
+            this.lEmpladoPass.Text = "Password:";
             // 
             // bAgregarEmpleado
             // 
-            this.bAgregarEmpleado.Location = new System.Drawing.Point(542, 68);
-            this.bAgregarEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bAgregarEmpleado.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.bAgregarEmpleado.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAgregarEmpleado.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bAgregarEmpleado.Location = new System.Drawing.Point(672, 28);
+            this.bAgregarEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.bAgregarEmpleado.Name = "bAgregarEmpleado";
-            this.bAgregarEmpleado.Size = new System.Drawing.Size(78, 31);
+            this.bAgregarEmpleado.Size = new System.Drawing.Size(75, 40);
             this.bAgregarEmpleado.TabIndex = 8;
-            this.bAgregarEmpleado.Text = "Agregar";
-            this.bAgregarEmpleado.UseVisualStyleBackColor = true;
+            this.bAgregarEmpleado.Text = "Insertar";
+            this.bAgregarEmpleado.UseVisualStyleBackColor = false;
             this.bAgregarEmpleado.Click += new System.EventHandler(this.BAgregarEmpleado_Click);
             // 
             // tbEmpleadoUsuario
             // 
-            this.tbEmpleadoUsuario.Location = new System.Drawing.Point(30, 111);
-            this.tbEmpleadoUsuario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbEmpleadoUsuario.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmpleadoUsuario.Location = new System.Drawing.Point(30, 99);
+            this.tbEmpleadoUsuario.Margin = new System.Windows.Forms.Padding(2);
             this.tbEmpleadoUsuario.Name = "tbEmpleadoUsuario";
-            this.tbEmpleadoUsuario.Size = new System.Drawing.Size(183, 20);
+            this.tbEmpleadoUsuario.Size = new System.Drawing.Size(203, 22);
             this.tbEmpleadoUsuario.TabIndex = 7;
             // 
             // lEmpleadoUsuario
             // 
             this.lEmpleadoUsuario.AutoSize = true;
+            this.lEmpleadoUsuario.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmpleadoUsuario.ForeColor = System.Drawing.Color.DarkCyan;
             this.lEmpleadoUsuario.Location = new System.Drawing.Point(27, 82);
             this.lEmpleadoUsuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmpleadoUsuario.Name = "lEmpleadoUsuario";
-            this.lEmpleadoUsuario.Size = new System.Drawing.Size(43, 13);
+            this.lEmpleadoUsuario.Size = new System.Drawing.Size(61, 20);
             this.lEmpleadoUsuario.TabIndex = 6;
-            this.lEmpleadoUsuario.Text = "Usuario";
+            this.lEmpleadoUsuario.Text = "Usuario:";
             // 
             // lEmpleadoFN
             // 
             this.lEmpleadoFN.AutoSize = true;
+            this.lEmpleadoFN.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmpleadoFN.ForeColor = System.Drawing.Color.DarkCyan;
             this.lEmpleadoFN.Location = new System.Drawing.Point(274, 24);
             this.lEmpleadoFN.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmpleadoFN.Name = "lEmpleadoFN";
-            this.lEmpleadoFN.Size = new System.Drawing.Size(93, 13);
+            this.lEmpleadoFN.Size = new System.Drawing.Size(122, 20);
             this.lEmpleadoFN.TabIndex = 4;
-            this.lEmpleadoFN.Text = "Fecha Nacimiento";
+            this.lEmpleadoFN.Text = "Fecha Nacimiento:";
             // 
             // tbEmpleadoDomicilio
             // 
-            this.tbEmpleadoDomicilio.Location = new System.Drawing.Point(276, 120);
-            this.tbEmpleadoDomicilio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbEmpleadoDomicilio.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmpleadoDomicilio.Location = new System.Drawing.Point(276, 108);
+            this.tbEmpleadoDomicilio.Margin = new System.Windows.Forms.Padding(2);
             this.tbEmpleadoDomicilio.Name = "tbEmpleadoDomicilio";
-            this.tbEmpleadoDomicilio.Size = new System.Drawing.Size(183, 20);
+            this.tbEmpleadoDomicilio.Size = new System.Drawing.Size(203, 22);
             this.tbEmpleadoDomicilio.TabIndex = 3;
             // 
             // lEmpleadoDomicilio
             // 
             this.lEmpleadoDomicilio.AutoSize = true;
+            this.lEmpleadoDomicilio.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmpleadoDomicilio.ForeColor = System.Drawing.Color.DarkCyan;
             this.lEmpleadoDomicilio.Location = new System.Drawing.Point(274, 91);
             this.lEmpleadoDomicilio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmpleadoDomicilio.Name = "lEmpleadoDomicilio";
-            this.lEmpleadoDomicilio.Size = new System.Drawing.Size(49, 13);
+            this.lEmpleadoDomicilio.Size = new System.Drawing.Size(72, 20);
             this.lEmpleadoDomicilio.TabIndex = 2;
-            this.lEmpleadoDomicilio.Text = "Domicilio";
+            this.lEmpleadoDomicilio.Text = "Domicilio:";
             // 
             // tbEmpleadoNombre
             // 
-            this.tbEmpleadoNombre.Location = new System.Drawing.Point(30, 48);
-            this.tbEmpleadoNombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbEmpleadoNombre.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmpleadoNombre.Location = new System.Drawing.Point(30, 44);
+            this.tbEmpleadoNombre.Margin = new System.Windows.Forms.Padding(2);
             this.tbEmpleadoNombre.Name = "tbEmpleadoNombre";
-            this.tbEmpleadoNombre.Size = new System.Drawing.Size(183, 20);
+            this.tbEmpleadoNombre.Size = new System.Drawing.Size(203, 22);
             this.tbEmpleadoNombre.TabIndex = 1;
             // 
             // lEmpleadoNombreEmpleado
             // 
             this.lEmpleadoNombreEmpleado.AutoSize = true;
+            this.lEmpleadoNombreEmpleado.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmpleadoNombreEmpleado.ForeColor = System.Drawing.Color.DarkCyan;
             this.lEmpleadoNombreEmpleado.Location = new System.Drawing.Point(28, 24);
             this.lEmpleadoNombreEmpleado.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmpleadoNombreEmpleado.Name = "lEmpleadoNombreEmpleado";
-            this.lEmpleadoNombreEmpleado.Size = new System.Drawing.Size(44, 13);
+            this.lEmpleadoNombreEmpleado.Size = new System.Drawing.Size(61, 20);
             this.lEmpleadoNombreEmpleado.TabIndex = 0;
-            this.lEmpleadoNombreEmpleado.Text = "Nombre";
+            this.lEmpleadoNombreEmpleado.Text = "Nombre:";
             // 
             // tabProveedor
             // 
+            this.tabProveedor.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabProveedor.Controls.Add(this.tbEmailProveedor);
             this.tabProveedor.Controls.Add(this.lEmailProveedor);
             this.tabProveedor.Controls.Add(this.bEditarProveedor);
@@ -401,39 +426,41 @@
             this.tabProveedor.Controls.Add(this.lDomicilioProveedor);
             this.tabProveedor.Controls.Add(this.tbNombreProveedor);
             this.tabProveedor.Controls.Add(this.lNombreProveedor);
-            this.tabProveedor.Location = new System.Drawing.Point(4, 22);
-            this.tabProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabProveedor.Location = new System.Drawing.Point(4, 25);
+            this.tabProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.tabProveedor.Name = "tabProveedor";
-            this.tabProveedor.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabProveedor.Size = new System.Drawing.Size(891, 520);
+            this.tabProveedor.Padding = new System.Windows.Forms.Padding(2);
+            this.tabProveedor.Size = new System.Drawing.Size(891, 517);
             this.tabProveedor.TabIndex = 1;
             this.tabProveedor.Text = "Proveedores";
-            this.tabProveedor.UseVisualStyleBackColor = true;
             // 
             // tbEmailProveedor
             // 
-            this.tbEmailProveedor.Location = new System.Drawing.Point(256, 45);
-            this.tbEmailProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbEmailProveedor.Location = new System.Drawing.Point(288, 39);
+            this.tbEmailProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.tbEmailProveedor.Name = "tbEmailProveedor";
-            this.tbEmailProveedor.Size = new System.Drawing.Size(183, 20);
+            this.tbEmailProveedor.Size = new System.Drawing.Size(203, 22);
             this.tbEmailProveedor.TabIndex = 30;
             // 
             // lEmailProveedor
             // 
             this.lEmailProveedor.AutoSize = true;
-            this.lEmailProveedor.Location = new System.Drawing.Point(254, 15);
+            this.lEmailProveedor.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEmailProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lEmailProveedor.Location = new System.Drawing.Point(286, 15);
             this.lEmailProveedor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lEmailProveedor.Name = "lEmailProveedor";
-            this.lEmailProveedor.Size = new System.Drawing.Size(32, 13);
+            this.lEmailProveedor.Size = new System.Drawing.Size(47, 20);
             this.lEmailProveedor.TabIndex = 29;
-            this.lEmailProveedor.Text = "Email";
+            this.lEmailProveedor.Text = "Email:";
             // 
             // bEditarProveedor
             // 
-            this.bEditarProveedor.Location = new System.Drawing.Point(646, 65);
-            this.bEditarProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEditarProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEditarProveedor.Location = new System.Drawing.Point(672, 91);
+            this.bEditarProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.bEditarProveedor.Name = "bEditarProveedor";
-            this.bEditarProveedor.Size = new System.Drawing.Size(78, 31);
+            this.bEditarProveedor.Size = new System.Drawing.Size(75, 40);
             this.bEditarProveedor.TabIndex = 28;
             this.bEditarProveedor.Text = "Editar";
             this.bEditarProveedor.UseVisualStyleBackColor = true;
@@ -442,21 +469,22 @@
             // dgProveedores
             // 
             this.dgProveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgProveedores.Location = new System.Drawing.Point(27, 247);
-            this.dgProveedores.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgProveedores.Location = new System.Drawing.Point(29, 226);
+            this.dgProveedores.Margin = new System.Windows.Forms.Padding(2);
             this.dgProveedores.Name = "dgProveedores";
             this.dgProveedores.RowHeadersWidth = 51;
             this.dgProveedores.RowTemplate.Height = 24;
-            this.dgProveedores.Size = new System.Drawing.Size(788, 254);
+            this.dgProveedores.Size = new System.Drawing.Size(833, 254);
             this.dgProveedores.TabIndex = 26;
             this.dgProveedores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgProveedores_CellClick);
             // 
             // bEliminaProveedor
             // 
-            this.bEliminaProveedor.Location = new System.Drawing.Point(541, 117);
-            this.bEliminaProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEliminaProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEliminaProveedor.Location = new System.Drawing.Point(762, 68);
+            this.bEliminaProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.bEliminaProveedor.Name = "bEliminaProveedor";
-            this.bEliminaProveedor.Size = new System.Drawing.Size(78, 31);
+            this.bEliminaProveedor.Size = new System.Drawing.Size(75, 40);
             this.bEliminaProveedor.TabIndex = 25;
             this.bEliminaProveedor.Text = "Eliminar";
             this.bEliminaProveedor.UseVisualStyleBackColor = true;
@@ -464,89 +492,99 @@
             // 
             // tbTelefonoProveedor
             // 
-            this.tbTelefonoProveedor.Location = new System.Drawing.Point(28, 177);
-            this.tbTelefonoProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbTelefonoProveedor.Location = new System.Drawing.Point(28, 166);
+            this.tbTelefonoProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.tbTelefonoProveedor.Name = "tbTelefonoProveedor";
-            this.tbTelefonoProveedor.Size = new System.Drawing.Size(183, 20);
+            this.tbTelefonoProveedor.Size = new System.Drawing.Size(203, 22);
             this.tbTelefonoProveedor.TabIndex = 24;
             // 
             // lTelefonoProveedor
             // 
             this.lTelefonoProveedor.AutoSize = true;
-            this.lTelefonoProveedor.Location = new System.Drawing.Point(25, 148);
+            this.lTelefonoProveedor.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTelefonoProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lTelefonoProveedor.Location = new System.Drawing.Point(25, 145);
             this.lTelefonoProveedor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lTelefonoProveedor.Name = "lTelefonoProveedor";
-            this.lTelefonoProveedor.Size = new System.Drawing.Size(49, 13);
+            this.lTelefonoProveedor.Size = new System.Drawing.Size(67, 20);
             this.lTelefonoProveedor.TabIndex = 23;
-            this.lTelefonoProveedor.Text = "Teléfono";
+            this.lTelefonoProveedor.Text = "Teléfono:";
             // 
             // bAgregarProveedor
             // 
-            this.bAgregarProveedor.Location = new System.Drawing.Point(541, 65);
-            this.bAgregarProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bAgregarProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bAgregarProveedor.Location = new System.Drawing.Point(672, 28);
+            this.bAgregarProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.bAgregarProveedor.Name = "bAgregarProveedor";
-            this.bAgregarProveedor.Size = new System.Drawing.Size(78, 31);
+            this.bAgregarProveedor.Size = new System.Drawing.Size(75, 40);
             this.bAgregarProveedor.TabIndex = 22;
-            this.bAgregarProveedor.Text = "Agregar";
+            this.bAgregarProveedor.Text = "Insertar";
             this.bAgregarProveedor.UseVisualStyleBackColor = true;
             this.bAgregarProveedor.Click += new System.EventHandler(this.BAgregarProveedor_Click);
             // 
             // tbRFCProveedor
             // 
-            this.tbRFCProveedor.Location = new System.Drawing.Point(28, 108);
-            this.tbRFCProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbRFCProveedor.Location = new System.Drawing.Point(28, 100);
+            this.tbRFCProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.tbRFCProveedor.Name = "tbRFCProveedor";
-            this.tbRFCProveedor.Size = new System.Drawing.Size(183, 20);
+            this.tbRFCProveedor.Size = new System.Drawing.Size(203, 22);
             this.tbRFCProveedor.TabIndex = 21;
             // 
             // lRFCProveedor
             // 
             this.lRFCProveedor.AutoSize = true;
+            this.lRFCProveedor.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lRFCProveedor.ForeColor = System.Drawing.Color.DarkCyan;
             this.lRFCProveedor.Location = new System.Drawing.Point(26, 79);
             this.lRFCProveedor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lRFCProveedor.Name = "lRFCProveedor";
-            this.lRFCProveedor.Size = new System.Drawing.Size(28, 13);
+            this.lRFCProveedor.Size = new System.Drawing.Size(39, 20);
             this.lRFCProveedor.TabIndex = 20;
-            this.lRFCProveedor.Text = "RFC";
+            this.lRFCProveedor.Text = "RFC:";
             // 
             // tbDomicilioFiscal
             // 
-            this.tbDomicilioFiscal.Location = new System.Drawing.Point(256, 108);
-            this.tbDomicilioFiscal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbDomicilioFiscal.Location = new System.Drawing.Point(288, 101);
+            this.tbDomicilioFiscal.Margin = new System.Windows.Forms.Padding(2);
             this.tbDomicilioFiscal.Name = "tbDomicilioFiscal";
-            this.tbDomicilioFiscal.Size = new System.Drawing.Size(183, 20);
+            this.tbDomicilioFiscal.Size = new System.Drawing.Size(203, 22);
             this.tbDomicilioFiscal.TabIndex = 18;
             // 
             // lDomicilioProveedor
             // 
             this.lDomicilioProveedor.AutoSize = true;
-            this.lDomicilioProveedor.Location = new System.Drawing.Point(254, 79);
+            this.lDomicilioProveedor.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lDomicilioProveedor.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lDomicilioProveedor.Location = new System.Drawing.Point(286, 79);
             this.lDomicilioProveedor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lDomicilioProveedor.Name = "lDomicilioProveedor";
-            this.lDomicilioProveedor.Size = new System.Drawing.Size(79, 13);
+            this.lDomicilioProveedor.Size = new System.Drawing.Size(112, 20);
             this.lDomicilioProveedor.TabIndex = 17;
-            this.lDomicilioProveedor.Text = "Domicilio Fiscal";
+            this.lDomicilioProveedor.Text = "Domicilio Fiscal:";
             // 
             // tbNombreProveedor
             // 
-            this.tbNombreProveedor.Location = new System.Drawing.Point(28, 45);
-            this.tbNombreProveedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbNombreProveedor.Location = new System.Drawing.Point(28, 42);
+            this.tbNombreProveedor.Margin = new System.Windows.Forms.Padding(2);
             this.tbNombreProveedor.Name = "tbNombreProveedor";
-            this.tbNombreProveedor.Size = new System.Drawing.Size(183, 20);
+            this.tbNombreProveedor.Size = new System.Drawing.Size(203, 22);
             this.tbNombreProveedor.TabIndex = 16;
             // 
             // lNombreProveedor
             // 
             this.lNombreProveedor.AutoSize = true;
+            this.lNombreProveedor.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lNombreProveedor.ForeColor = System.Drawing.Color.DarkCyan;
             this.lNombreProveedor.Location = new System.Drawing.Point(26, 21);
             this.lNombreProveedor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lNombreProveedor.Name = "lNombreProveedor";
-            this.lNombreProveedor.Size = new System.Drawing.Size(44, 13);
+            this.lNombreProveedor.Size = new System.Drawing.Size(61, 20);
             this.lNombreProveedor.TabIndex = 15;
-            this.lNombreProveedor.Text = "Nombre";
+            this.lNombreProveedor.Text = "Nombre:";
             // 
             // tabProducto
             // 
+            this.tabProducto.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabProducto.Controls.Add(this.btEliminarProducto);
             this.tabProducto.Controls.Add(this.dtProducto);
             this.tabProducto.Controls.Add(this.btActualizarProducto);
@@ -559,19 +597,19 @@
             this.tabProducto.Controls.Add(this.lbNombreProducto);
             this.tabProducto.Controls.Add(this.tbNombreProducto);
             this.tabProducto.Controls.Add(this.btInsertarProducto);
-            this.tabProducto.Location = new System.Drawing.Point(4, 22);
-            this.tabProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabProducto.Location = new System.Drawing.Point(4, 25);
+            this.tabProducto.Margin = new System.Windows.Forms.Padding(2);
             this.tabProducto.Name = "tabProducto";
-            this.tabProducto.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabProducto.Size = new System.Drawing.Size(891, 520);
+            this.tabProducto.Padding = new System.Windows.Forms.Padding(2);
+            this.tabProducto.Size = new System.Drawing.Size(891, 517);
             this.tabProducto.TabIndex = 2;
             this.tabProducto.Text = "Productos";
-            this.tabProducto.UseVisualStyleBackColor = true;
             this.tabProducto.Click += new System.EventHandler(this.tabProducto_Click);
             // 
             // btEliminarProducto
             // 
-            this.btEliminarProducto.Location = new System.Drawing.Point(672, 48);
+            this.btEliminarProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarProducto.Location = new System.Drawing.Point(762, 68);
             this.btEliminarProducto.Name = "btEliminarProducto";
             this.btEliminarProducto.Size = new System.Drawing.Size(75, 40);
             this.btEliminarProducto.TabIndex = 11;
@@ -582,90 +620,100 @@
             // dtProducto
             // 
             this.dtProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtProducto.Location = new System.Drawing.Point(24, 139);
+            this.dtProducto.Location = new System.Drawing.Point(29, 226);
             this.dtProducto.Name = "dtProducto";
             this.dtProducto.RowHeadersWidth = 51;
-            this.dtProducto.Size = new System.Drawing.Size(723, 349);
+            this.dtProducto.Size = new System.Drawing.Size(833, 254);
             this.dtProducto.TabIndex = 10;
             this.dtProducto.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtProducto_CellClick);
             // 
             // btActualizarProducto
             // 
-            this.btActualizarProducto.Location = new System.Drawing.Point(565, 75);
+            this.btActualizarProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btActualizarProducto.Location = new System.Drawing.Point(672, 91);
             this.btActualizarProducto.Name = "btActualizarProducto";
             this.btActualizarProducto.Size = new System.Drawing.Size(75, 40);
             this.btActualizarProducto.TabIndex = 9;
-            this.btActualizarProducto.Text = "Actualizar";
+            this.btActualizarProducto.Text = "Editar";
             this.btActualizarProducto.UseVisualStyleBackColor = true;
             this.btActualizarProducto.Click += new System.EventHandler(this.btActualizarProducto_Click);
             // 
             // lbCostoVentaProducto
             // 
             this.lbCostoVentaProducto.AutoSize = true;
-            this.lbCostoVentaProducto.Location = new System.Drawing.Point(300, 75);
+            this.lbCostoVentaProducto.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCostoVentaProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbCostoVentaProducto.Location = new System.Drawing.Point(281, 99);
             this.lbCostoVentaProducto.Name = "lbCostoVentaProducto";
-            this.lbCostoVentaProducto.Size = new System.Drawing.Size(67, 13);
+            this.lbCostoVentaProducto.Size = new System.Drawing.Size(85, 20);
             this.lbCostoVentaProducto.TabIndex = 8;
             this.lbCostoVentaProducto.Text = "Costo venta:";
             // 
             // tbCostoVentaProducto
             // 
-            this.tbCostoVentaProducto.Location = new System.Drawing.Point(373, 72);
+            this.tbCostoVentaProducto.Location = new System.Drawing.Point(282, 122);
             this.tbCostoVentaProducto.Name = "tbCostoVentaProducto";
-            this.tbCostoVentaProducto.Size = new System.Drawing.Size(100, 20);
+            this.tbCostoVentaProducto.Size = new System.Drawing.Size(203, 22);
             this.tbCostoVentaProducto.TabIndex = 7;
             // 
             // lbCostoProvProducto
             // 
             this.lbCostoProvProducto.AutoSize = true;
+            this.lbCostoProvProducto.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCostoProvProducto.ForeColor = System.Drawing.Color.DarkCyan;
             this.lbCostoProvProducto.Location = new System.Drawing.Point(281, 30);
             this.lbCostoProvProducto.Name = "lbCostoProvProducto";
-            this.lbCostoProvProducto.Size = new System.Drawing.Size(88, 13);
+            this.lbCostoProvProducto.Size = new System.Drawing.Size(115, 20);
             this.lbCostoProvProducto.TabIndex = 6;
             this.lbCostoProvProducto.Text = "Costo proveedor:";
             // 
             // tbCostoProvProducto
             // 
-            this.tbCostoProvProducto.Location = new System.Drawing.Point(373, 27);
+            this.tbCostoProvProducto.Location = new System.Drawing.Point(282, 53);
             this.tbCostoProvProducto.Name = "tbCostoProvProducto";
-            this.tbCostoProvProducto.Size = new System.Drawing.Size(100, 20);
+            this.tbCostoProvProducto.Size = new System.Drawing.Size(203, 22);
             this.tbCostoProvProducto.TabIndex = 5;
             // 
             // lbExistenciasProducto
             // 
             this.lbExistenciasProducto.AutoSize = true;
-            this.lbExistenciasProducto.Location = new System.Drawing.Point(37, 75);
+            this.lbExistenciasProducto.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbExistenciasProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbExistenciasProducto.Location = new System.Drawing.Point(37, 99);
             this.lbExistenciasProducto.Name = "lbExistenciasProducto";
-            this.lbExistenciasProducto.Size = new System.Drawing.Size(63, 13);
+            this.lbExistenciasProducto.Size = new System.Drawing.Size(82, 20);
             this.lbExistenciasProducto.TabIndex = 4;
             this.lbExistenciasProducto.Text = "Existencias:";
             // 
             // tbExistenciasProducto
             // 
-            this.tbExistenciasProducto.Location = new System.Drawing.Point(108, 72);
+            this.tbExistenciasProducto.Location = new System.Drawing.Point(40, 122);
             this.tbExistenciasProducto.Name = "tbExistenciasProducto";
-            this.tbExistenciasProducto.Size = new System.Drawing.Size(100, 20);
+            this.tbExistenciasProducto.Size = new System.Drawing.Size(203, 22);
             this.tbExistenciasProducto.TabIndex = 3;
             // 
             // lbNombreProducto
             // 
             this.lbNombreProducto.AutoSize = true;
-            this.lbNombreProducto.Location = new System.Drawing.Point(53, 33);
+            this.lbNombreProducto.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNombreProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbNombreProducto.Location = new System.Drawing.Point(37, 27);
             this.lbNombreProducto.Name = "lbNombreProducto";
-            this.lbNombreProducto.Size = new System.Drawing.Size(47, 13);
+            this.lbNombreProducto.Size = new System.Drawing.Size(61, 20);
             this.lbNombreProducto.TabIndex = 2;
             this.lbNombreProducto.Text = "Nombre:";
             // 
             // tbNombreProducto
             // 
-            this.tbNombreProducto.Location = new System.Drawing.Point(108, 30);
+            this.tbNombreProducto.Location = new System.Drawing.Point(40, 50);
             this.tbNombreProducto.Name = "tbNombreProducto";
-            this.tbNombreProducto.Size = new System.Drawing.Size(100, 20);
+            this.tbNombreProducto.Size = new System.Drawing.Size(203, 22);
             this.tbNombreProducto.TabIndex = 1;
             // 
             // btInsertarProducto
             // 
-            this.btInsertarProducto.Location = new System.Drawing.Point(565, 19);
+            this.btInsertarProducto.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btInsertarProducto.Location = new System.Drawing.Point(672, 28);
             this.btInsertarProducto.Name = "btInsertarProducto";
             this.btInsertarProducto.Size = new System.Drawing.Size(75, 40);
             this.btInsertarProducto.TabIndex = 0;
@@ -675,6 +723,7 @@
             // 
             // tabVenta
             // 
+            this.tabVenta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabVenta.Controls.Add(this.dtpFechaVenta);
             this.tabVenta.Controls.Add(this.label1);
             this.tabVenta.Controls.Add(this.dgVentas);
@@ -685,33 +734,52 @@
             this.tabVenta.Controls.Add(this.label6);
             this.tabVenta.Controls.Add(this.tbTotal);
             this.tabVenta.Controls.Add(this.tbIdEmpleado);
-            this.tabVenta.Location = new System.Drawing.Point(4, 22);
+            this.tabVenta.Location = new System.Drawing.Point(4, 25);
             this.tabVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabVenta.Name = "tabVenta";
             this.tabVenta.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabVenta.Size = new System.Drawing.Size(891, 520);
+            this.tabVenta.Size = new System.Drawing.Size(891, 517);
             this.tabVenta.TabIndex = 3;
             this.tabVenta.Text = "Ventas";
-            this.tabVenta.UseVisualStyleBackColor = true;
             this.tabVenta.Enter += new System.EventHandler(this.tabVenta_Enter);
+            // 
+            // dtpFechaVenta
+            // 
+            this.dtpFechaVenta.Location = new System.Drawing.Point(279, 51);
+            this.dtpFechaVenta.Name = "dtpFechaVenta";
+            this.dtpFechaVenta.Size = new System.Drawing.Size(203, 22);
+            this.dtpFechaVenta.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label1.Location = new System.Drawing.Point(30, 103);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 20);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Total:";
             // 
             // dgVentas
             // 
             this.dgVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgVentas.Location = new System.Drawing.Point(12, 252);
-            this.dgVentas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgVentas.Location = new System.Drawing.Point(29, 226);
+            this.dgVentas.Margin = new System.Windows.Forms.Padding(4);
             this.dgVentas.Name = "dgVentas";
             this.dgVentas.RowHeadersWidth = 51;
-            this.dgVentas.Size = new System.Drawing.Size(1025, 382);
+            this.dgVentas.Size = new System.Drawing.Size(833, 254);
             this.dgVentas.TabIndex = 9;
             this.dgVentas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgVentas_CellClick);
             // 
             // btEliminarVenta
             // 
-            this.btEliminarVenta.Location = new System.Drawing.Point(305, 194);
-            this.btEliminarVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btEliminarVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarVenta.Location = new System.Drawing.Point(762, 68);
+            this.btEliminarVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btEliminarVenta.Name = "btEliminarVenta";
-            this.btEliminarVenta.Size = new System.Drawing.Size(100, 28);
+            this.btEliminarVenta.Size = new System.Drawing.Size(75, 40);
             this.btEliminarVenta.TabIndex = 8;
             this.btEliminarVenta.Text = "Eliminar";
             this.btEliminarVenta.UseVisualStyleBackColor = true;
@@ -719,64 +787,71 @@
             // 
             // btModificarVenta
             // 
-            this.btModificarVenta.Location = new System.Drawing.Point(152, 194);
-            this.btModificarVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btModificarVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btModificarVenta.Location = new System.Drawing.Point(672, 91);
+            this.btModificarVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btModificarVenta.Name = "btModificarVenta";
-            this.btModificarVenta.Size = new System.Drawing.Size(100, 28);
+            this.btModificarVenta.Size = new System.Drawing.Size(75, 40);
             this.btModificarVenta.TabIndex = 7;
-            this.btModificarVenta.Text = "Modificar";
+            this.btModificarVenta.Text = "Editar";
             this.btModificarVenta.UseVisualStyleBackColor = true;
             this.btModificarVenta.Click += new System.EventHandler(this.btModificarVenta_Click);
             // 
             // btAgregarVenta
             // 
-            this.btAgregarVenta.Location = new System.Drawing.Point(12, 194);
-            this.btAgregarVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAgregarVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btAgregarVenta.Location = new System.Drawing.Point(672, 28);
+            this.btAgregarVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btAgregarVenta.Name = "btAgregarVenta";
-            this.btAgregarVenta.Size = new System.Drawing.Size(100, 28);
+            this.btAgregarVenta.Size = new System.Drawing.Size(75, 40);
             this.btAgregarVenta.TabIndex = 6;
-            this.btAgregarVenta.Text = "Agregar";
+            this.btAgregarVenta.Text = "Insertar";
             this.btAgregarVenta.UseVisualStyleBackColor = true;
             this.btAgregarVenta.Click += new System.EventHandler(this.btAgregarVenta_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 76);
+            this.label7.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label7.Location = new System.Drawing.Point(278, 28);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.Size = new System.Drawing.Size(86, 20);
             this.label7.TabIndex = 4;
-            this.label7.Text = "Fecha Venta";
+            this.label7.Text = "Fecha Venta:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 17);
+            this.label6.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label6.Location = new System.Drawing.Point(27, 26);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 13);
+            this.label6.Size = new System.Drawing.Size(89, 20);
             this.label6.TabIndex = 3;
-            this.label6.Text = "IdEmpleado";
+            this.label6.Text = "Id Empleado:";
             // 
             // tbTotal
             // 
-            this.tbTotal.Location = new System.Drawing.Point(8, 148);
-            this.tbTotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbTotal.Location = new System.Drawing.Point(31, 125);
+            this.tbTotal.Margin = new System.Windows.Forms.Padding(4);
             this.tbTotal.Name = "tbTotal";
-            this.tbTotal.Size = new System.Drawing.Size(132, 20);
+            this.tbTotal.Size = new System.Drawing.Size(203, 22);
             this.tbTotal.TabIndex = 2;
             // 
             // tbIdEmpleado
             // 
-            this.tbIdEmpleado.Location = new System.Drawing.Point(8, 37);
-            this.tbIdEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbIdEmpleado.Location = new System.Drawing.Point(31, 51);
+            this.tbIdEmpleado.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdEmpleado.Name = "tbIdEmpleado";
-            this.tbIdEmpleado.Size = new System.Drawing.Size(132, 20);
+            this.tbIdEmpleado.Size = new System.Drawing.Size(203, 22);
             this.tbIdEmpleado.TabIndex = 0;
             // 
             // tabPromocion
             // 
+            this.tabPromocion.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabPromocion.Controls.Add(this.dtpFechaFinalPromo);
             this.tabPromocion.Controls.Add(this.dtpFechaInicioPromo);
             this.tabPromocion.Controls.Add(this.label12);
@@ -789,73 +864,96 @@
             this.tabPromocion.Controls.Add(this.btAgregarPromocion);
             this.tabPromocion.Controls.Add(this.tbDescuento);
             this.tabPromocion.Controls.Add(this.tbIdProducto);
-            this.tabPromocion.Location = new System.Drawing.Point(4, 22);
+            this.tabPromocion.Location = new System.Drawing.Point(4, 25);
             this.tabPromocion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPromocion.Name = "tabPromocion";
             this.tabPromocion.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPromocion.Size = new System.Drawing.Size(891, 520);
+            this.tabPromocion.Size = new System.Drawing.Size(891, 517);
             this.tabPromocion.TabIndex = 4;
             this.tabPromocion.Text = "Promociones";
-            this.tabPromocion.UseVisualStyleBackColor = true;
             this.tabPromocion.Enter += new System.EventHandler(this.tabPromocion_Enter);
+            // 
+            // dtpFechaFinalPromo
+            // 
+            this.dtpFechaFinalPromo.Location = new System.Drawing.Point(317, 42);
+            this.dtpFechaFinalPromo.Name = "dtpFechaFinalPromo";
+            this.dtpFechaFinalPromo.Size = new System.Drawing.Size(203, 22);
+            this.dtpFechaFinalPromo.TabIndex = 23;
+            // 
+            // dtpFechaInicioPromo
+            // 
+            this.dtpFechaInicioPromo.Location = new System.Drawing.Point(50, 105);
+            this.dtpFechaInicioPromo.Name = "dtpFechaInicioPromo";
+            this.dtpFechaInicioPromo.Size = new System.Drawing.Size(203, 22);
+            this.dtpFechaInicioPromo.TabIndex = 22;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(189, 22);
+            this.label12.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label12.Location = new System.Drawing.Point(314, 22);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(62, 13);
+            this.label12.Size = new System.Drawing.Size(84, 20);
             this.label12.TabIndex = 21;
-            this.label12.Text = "Fecha Final";
+            this.label12.Text = "Fecha Final:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(189, 85);
+            this.label9.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label9.Location = new System.Drawing.Point(314, 85);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.Size = new System.Drawing.Size(78, 20);
             this.label9.TabIndex = 20;
-            this.label9.Text = "Descuento";
+            this.label9.Text = "Descuento:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 85);
+            this.label10.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label10.Location = new System.Drawing.Point(50, 85);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 13);
+            this.label10.Size = new System.Drawing.Size(88, 20);
             this.label10.TabIndex = 19;
-            this.label10.Text = "Fecha Inicio";
+            this.label10.Text = "Fecha Inicio:";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 22);
+            this.label11.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label11.Location = new System.Drawing.Point(50, 22);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 13);
+            this.label11.Size = new System.Drawing.Size(84, 20);
             this.label11.TabIndex = 18;
-            this.label11.Text = "IdProducto";
+            this.label11.Text = "Id Producto:";
             // 
             // dgPromocion
             // 
             this.dgPromocion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPromocion.Location = new System.Drawing.Point(12, 238);
-            this.dgPromocion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgPromocion.Location = new System.Drawing.Point(29, 226);
+            this.dgPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.dgPromocion.Name = "dgPromocion";
             this.dgPromocion.RowHeadersWidth = 51;
-            this.dgPromocion.Size = new System.Drawing.Size(1025, 382);
+            this.dgPromocion.Size = new System.Drawing.Size(833, 254);
             this.dgPromocion.TabIndex = 16;
             this.dgPromocion.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPromocion_CellClick);
+            this.dgPromocion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPromocion_CellContentClick);
             // 
             // btEliminarPromocion
             // 
-            this.btEliminarPromocion.Location = new System.Drawing.Point(305, 180);
-            this.btEliminarPromocion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btEliminarPromocion.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarPromocion.Location = new System.Drawing.Point(762, 68);
+            this.btEliminarPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.btEliminarPromocion.Name = "btEliminarPromocion";
-            this.btEliminarPromocion.Size = new System.Drawing.Size(100, 28);
+            this.btEliminarPromocion.Size = new System.Drawing.Size(75, 40);
             this.btEliminarPromocion.TabIndex = 15;
             this.btEliminarPromocion.Text = "Eliminar";
             this.btEliminarPromocion.UseVisualStyleBackColor = true;
@@ -863,44 +961,47 @@
             // 
             // btModificarPromocion
             // 
-            this.btModificarPromocion.Location = new System.Drawing.Point(152, 180);
-            this.btModificarPromocion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btModificarPromocion.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btModificarPromocion.Location = new System.Drawing.Point(672, 91);
+            this.btModificarPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.btModificarPromocion.Name = "btModificarPromocion";
-            this.btModificarPromocion.Size = new System.Drawing.Size(100, 28);
+            this.btModificarPromocion.Size = new System.Drawing.Size(75, 40);
             this.btModificarPromocion.TabIndex = 14;
-            this.btModificarPromocion.Text = "Modificar";
+            this.btModificarPromocion.Text = "Editar";
             this.btModificarPromocion.UseVisualStyleBackColor = true;
             this.btModificarPromocion.Click += new System.EventHandler(this.btModificarPromocion_Click);
             // 
             // btAgregarPromocion
             // 
-            this.btAgregarPromocion.Location = new System.Drawing.Point(12, 180);
-            this.btAgregarPromocion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAgregarPromocion.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btAgregarPromocion.Location = new System.Drawing.Point(672, 28);
+            this.btAgregarPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.btAgregarPromocion.Name = "btAgregarPromocion";
-            this.btAgregarPromocion.Size = new System.Drawing.Size(100, 28);
+            this.btAgregarPromocion.Size = new System.Drawing.Size(75, 40);
             this.btAgregarPromocion.TabIndex = 13;
-            this.btAgregarPromocion.Text = "Agregar";
+            this.btAgregarPromocion.Text = "Insertar";
             this.btAgregarPromocion.UseVisualStyleBackColor = true;
             this.btAgregarPromocion.Click += new System.EventHandler(this.btAgregarPromocion_Click);
             // 
             // tbDescuento
             // 
-            this.tbDescuento.Location = new System.Drawing.Point(193, 105);
-            this.tbDescuento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDescuento.Location = new System.Drawing.Point(318, 105);
+            this.tbDescuento.Margin = new System.Windows.Forms.Padding(4);
             this.tbDescuento.Name = "tbDescuento";
-            this.tbDescuento.Size = new System.Drawing.Size(132, 20);
+            this.tbDescuento.Size = new System.Drawing.Size(203, 22);
             this.tbDescuento.TabIndex = 12;
             // 
             // tbIdProducto
             // 
-            this.tbIdProducto.Location = new System.Drawing.Point(8, 42);
-            this.tbIdProducto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbIdProducto.Location = new System.Drawing.Point(50, 42);
+            this.tbIdProducto.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdProducto.Name = "tbIdProducto";
-            this.tbIdProducto.Size = new System.Drawing.Size(132, 20);
+            this.tbIdProducto.Size = new System.Drawing.Size(203, 22);
             this.tbIdProducto.TabIndex = 10;
             // 
             // tabDetalleVenta
             // 
+            this.tabDetalleVenta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabDetalleVenta.Controls.Add(this.label17);
             this.tabDetalleVenta.Controls.Add(this.tbIdVenta);
             this.tabDetalleVenta.Controls.Add(this.label13);
@@ -915,99 +1016,109 @@
             this.tabDetalleVenta.Controls.Add(this.tbSubtotal);
             this.tabDetalleVenta.Controls.Add(this.tbIdProducto2);
             this.tabDetalleVenta.Controls.Add(this.tbIdPromocion);
-            this.tabDetalleVenta.Location = new System.Drawing.Point(4, 22);
+            this.tabDetalleVenta.Location = new System.Drawing.Point(4, 25);
             this.tabDetalleVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabDetalleVenta.Name = "tabDetalleVenta";
             this.tabDetalleVenta.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabDetalleVenta.Size = new System.Drawing.Size(891, 520);
+            this.tabDetalleVenta.Size = new System.Drawing.Size(891, 517);
             this.tabDetalleVenta.TabIndex = 5;
             this.tabDetalleVenta.Text = "Detalle Ventas";
-            this.tabDetalleVenta.UseVisualStyleBackColor = true;
             this.tabDetalleVenta.Enter += new System.EventHandler(this.tabDetalleVenta_Enter);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(12, 15);
+            this.label17.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label17.Location = new System.Drawing.Point(47, 15);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(44, 13);
+            this.label17.Size = new System.Drawing.Size(61, 20);
             this.label17.TabIndex = 35;
-            this.label17.Text = "IdVenta";
+            this.label17.Text = "Id Venta:";
             // 
             // tbIdVenta
             // 
-            this.tbIdVenta.Location = new System.Drawing.Point(12, 34);
-            this.tbIdVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbIdVenta.Location = new System.Drawing.Point(47, 35);
+            this.tbIdVenta.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdVenta.Name = "tbIdVenta";
-            this.tbIdVenta.Size = new System.Drawing.Size(132, 20);
+            this.tbIdVenta.Size = new System.Drawing.Size(203, 22);
             this.tbIdVenta.TabIndex = 34;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(187, 15);
+            this.label13.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label13.Location = new System.Drawing.Point(307, 15);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.Size = new System.Drawing.Size(68, 20);
             this.label13.TabIndex = 33;
-            this.label13.Text = "Cantidad";
+            this.label13.Text = "Cantidad:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(187, 78);
+            this.label14.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label14.Location = new System.Drawing.Point(308, 78);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(46, 13);
+            this.label14.Size = new System.Drawing.Size(64, 20);
             this.label14.TabIndex = 32;
-            this.label14.Text = "Subtotal";
+            this.label14.Text = "Subtotal:";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 70);
+            this.label15.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label15.Location = new System.Drawing.Point(47, 70);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(66, 13);
+            this.label15.Size = new System.Drawing.Size(95, 20);
             this.label15.TabIndex = 31;
-            this.label15.Text = "IdPromocion";
+            this.label15.Text = "Id Promocion:";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 133);
+            this.label16.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.DarkCyan;
+            this.label16.Location = new System.Drawing.Point(47, 133);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(59, 13);
+            this.label16.Size = new System.Drawing.Size(84, 20);
             this.label16.TabIndex = 30;
-            this.label16.Text = "IdProducto";
+            this.label16.Text = "Id Producto:";
             // 
             // tbCantidad
             // 
-            this.tbCantidad.Location = new System.Drawing.Point(191, 34);
-            this.tbCantidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCantidad.Location = new System.Drawing.Point(312, 37);
+            this.tbCantidad.Margin = new System.Windows.Forms.Padding(4);
             this.tbCantidad.Name = "tbCantidad";
-            this.tbCantidad.Size = new System.Drawing.Size(132, 20);
+            this.tbCantidad.Size = new System.Drawing.Size(203, 22);
             this.tbCantidad.TabIndex = 29;
             // 
             // dgDetalleVenta
             // 
             this.dgDetalleVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgDetalleVenta.Location = new System.Drawing.Point(12, 238);
-            this.dgDetalleVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgDetalleVenta.Location = new System.Drawing.Point(29, 226);
+            this.dgDetalleVenta.Margin = new System.Windows.Forms.Padding(4);
             this.dgDetalleVenta.Name = "dgDetalleVenta";
             this.dgDetalleVenta.RowHeadersWidth = 51;
-            this.dgDetalleVenta.Size = new System.Drawing.Size(1025, 382);
+            this.dgDetalleVenta.Size = new System.Drawing.Size(833, 254);
             this.dgDetalleVenta.TabIndex = 28;
             this.dgDetalleVenta.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgDetalleVenta_CellClick);
             // 
             // btEliminarDetalleVenta
             // 
-            this.btEliminarDetalleVenta.Location = new System.Drawing.Point(305, 202);
-            this.btEliminarDetalleVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btEliminarDetalleVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarDetalleVenta.Location = new System.Drawing.Point(762, 68);
+            this.btEliminarDetalleVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btEliminarDetalleVenta.Name = "btEliminarDetalleVenta";
-            this.btEliminarDetalleVenta.Size = new System.Drawing.Size(100, 28);
+            this.btEliminarDetalleVenta.Size = new System.Drawing.Size(75, 40);
             this.btEliminarDetalleVenta.TabIndex = 27;
             this.btEliminarDetalleVenta.Text = "Eliminar";
             this.btEliminarDetalleVenta.UseVisualStyleBackColor = true;
@@ -1015,52 +1126,55 @@
             // 
             // btModificarDetalleVenta
             // 
-            this.btModificarDetalleVenta.Location = new System.Drawing.Point(152, 202);
-            this.btModificarDetalleVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btModificarDetalleVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btModificarDetalleVenta.Location = new System.Drawing.Point(672, 91);
+            this.btModificarDetalleVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btModificarDetalleVenta.Name = "btModificarDetalleVenta";
-            this.btModificarDetalleVenta.Size = new System.Drawing.Size(100, 28);
+            this.btModificarDetalleVenta.Size = new System.Drawing.Size(75, 40);
             this.btModificarDetalleVenta.TabIndex = 26;
-            this.btModificarDetalleVenta.Text = "Modificar";
+            this.btModificarDetalleVenta.Text = "Editar";
             this.btModificarDetalleVenta.UseVisualStyleBackColor = true;
             this.btModificarDetalleVenta.Click += new System.EventHandler(this.btModificarDetalleVenta_Click);
             // 
             // btAgregarDetalleVenta
             // 
-            this.btAgregarDetalleVenta.Location = new System.Drawing.Point(12, 202);
-            this.btAgregarDetalleVenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAgregarDetalleVenta.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btAgregarDetalleVenta.Location = new System.Drawing.Point(672, 28);
+            this.btAgregarDetalleVenta.Margin = new System.Windows.Forms.Padding(4);
             this.btAgregarDetalleVenta.Name = "btAgregarDetalleVenta";
-            this.btAgregarDetalleVenta.Size = new System.Drawing.Size(100, 28);
+            this.btAgregarDetalleVenta.Size = new System.Drawing.Size(75, 40);
             this.btAgregarDetalleVenta.TabIndex = 25;
-            this.btAgregarDetalleVenta.Text = "Agregar";
+            this.btAgregarDetalleVenta.Text = "Insertar";
             this.btAgregarDetalleVenta.UseVisualStyleBackColor = true;
             this.btAgregarDetalleVenta.Click += new System.EventHandler(this.btAgregarDetalleVenta_Click);
             // 
             // tbSubtotal
             // 
-            this.tbSubtotal.Location = new System.Drawing.Point(191, 97);
-            this.tbSubtotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbSubtotal.Location = new System.Drawing.Point(312, 99);
+            this.tbSubtotal.Margin = new System.Windows.Forms.Padding(4);
             this.tbSubtotal.Name = "tbSubtotal";
-            this.tbSubtotal.Size = new System.Drawing.Size(132, 20);
+            this.tbSubtotal.Size = new System.Drawing.Size(203, 22);
             this.tbSubtotal.TabIndex = 24;
             // 
             // tbIdProducto2
             // 
-            this.tbIdProducto2.Location = new System.Drawing.Point(11, 153);
-            this.tbIdProducto2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbIdProducto2.Location = new System.Drawing.Point(47, 153);
+            this.tbIdProducto2.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdProducto2.Name = "tbIdProducto2";
-            this.tbIdProducto2.Size = new System.Drawing.Size(132, 20);
+            this.tbIdProducto2.Size = new System.Drawing.Size(203, 22);
             this.tbIdProducto2.TabIndex = 23;
             // 
             // tbIdPromocion
             // 
-            this.tbIdPromocion.Location = new System.Drawing.Point(12, 90);
-            this.tbIdPromocion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbIdPromocion.Location = new System.Drawing.Point(47, 90);
+            this.tbIdPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdPromocion.Name = "tbIdPromocion";
-            this.tbIdPromocion.Size = new System.Drawing.Size(132, 20);
+            this.tbIdPromocion.Size = new System.Drawing.Size(203, 22);
             this.tbIdPromocion.TabIndex = 22;
             // 
             // tabCompra
             // 
+            this.tabCompra.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabCompra.Controls.Add(this.lbFechaCompras);
             this.tabCompra.Controls.Add(this.dateCompras);
             this.tabCompra.Controls.Add(this.btEliminarCompras);
@@ -1073,34 +1187,36 @@
             this.tabCompra.Controls.Add(this.cbProveedorCompras);
             this.tabCompra.Controls.Add(this.lbEmpleadoCompras);
             this.tabCompra.Controls.Add(this.cbEmpleadoCompras);
-            this.tabCompra.Location = new System.Drawing.Point(4, 22);
-            this.tabCompra.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabCompra.Location = new System.Drawing.Point(4, 25);
+            this.tabCompra.Margin = new System.Windows.Forms.Padding(2);
             this.tabCompra.Name = "tabCompra";
-            this.tabCompra.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabCompra.Size = new System.Drawing.Size(891, 520);
+            this.tabCompra.Padding = new System.Windows.Forms.Padding(2);
+            this.tabCompra.Size = new System.Drawing.Size(891, 517);
             this.tabCompra.TabIndex = 6;
             this.tabCompra.Text = "Compras";
-            this.tabCompra.UseVisualStyleBackColor = true;
             // 
             // lbFechaCompras
             // 
             this.lbFechaCompras.AutoSize = true;
-            this.lbFechaCompras.Location = new System.Drawing.Point(78, 79);
+            this.lbFechaCompras.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbFechaCompras.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbFechaCompras.Location = new System.Drawing.Point(61, 88);
             this.lbFechaCompras.Name = "lbFechaCompras";
-            this.lbFechaCompras.Size = new System.Drawing.Size(40, 13);
+            this.lbFechaCompras.Size = new System.Drawing.Size(50, 20);
             this.lbFechaCompras.TabIndex = 14;
             this.lbFechaCompras.Text = "Fecha:";
             // 
             // dateCompras
             // 
-            this.dateCompras.Location = new System.Drawing.Point(126, 76);
+            this.dateCompras.Location = new System.Drawing.Point(64, 110);
             this.dateCompras.Name = "dateCompras";
-            this.dateCompras.Size = new System.Drawing.Size(200, 20);
+            this.dateCompras.Size = new System.Drawing.Size(203, 22);
             this.dateCompras.TabIndex = 13;
             // 
             // btEliminarCompras
             // 
-            this.btEliminarCompras.Location = new System.Drawing.Point(691, 44);
+            this.btEliminarCompras.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarCompras.Location = new System.Drawing.Point(762, 68);
             this.btEliminarCompras.Name = "btEliminarCompras";
             this.btEliminarCompras.Size = new System.Drawing.Size(75, 40);
             this.btEliminarCompras.TabIndex = 12;
@@ -1110,17 +1226,19 @@
             // 
             // btActualizarCompras
             // 
-            this.btActualizarCompras.Location = new System.Drawing.Point(587, 75);
+            this.btActualizarCompras.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btActualizarCompras.Location = new System.Drawing.Point(672, 91);
             this.btActualizarCompras.Name = "btActualizarCompras";
             this.btActualizarCompras.Size = new System.Drawing.Size(75, 40);
             this.btActualizarCompras.TabIndex = 11;
-            this.btActualizarCompras.Text = "Actualizar";
+            this.btActualizarCompras.Text = "Editar";
             this.btActualizarCompras.UseVisualStyleBackColor = true;
             this.btActualizarCompras.Click += new System.EventHandler(this.btActualizarCompras_Click);
             // 
             // btInsertarCompras
             // 
-            this.btInsertarCompras.Location = new System.Drawing.Point(586, 19);
+            this.btInsertarCompras.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btInsertarCompras.Location = new System.Drawing.Point(672, 28);
             this.btInsertarCompras.Name = "btInsertarCompras";
             this.btInsertarCompras.Size = new System.Drawing.Size(75, 40);
             this.btInsertarCompras.TabIndex = 10;
@@ -1131,65 +1249,72 @@
             // dtCompras
             // 
             this.dtCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtCompras.Location = new System.Drawing.Point(38, 139);
+            this.dtCompras.Location = new System.Drawing.Point(29, 226);
             this.dtCompras.Name = "dtCompras";
             this.dtCompras.RowHeadersWidth = 51;
-            this.dtCompras.Size = new System.Drawing.Size(704, 339);
+            this.dtCompras.Size = new System.Drawing.Size(833, 254);
             this.dtCompras.TabIndex = 6;
             this.dtCompras.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtCompras_CellClick);
             // 
             // lbTotalCompras
             // 
             this.lbTotalCompras.AutoSize = true;
-            this.lbTotalCompras.Location = new System.Drawing.Point(383, 82);
+            this.lbTotalCompras.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTotalCompras.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbTotalCompras.Location = new System.Drawing.Point(358, 88);
             this.lbTotalCompras.Name = "lbTotalCompras";
-            this.lbTotalCompras.Size = new System.Drawing.Size(34, 13);
+            this.lbTotalCompras.Size = new System.Drawing.Size(44, 20);
             this.lbTotalCompras.TabIndex = 5;
             this.lbTotalCompras.Text = "Total:";
             // 
             // tbTotalCompras
             // 
-            this.tbTotalCompras.Location = new System.Drawing.Point(423, 79);
+            this.tbTotalCompras.Location = new System.Drawing.Point(361, 110);
             this.tbTotalCompras.Name = "tbTotalCompras";
-            this.tbTotalCompras.Size = new System.Drawing.Size(100, 20);
+            this.tbTotalCompras.Size = new System.Drawing.Size(203, 22);
             this.tbTotalCompras.TabIndex = 4;
             // 
             // lbProveedorCompras
             // 
             this.lbProveedorCompras.AutoSize = true;
+            this.lbProveedorCompras.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbProveedorCompras.ForeColor = System.Drawing.Color.DarkCyan;
             this.lbProveedorCompras.Location = new System.Drawing.Point(358, 30);
             this.lbProveedorCompras.Name = "lbProveedorCompras";
-            this.lbProveedorCompras.Size = new System.Drawing.Size(59, 13);
+            this.lbProveedorCompras.Size = new System.Drawing.Size(76, 20);
             this.lbProveedorCompras.TabIndex = 3;
             this.lbProveedorCompras.Text = "Proveedor:";
             // 
             // cbProveedorCompras
             // 
             this.cbProveedorCompras.FormattingEnabled = true;
-            this.cbProveedorCompras.Location = new System.Drawing.Point(423, 30);
+            this.cbProveedorCompras.Location = new System.Drawing.Point(361, 51);
             this.cbProveedorCompras.Name = "cbProveedorCompras";
-            this.cbProveedorCompras.Size = new System.Drawing.Size(121, 21);
+            this.cbProveedorCompras.Size = new System.Drawing.Size(203, 24);
             this.cbProveedorCompras.TabIndex = 2;
             // 
             // lbEmpleadoCompras
             // 
             this.lbEmpleadoCompras.AutoSize = true;
+            this.lbEmpleadoCompras.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbEmpleadoCompras.ForeColor = System.Drawing.Color.DarkCyan;
             this.lbEmpleadoCompras.Location = new System.Drawing.Point(61, 30);
             this.lbEmpleadoCompras.Name = "lbEmpleadoCompras";
-            this.lbEmpleadoCompras.Size = new System.Drawing.Size(57, 13);
+            this.lbEmpleadoCompras.Size = new System.Drawing.Size(74, 20);
             this.lbEmpleadoCompras.TabIndex = 1;
             this.lbEmpleadoCompras.Text = "Empleado:";
             // 
             // cbEmpleadoCompras
             // 
             this.cbEmpleadoCompras.FormattingEnabled = true;
-            this.cbEmpleadoCompras.Location = new System.Drawing.Point(126, 30);
+            this.cbEmpleadoCompras.Location = new System.Drawing.Point(64, 52);
             this.cbEmpleadoCompras.Name = "cbEmpleadoCompras";
-            this.cbEmpleadoCompras.Size = new System.Drawing.Size(121, 21);
+            this.cbEmpleadoCompras.Size = new System.Drawing.Size(203, 24);
             this.cbEmpleadoCompras.TabIndex = 0;
             // 
             // tabDetalleCompra
             // 
+            this.tabDetalleCompra.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabDetalleCompra.Controls.Add(this.dtDetalleCom);
             this.tabDetalleCompra.Controls.Add(this.btActualizarDetalleCom);
             this.tabDetalleCompra.Controls.Add(this.btInsertarDetalleCom);
@@ -1201,38 +1326,39 @@
             this.tabDetalleCompra.Controls.Add(this.lbProductoDetalleCom);
             this.tabDetalleCompra.Controls.Add(this.cbCompraDetalleCom);
             this.tabDetalleCompra.Controls.Add(this.lbCompraDetalleCom);
-            this.tabDetalleCompra.Location = new System.Drawing.Point(4, 22);
-            this.tabDetalleCompra.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabDetalleCompra.Location = new System.Drawing.Point(4, 25);
+            this.tabDetalleCompra.Margin = new System.Windows.Forms.Padding(2);
             this.tabDetalleCompra.Name = "tabDetalleCompra";
-            this.tabDetalleCompra.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabDetalleCompra.Size = new System.Drawing.Size(891, 520);
+            this.tabDetalleCompra.Padding = new System.Windows.Forms.Padding(2);
+            this.tabDetalleCompra.Size = new System.Drawing.Size(891, 517);
             this.tabDetalleCompra.TabIndex = 7;
             this.tabDetalleCompra.Text = "Detalle Compras";
-            this.tabDetalleCompra.UseVisualStyleBackColor = true;
             // 
             // dtDetalleCom
             // 
             this.dtDetalleCom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtDetalleCom.Location = new System.Drawing.Point(18, 136);
+            this.dtDetalleCom.Location = new System.Drawing.Point(29, 226);
             this.dtDetalleCom.Name = "dtDetalleCom";
             this.dtDetalleCom.RowHeadersWidth = 51;
-            this.dtDetalleCom.Size = new System.Drawing.Size(731, 358);
+            this.dtDetalleCom.Size = new System.Drawing.Size(833, 254);
             this.dtDetalleCom.TabIndex = 16;
             this.dtDetalleCom.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtDetalleCom_CellClick);
             // 
             // btActualizarDetalleCom
             // 
-            this.btActualizarDetalleCom.Location = new System.Drawing.Point(550, 71);
+            this.btActualizarDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btActualizarDetalleCom.Location = new System.Drawing.Point(672, 91);
             this.btActualizarDetalleCom.Name = "btActualizarDetalleCom";
             this.btActualizarDetalleCom.Size = new System.Drawing.Size(75, 40);
             this.btActualizarDetalleCom.TabIndex = 14;
-            this.btActualizarDetalleCom.Text = "Actualizar";
+            this.btActualizarDetalleCom.Text = "Editar";
             this.btActualizarDetalleCom.UseVisualStyleBackColor = true;
             this.btActualizarDetalleCom.Click += new System.EventHandler(this.btActualizarDetalleCom_Click);
             // 
             // btInsertarDetalleCom
             // 
-            this.btInsertarDetalleCom.Location = new System.Drawing.Point(549, 15);
+            this.btInsertarDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btInsertarDetalleCom.Location = new System.Drawing.Point(672, 28);
             this.btInsertarDetalleCom.Name = "btInsertarDetalleCom";
             this.btInsertarDetalleCom.Size = new System.Drawing.Size(75, 40);
             this.btInsertarDetalleCom.TabIndex = 13;
@@ -1242,72 +1368,81 @@
             // 
             // tbCantidadDetalleCom
             // 
-            this.tbCantidadDetalleCom.Location = new System.Drawing.Point(110, 81);
+            this.tbCantidadDetalleCom.Location = new System.Drawing.Point(71, 124);
             this.tbCantidadDetalleCom.Name = "tbCantidadDetalleCom";
-            this.tbCantidadDetalleCom.Size = new System.Drawing.Size(100, 20);
+            this.tbCantidadDetalleCom.Size = new System.Drawing.Size(203, 22);
             this.tbCantidadDetalleCom.TabIndex = 7;
             // 
             // tbSubtotalDetalleCom
             // 
-            this.tbSubtotalDetalleCom.Location = new System.Drawing.Point(374, 81);
+            this.tbSubtotalDetalleCom.Location = new System.Drawing.Point(323, 123);
             this.tbSubtotalDetalleCom.Name = "tbSubtotalDetalleCom";
-            this.tbSubtotalDetalleCom.Size = new System.Drawing.Size(100, 20);
+            this.tbSubtotalDetalleCom.Size = new System.Drawing.Size(203, 22);
             this.tbSubtotalDetalleCom.TabIndex = 6;
             // 
             // lbCantidadDetalleCom
             // 
             this.lbCantidadDetalleCom.AutoSize = true;
-            this.lbCantidadDetalleCom.Location = new System.Drawing.Point(56, 84);
+            this.lbCantidadDetalleCom.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCantidadDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbCantidadDetalleCom.Location = new System.Drawing.Point(68, 103);
             this.lbCantidadDetalleCom.Name = "lbCantidadDetalleCom";
-            this.lbCantidadDetalleCom.Size = new System.Drawing.Size(52, 13);
+            this.lbCantidadDetalleCom.Size = new System.Drawing.Size(68, 20);
             this.lbCantidadDetalleCom.TabIndex = 5;
             this.lbCantidadDetalleCom.Text = "Cantidad:";
             // 
             // lbSubtotalDetalleCom
             // 
             this.lbSubtotalDetalleCom.AutoSize = true;
-            this.lbSubtotalDetalleCom.Location = new System.Drawing.Point(320, 88);
+            this.lbSubtotalDetalleCom.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbSubtotalDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbSubtotalDetalleCom.Location = new System.Drawing.Point(323, 103);
             this.lbSubtotalDetalleCom.Name = "lbSubtotalDetalleCom";
-            this.lbSubtotalDetalleCom.Size = new System.Drawing.Size(49, 13);
+            this.lbSubtotalDetalleCom.Size = new System.Drawing.Size(64, 20);
             this.lbSubtotalDetalleCom.TabIndex = 4;
             this.lbSubtotalDetalleCom.Text = "Subtotal:";
             // 
             // cbProductoDetalleCom
             // 
             this.cbProductoDetalleCom.FormattingEnabled = true;
-            this.cbProductoDetalleCom.Location = new System.Drawing.Point(374, 26);
+            this.cbProductoDetalleCom.Location = new System.Drawing.Point(323, 49);
             this.cbProductoDetalleCom.Name = "cbProductoDetalleCom";
-            this.cbProductoDetalleCom.Size = new System.Drawing.Size(121, 21);
+            this.cbProductoDetalleCom.Size = new System.Drawing.Size(203, 24);
             this.cbProductoDetalleCom.TabIndex = 3;
             // 
             // lbProductoDetalleCom
             // 
             this.lbProductoDetalleCom.AutoSize = true;
+            this.lbProductoDetalleCom.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbProductoDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
             this.lbProductoDetalleCom.Location = new System.Drawing.Point(320, 29);
             this.lbProductoDetalleCom.Name = "lbProductoDetalleCom";
-            this.lbProductoDetalleCom.Size = new System.Drawing.Size(53, 13);
+            this.lbProductoDetalleCom.Size = new System.Drawing.Size(69, 20);
             this.lbProductoDetalleCom.TabIndex = 2;
             this.lbProductoDetalleCom.Text = "Producto:";
             // 
             // cbCompraDetalleCom
             // 
             this.cbCompraDetalleCom.FormattingEnabled = true;
-            this.cbCompraDetalleCom.Location = new System.Drawing.Point(110, 26);
+            this.cbCompraDetalleCom.Location = new System.Drawing.Point(71, 50);
             this.cbCompraDetalleCom.Name = "cbCompraDetalleCom";
-            this.cbCompraDetalleCom.Size = new System.Drawing.Size(121, 21);
+            this.cbCompraDetalleCom.Size = new System.Drawing.Size(203, 24);
             this.cbCompraDetalleCom.TabIndex = 1;
             // 
             // lbCompraDetalleCom
             // 
             this.lbCompraDetalleCom.AutoSize = true;
-            this.lbCompraDetalleCom.Location = new System.Drawing.Point(56, 29);
+            this.lbCompraDetalleCom.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCompraDetalleCom.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lbCompraDetalleCom.Location = new System.Drawing.Point(68, 29);
             this.lbCompraDetalleCom.Name = "lbCompraDetalleCom";
-            this.lbCompraDetalleCom.Size = new System.Drawing.Size(46, 13);
+            this.lbCompraDetalleCom.Size = new System.Drawing.Size(61, 20);
             this.lbCompraDetalleCom.TabIndex = 0;
             this.lbCompraDetalleCom.Text = "Compra:";
             // 
             // tabDevolucion
             // 
+            this.tabDevolucion.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabDevolucion.Controls.Add(this.lFechaVentaDevo);
             this.tabDevolucion.Controls.Add(this.dgDevoluciones);
             this.tabDevolucion.Controls.Add(this.bEditarDevo);
@@ -1322,43 +1457,48 @@
             this.tabDevolucion.Controls.Add(this.cbVentasDevo);
             this.tabDevolucion.Controls.Add(this.lNombreEmpleadoDevolucion);
             this.tabDevolucion.Controls.Add(this.cbNombreEmpleadosDevo);
-            this.tabDevolucion.Location = new System.Drawing.Point(4, 22);
+            this.tabDevolucion.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabDevolucion.ForeColor = System.Drawing.Color.DarkCyan;
+            this.tabDevolucion.Location = new System.Drawing.Point(4, 25);
             this.tabDevolucion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabDevolucion.Name = "tabDevolucion";
-            this.tabDevolucion.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabDevolucion.Size = new System.Drawing.Size(891, 520);
+            this.tabDevolucion.Padding = new System.Windows.Forms.Padding(4);
+            this.tabDevolucion.Size = new System.Drawing.Size(891, 517);
             this.tabDevolucion.TabIndex = 8;
             this.tabDevolucion.Text = "Devoluciones";
-            this.tabDevolucion.UseVisualStyleBackColor = true;
             // 
             // lFechaVentaDevo
             // 
             this.lFechaVentaDevo.AutoSize = true;
-            this.lFechaVentaDevo.Location = new System.Drawing.Point(378, 27);
+            this.lFechaVentaDevo.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lFechaVentaDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lFechaVentaDevo.Location = new System.Drawing.Point(348, 27);
             this.lFechaVentaDevo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lFechaVentaDevo.Name = "lFechaVentaDevo";
-            this.lFechaVentaDevo.Size = new System.Drawing.Size(68, 13);
+            this.lFechaVentaDevo.Size = new System.Drawing.Size(86, 20);
             this.lFechaVentaDevo.TabIndex = 20;
-            this.lFechaVentaDevo.Text = "Fecha Venta";
+            this.lFechaVentaDevo.Text = "Fecha Venta:";
             // 
             // dgDevoluciones
             // 
             this.dgDevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgDevoluciones.Location = new System.Drawing.Point(28, 243);
-            this.dgDevoluciones.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgDevoluciones.Location = new System.Drawing.Point(29, 226);
+            this.dgDevoluciones.Margin = new System.Windows.Forms.Padding(2);
             this.dgDevoluciones.Name = "dgDevoluciones";
             this.dgDevoluciones.RowHeadersWidth = 51;
             this.dgDevoluciones.RowTemplate.Height = 24;
-            this.dgDevoluciones.Size = new System.Drawing.Size(788, 254);
+            this.dgDevoluciones.Size = new System.Drawing.Size(833, 254);
             this.dgDevoluciones.TabIndex = 19;
             this.dgDevoluciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgDevoluciones_CellClick);
             // 
             // bEditarDevo
             // 
-            this.bEditarDevo.Location = new System.Drawing.Point(783, 57);
-            this.bEditarDevo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEditarDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bEditarDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEditarDevo.Location = new System.Drawing.Point(672, 91);
+            this.bEditarDevo.Margin = new System.Windows.Forms.Padding(2);
             this.bEditarDevo.Name = "bEditarDevo";
-            this.bEditarDevo.Size = new System.Drawing.Size(78, 31);
+            this.bEditarDevo.Size = new System.Drawing.Size(75, 40);
             this.bEditarDevo.TabIndex = 18;
             this.bEditarDevo.Text = "Editar";
             this.bEditarDevo.UseVisualStyleBackColor = true;
@@ -1366,10 +1506,12 @@
             // 
             // bEliminarDevo
             // 
-            this.bEliminarDevo.Location = new System.Drawing.Point(678, 109);
-            this.bEliminarDevo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bEliminarDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bEliminarDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEliminarDevo.Location = new System.Drawing.Point(762, 68);
+            this.bEliminarDevo.Margin = new System.Windows.Forms.Padding(2);
             this.bEliminarDevo.Name = "bEliminarDevo";
-            this.bEliminarDevo.Size = new System.Drawing.Size(78, 31);
+            this.bEliminarDevo.Size = new System.Drawing.Size(75, 40);
             this.bEliminarDevo.TabIndex = 17;
             this.bEliminarDevo.Text = "Eliminar";
             this.bEliminarDevo.UseVisualStyleBackColor = true;
@@ -1377,101 +1519,117 @@
             // 
             // bAgregarDevo
             // 
-            this.bAgregarDevo.Location = new System.Drawing.Point(678, 57);
-            this.bAgregarDevo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bAgregarDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAgregarDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bAgregarDevo.Location = new System.Drawing.Point(672, 28);
+            this.bAgregarDevo.Margin = new System.Windows.Forms.Padding(2);
             this.bAgregarDevo.Name = "bAgregarDevo";
-            this.bAgregarDevo.Size = new System.Drawing.Size(78, 31);
+            this.bAgregarDevo.Size = new System.Drawing.Size(75, 40);
             this.bAgregarDevo.TabIndex = 16;
-            this.bAgregarDevo.Text = "Agregar";
+            this.bAgregarDevo.Text = "Insertar";
             this.bAgregarDevo.UseVisualStyleBackColor = true;
             this.bAgregarDevo.Click += new System.EventHandler(this.BAgregarDevo_Click);
             // 
             // lCantidadDevo
             // 
             this.lCantidadDevo.AutoSize = true;
-            this.lCantidadDevo.Location = new System.Drawing.Point(378, 118);
+            this.lCantidadDevo.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lCantidadDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lCantidadDevo.Location = new System.Drawing.Point(348, 91);
             this.lCantidadDevo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lCantidadDevo.Name = "lCantidadDevo";
-            this.lCantidadDevo.Size = new System.Drawing.Size(49, 13);
+            this.lCantidadDevo.Size = new System.Drawing.Size(68, 20);
             this.lCantidadDevo.TabIndex = 15;
-            this.lCantidadDevo.Text = "Cantidad";
+            this.lCantidadDevo.Text = "Cantidad:";
             // 
             // tbCantidadDevo
             // 
-            this.tbCantidadDevo.Location = new System.Drawing.Point(382, 146);
-            this.tbCantidadDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCantidadDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCantidadDevo.Location = new System.Drawing.Point(352, 111);
+            this.tbCantidadDevo.Margin = new System.Windows.Forms.Padding(4);
             this.tbCantidadDevo.Name = "tbCantidadDevo";
-            this.tbCantidadDevo.Size = new System.Drawing.Size(132, 20);
+            this.tbCantidadDevo.Size = new System.Drawing.Size(203, 22);
             this.tbCantidadDevo.TabIndex = 14;
             // 
             // lMotivoDevolucionDevo
             // 
             this.lMotivoDevolucionDevo.AutoSize = true;
-            this.lMotivoDevolucionDevo.Location = new System.Drawing.Point(25, 175);
+            this.lMotivoDevolucionDevo.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMotivoDevolucionDevo.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lMotivoDevolucionDevo.Location = new System.Drawing.Point(57, 155);
             this.lMotivoDevolucionDevo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMotivoDevolucionDevo.Name = "lMotivoDevolucionDevo";
-            this.lMotivoDevolucionDevo.Size = new System.Drawing.Size(94, 13);
+            this.lMotivoDevolucionDevo.Size = new System.Drawing.Size(127, 20);
             this.lMotivoDevolucionDevo.TabIndex = 13;
-            this.lMotivoDevolucionDevo.Text = "Motivo devolución";
+            this.lMotivoDevolucionDevo.Text = "Motivo devolución:";
             // 
             // tbMotivoDevolucionDevo
             // 
-            this.tbMotivoDevolucionDevo.Location = new System.Drawing.Point(28, 201);
-            this.tbMotivoDevolucionDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbMotivoDevolucionDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbMotivoDevolucionDevo.Location = new System.Drawing.Point(57, 175);
+            this.tbMotivoDevolucionDevo.Margin = new System.Windows.Forms.Padding(4);
             this.tbMotivoDevolucionDevo.Name = "tbMotivoDevolucionDevo";
-            this.tbMotivoDevolucionDevo.Size = new System.Drawing.Size(132, 20);
+            this.tbMotivoDevolucionDevo.Size = new System.Drawing.Size(203, 22);
             this.tbMotivoDevolucionDevo.TabIndex = 12;
             // 
             // dtFechaVentaDevo
             // 
-            this.dtFechaVentaDevo.Location = new System.Drawing.Point(381, 54);
-            this.dtFechaVentaDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtFechaVentaDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtFechaVentaDevo.Location = new System.Drawing.Point(352, 47);
+            this.dtFechaVentaDevo.Margin = new System.Windows.Forms.Padding(4);
             this.dtFechaVentaDevo.Name = "dtFechaVentaDevo";
-            this.dtFechaVentaDevo.Size = new System.Drawing.Size(265, 20);
+            this.dtFechaVentaDevo.Size = new System.Drawing.Size(203, 22);
             this.dtFechaVentaDevo.TabIndex = 11;
             // 
             // lVentaDevoluciones
             // 
             this.lVentaDevoluciones.AutoSize = true;
-            this.lVentaDevoluciones.Location = new System.Drawing.Point(23, 100);
+            this.lVentaDevoluciones.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lVentaDevoluciones.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lVentaDevoluciones.Location = new System.Drawing.Point(56, 90);
             this.lVentaDevoluciones.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lVentaDevoluciones.Name = "lVentaDevoluciones";
-            this.lVentaDevoluciones.Size = new System.Drawing.Size(35, 13);
+            this.lVentaDevoluciones.Size = new System.Drawing.Size(46, 20);
             this.lVentaDevoluciones.TabIndex = 10;
-            this.lVentaDevoluciones.Text = "Venta";
+            this.lVentaDevoluciones.Text = "Venta:";
             // 
             // cbVentasDevo
             // 
             this.cbVentasDevo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVentasDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbVentasDevo.FormattingEnabled = true;
-            this.cbVentasDevo.Location = new System.Drawing.Point(27, 130);
-            this.cbVentasDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbVentasDevo.Location = new System.Drawing.Point(56, 111);
+            this.cbVentasDevo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVentasDevo.Name = "cbVentasDevo";
-            this.cbVentasDevo.Size = new System.Drawing.Size(239, 21);
+            this.cbVentasDevo.Size = new System.Drawing.Size(203, 24);
             this.cbVentasDevo.TabIndex = 9;
             // 
             // lNombreEmpleadoDevolucion
             // 
             this.lNombreEmpleadoDevolucion.AutoSize = true;
-            this.lNombreEmpleadoDevolucion.Location = new System.Drawing.Point(24, 27);
+            this.lNombreEmpleadoDevolucion.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lNombreEmpleadoDevolucion.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lNombreEmpleadoDevolucion.Location = new System.Drawing.Point(53, 27);
             this.lNombreEmpleadoDevolucion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lNombreEmpleadoDevolucion.Name = "lNombreEmpleadoDevolucion";
-            this.lNombreEmpleadoDevolucion.Size = new System.Drawing.Size(93, 13);
+            this.lNombreEmpleadoDevolucion.Size = new System.Drawing.Size(124, 20);
             this.lNombreEmpleadoDevolucion.TabIndex = 8;
-            this.lNombreEmpleadoDevolucion.Text = "Nombre empleado";
+            this.lNombreEmpleadoDevolucion.Text = "Nombre empleado:";
             // 
             // cbNombreEmpleadosDevo
             // 
             this.cbNombreEmpleadosDevo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNombreEmpleadosDevo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbNombreEmpleadosDevo.FormattingEnabled = true;
-            this.cbNombreEmpleadosDevo.Location = new System.Drawing.Point(28, 57);
-            this.cbNombreEmpleadosDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbNombreEmpleadosDevo.Location = new System.Drawing.Point(57, 49);
+            this.cbNombreEmpleadosDevo.Margin = new System.Windows.Forms.Padding(4);
             this.cbNombreEmpleadosDevo.Name = "cbNombreEmpleadosDevo";
-            this.cbNombreEmpleadosDevo.Size = new System.Drawing.Size(239, 21);
+            this.cbNombreEmpleadosDevo.Size = new System.Drawing.Size(203, 24);
             this.cbNombreEmpleadosDevo.TabIndex = 7;
             // 
             // tabDetalleDevolucion
             // 
+            this.tabDetalleDevolucion.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabDetalleDevolucion.Controls.Add(this.labelCantiDetalledev);
             this.tabDetalleDevolucion.Controls.Add(this.labelProductoDetalleDev);
             this.tabDetalleDevolucion.Controls.Add(this.labelMotivoDevDetalledev);
@@ -1479,85 +1637,91 @@
             this.tabDetalleDevolucion.Controls.Add(this.cbIdProductoDetalleDevo);
             this.tabDetalleDevolucion.Controls.Add(this.cbIdDevolucionDetalleDevo);
             this.tabDetalleDevolucion.Controls.Add(this.dGDetalleDevoluciones);
-            this.tabDetalleDevolucion.Location = new System.Drawing.Point(4, 22);
-            this.tabDetalleDevolucion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabDetalleDevolucion.Location = new System.Drawing.Point(4, 25);
+            this.tabDetalleDevolucion.Margin = new System.Windows.Forms.Padding(4);
             this.tabDetalleDevolucion.Name = "tabDetalleDevolucion";
-            this.tabDetalleDevolucion.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabDetalleDevolucion.Size = new System.Drawing.Size(891, 520);
+            this.tabDetalleDevolucion.Padding = new System.Windows.Forms.Padding(4);
+            this.tabDetalleDevolucion.Size = new System.Drawing.Size(891, 517);
             this.tabDetalleDevolucion.TabIndex = 9;
             this.tabDetalleDevolucion.Text = "Detalle Devoluciones";
-            this.tabDetalleDevolucion.UseVisualStyleBackColor = true;
             // 
             // labelCantiDetalledev
             // 
             this.labelCantiDetalledev.AutoSize = true;
-            this.labelCantiDetalledev.Location = new System.Drawing.Point(56, 92);
+            this.labelCantiDetalledev.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCantiDetalledev.ForeColor = System.Drawing.Color.DarkCyan;
+            this.labelCantiDetalledev.Location = new System.Drawing.Point(79, 99);
             this.labelCantiDetalledev.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCantiDetalledev.Name = "labelCantiDetalledev";
-            this.labelCantiDetalledev.Size = new System.Drawing.Size(49, 13);
+            this.labelCantiDetalledev.Size = new System.Drawing.Size(68, 20);
             this.labelCantiDetalledev.TabIndex = 6;
-            this.labelCantiDetalledev.Text = "Cantidad";
+            this.labelCantiDetalledev.Text = "Cantidad:";
             // 
             // labelProductoDetalleDev
             // 
             this.labelProductoDetalleDev.AutoSize = true;
-            this.labelProductoDetalleDev.Location = new System.Drawing.Point(561, 32);
+            this.labelProductoDetalleDev.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProductoDetalleDev.ForeColor = System.Drawing.Color.DarkCyan;
+            this.labelProductoDetalleDev.Location = new System.Drawing.Point(363, 31);
             this.labelProductoDetalleDev.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProductoDetalleDev.Name = "labelProductoDetalleDev";
-            this.labelProductoDetalleDev.Size = new System.Drawing.Size(50, 13);
+            this.labelProductoDetalleDev.Size = new System.Drawing.Size(69, 20);
             this.labelProductoDetalleDev.TabIndex = 5;
-            this.labelProductoDetalleDev.Text = "Producto";
+            this.labelProductoDetalleDev.Text = "Producto:";
             // 
             // labelMotivoDevDetalledev
             // 
             this.labelMotivoDevDetalledev.AutoSize = true;
-            this.labelMotivoDevDetalledev.Location = new System.Drawing.Point(60, 32);
+            this.labelMotivoDevDetalledev.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMotivoDevDetalledev.ForeColor = System.Drawing.Color.DarkCyan;
+            this.labelMotivoDevDetalledev.Location = new System.Drawing.Point(80, 32);
             this.labelMotivoDevDetalledev.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelMotivoDevDetalledev.Name = "labelMotivoDevDetalledev";
-            this.labelMotivoDevDetalledev.Size = new System.Drawing.Size(94, 13);
+            this.labelMotivoDevDetalledev.Size = new System.Drawing.Size(127, 20);
             this.labelMotivoDevDetalledev.TabIndex = 4;
-            this.labelMotivoDevDetalledev.Text = "Motivo devolución";
+            this.labelMotivoDevDetalledev.Text = "Motivo devolución:";
             // 
             // tbCantidadDetalleDevo
             // 
-            this.tbCantidadDetalleDevo.Location = new System.Drawing.Point(60, 120);
-            this.tbCantidadDetalleDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCantidadDetalleDevo.Location = new System.Drawing.Point(81, 120);
+            this.tbCantidadDetalleDevo.Margin = new System.Windows.Forms.Padding(4);
             this.tbCantidadDetalleDevo.Name = "tbCantidadDetalleDevo";
-            this.tbCantidadDetalleDevo.Size = new System.Drawing.Size(132, 20);
+            this.tbCantidadDetalleDevo.Size = new System.Drawing.Size(203, 22);
             this.tbCantidadDetalleDevo.TabIndex = 3;
             // 
             // cbIdProductoDetalleDevo
             // 
             this.cbIdProductoDetalleDevo.FormattingEnabled = true;
-            this.cbIdProductoDetalleDevo.Location = new System.Drawing.Point(561, 60);
-            this.cbIdProductoDetalleDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbIdProductoDetalleDevo.Location = new System.Drawing.Point(365, 55);
+            this.cbIdProductoDetalleDevo.Margin = new System.Windows.Forms.Padding(4);
             this.cbIdProductoDetalleDevo.Name = "cbIdProductoDetalleDevo";
-            this.cbIdProductoDetalleDevo.Size = new System.Drawing.Size(160, 21);
+            this.cbIdProductoDetalleDevo.Size = new System.Drawing.Size(203, 24);
             this.cbIdProductoDetalleDevo.TabIndex = 2;
             // 
             // cbIdDevolucionDetalleDevo
             // 
             this.cbIdDevolucionDetalleDevo.FormattingEnabled = true;
-            this.cbIdDevolucionDetalleDevo.Location = new System.Drawing.Point(60, 60);
-            this.cbIdDevolucionDetalleDevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbIdDevolucionDetalleDevo.Location = new System.Drawing.Point(81, 55);
+            this.cbIdDevolucionDetalleDevo.Margin = new System.Windows.Forms.Padding(4);
             this.cbIdDevolucionDetalleDevo.Name = "cbIdDevolucionDetalleDevo";
-            this.cbIdDevolucionDetalleDevo.Size = new System.Drawing.Size(389, 21);
+            this.cbIdDevolucionDetalleDevo.Size = new System.Drawing.Size(203, 24);
             this.cbIdDevolucionDetalleDevo.TabIndex = 1;
             // 
             // dGDetalleDevoluciones
             // 
             this.dGDetalleDevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(16, 167);
-            this.dGDetalleDevoluciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dGDetalleDevoluciones.Location = new System.Drawing.Point(29, 226);
+            this.dGDetalleDevoluciones.Margin = new System.Windows.Forms.Padding(4);
             this.dGDetalleDevoluciones.Name = "dGDetalleDevoluciones";
             this.dGDetalleDevoluciones.RowHeadersWidth = 51;
             this.dGDetalleDevoluciones.RowTemplate.Height = 24;
-            this.dGDetalleDevoluciones.Size = new System.Drawing.Size(778, 296);
+            this.dGDetalleDevoluciones.Size = new System.Drawing.Size(833, 254);
             this.dGDetalleDevoluciones.TabIndex = 0;
             this.dGDetalleDevoluciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGDetalleDevoluciones_CellClick);
             // 
             // tabEntrega
             // 
+            this.tabEntrega.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabEntrega.Controls.Add(this.lEntregasMotivoDev);
             this.tabEntrega.Controls.Add(this.bEditarEntrega);
             this.tabEntrega.Controls.Add(this.bEliminaEntrega);
@@ -1569,31 +1733,33 @@
             this.tabEntrega.Controls.Add(this.cBIdEmpleado);
             this.tabEntrega.Controls.Add(this.cBIdProveedor);
             this.tabEntrega.Controls.Add(this.dGEntregas);
-            this.tabEntrega.Location = new System.Drawing.Point(4, 22);
-            this.tabEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabEntrega.Location = new System.Drawing.Point(4, 25);
+            this.tabEntrega.Margin = new System.Windows.Forms.Padding(4);
             this.tabEntrega.Name = "tabEntrega";
-            this.tabEntrega.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabEntrega.Size = new System.Drawing.Size(891, 520);
+            this.tabEntrega.Padding = new System.Windows.Forms.Padding(4);
+            this.tabEntrega.Size = new System.Drawing.Size(891, 517);
             this.tabEntrega.TabIndex = 10;
             this.tabEntrega.Text = "Entregas";
-            this.tabEntrega.UseVisualStyleBackColor = true;
             // 
             // lEntregasMotivoDev
             // 
             this.lEntregasMotivoDev.AutoSize = true;
-            this.lEntregasMotivoDev.Location = new System.Drawing.Point(74, 125);
+            this.lEntregasMotivoDev.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lEntregasMotivoDev.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lEntregasMotivoDev.Location = new System.Drawing.Point(74, 111);
             this.lEntregasMotivoDev.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lEntregasMotivoDev.Name = "lEntregasMotivoDev";
-            this.lEntregasMotivoDev.Size = new System.Drawing.Size(94, 13);
+            this.lEntregasMotivoDev.Size = new System.Drawing.Size(127, 20);
             this.lEntregasMotivoDev.TabIndex = 11;
-            this.lEntregasMotivoDev.Text = "Motivo devolución";
+            this.lEntregasMotivoDev.Text = "Motivo devolución:";
             // 
             // bEditarEntrega
             // 
-            this.bEditarEntrega.Location = new System.Drawing.Point(671, 106);
-            this.bEditarEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bEditarEntrega.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEditarEntrega.Location = new System.Drawing.Point(672, 91);
+            this.bEditarEntrega.Margin = new System.Windows.Forms.Padding(4);
             this.bEditarEntrega.Name = "bEditarEntrega";
-            this.bEditarEntrega.Size = new System.Drawing.Size(80, 32);
+            this.bEditarEntrega.Size = new System.Drawing.Size(75, 40);
             this.bEditarEntrega.TabIndex = 10;
             this.bEditarEntrega.Text = "Editar";
             this.bEditarEntrega.UseVisualStyleBackColor = true;
@@ -1601,52 +1767,58 @@
             // 
             // bEliminaEntrega
             // 
-            this.bEliminaEntrega.Location = new System.Drawing.Point(671, 180);
-            this.bEliminaEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bEliminaEntrega.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bEliminaEntrega.Location = new System.Drawing.Point(762, 68);
+            this.bEliminaEntrega.Margin = new System.Windows.Forms.Padding(4);
             this.bEliminaEntrega.Name = "bEliminaEntrega";
-            this.bEliminaEntrega.Size = new System.Drawing.Size(80, 32);
+            this.bEliminaEntrega.Size = new System.Drawing.Size(75, 40);
             this.bEliminaEntrega.TabIndex = 9;
-            this.bEliminaEntrega.Text = "Elimina";
+            this.bEliminaEntrega.Text = "Eliminar";
             this.bEliminaEntrega.UseVisualStyleBackColor = true;
             this.bEliminaEntrega.Click += new System.EventHandler(this.BEliminaEntrega_Click);
             // 
             // bAgregarEntrega
             // 
-            this.bAgregarEntrega.Location = new System.Drawing.Point(671, 48);
-            this.bAgregarEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bAgregarEntrega.ForeColor = System.Drawing.Color.DarkCyan;
+            this.bAgregarEntrega.Location = new System.Drawing.Point(672, 28);
+            this.bAgregarEntrega.Margin = new System.Windows.Forms.Padding(4);
             this.bAgregarEntrega.Name = "bAgregarEntrega";
-            this.bAgregarEntrega.Size = new System.Drawing.Size(80, 37);
+            this.bAgregarEntrega.Size = new System.Drawing.Size(75, 40);
             this.bAgregarEntrega.TabIndex = 8;
-            this.bAgregarEntrega.Text = "Agregar";
+            this.bAgregarEntrega.Text = "Insertar";
             this.bAgregarEntrega.UseVisualStyleBackColor = true;
             this.bAgregarEntrega.Click += new System.EventHandler(this.BAgregarEntrega_Click);
             // 
             // labelNombreEmpleadoEntrega
             // 
             this.labelNombreEmpleadoEntrega.AutoSize = true;
-            this.labelNombreEmpleadoEntrega.Location = new System.Drawing.Point(376, 20);
+            this.labelNombreEmpleadoEntrega.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNombreEmpleadoEntrega.ForeColor = System.Drawing.Color.DarkCyan;
+            this.labelNombreEmpleadoEntrega.Location = new System.Drawing.Point(376, 38);
             this.labelNombreEmpleadoEntrega.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelNombreEmpleadoEntrega.Name = "labelNombreEmpleadoEntrega";
-            this.labelNombreEmpleadoEntrega.Size = new System.Drawing.Size(93, 13);
+            this.labelNombreEmpleadoEntrega.Size = new System.Drawing.Size(124, 20);
             this.labelNombreEmpleadoEntrega.TabIndex = 6;
-            this.labelNombreEmpleadoEntrega.Text = "Nombre empleado";
+            this.labelNombreEmpleadoEntrega.Text = "Nombre empleado:";
             // 
             // labelNombreProvEntrega
             // 
             this.labelNombreProvEntrega.AutoSize = true;
-            this.labelNombreProvEntrega.Location = new System.Drawing.Point(72, 20);
+            this.labelNombreProvEntrega.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNombreProvEntrega.ForeColor = System.Drawing.Color.DarkCyan;
+            this.labelNombreProvEntrega.Location = new System.Drawing.Point(74, 37);
             this.labelNombreProvEntrega.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelNombreProvEntrega.Name = "labelNombreProvEntrega";
-            this.labelNombreProvEntrega.Size = new System.Drawing.Size(95, 13);
+            this.labelNombreProvEntrega.Size = new System.Drawing.Size(127, 20);
             this.labelNombreProvEntrega.TabIndex = 5;
-            this.labelNombreProvEntrega.Text = "Nombre proveedor";
+            this.labelNombreProvEntrega.Text = "Nombre proveedor:";
             // 
             // dTFechaEntregaEntregas
             // 
-            this.dTFechaEntregaEntregas.Location = new System.Drawing.Point(76, 220);
-            this.dTFechaEntregaEntregas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dTFechaEntregaEntregas.Location = new System.Drawing.Point(379, 134);
+            this.dTFechaEntregaEntregas.Margin = new System.Windows.Forms.Padding(4);
             this.dTFechaEntregaEntregas.Name = "dTFechaEntregaEntregas";
-            this.dTFechaEntregaEntregas.Size = new System.Drawing.Size(265, 20);
+            this.dTFechaEntregaEntregas.Size = new System.Drawing.Size(203, 22);
             this.dTFechaEntregaEntregas.TabIndex = 4;
             // 
             // cBIdDevolucion
@@ -1655,74 +1827,43 @@
             this.cBIdDevolucion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdDevolucion.FormattingEnabled = true;
             this.cBIdDevolucion.IntegralHeight = false;
-            this.cBIdDevolucion.Location = new System.Drawing.Point(76, 150);
-            this.cBIdDevolucion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cBIdDevolucion.Location = new System.Drawing.Point(78, 134);
+            this.cBIdDevolucion.Margin = new System.Windows.Forms.Padding(4);
             this.cBIdDevolucion.Name = "cBIdDevolucion";
-            this.cBIdDevolucion.Size = new System.Drawing.Size(543, 21);
+            this.cBIdDevolucion.Size = new System.Drawing.Size(203, 24);
             this.cBIdDevolucion.TabIndex = 3;
             // 
             // cBIdEmpleado
             // 
             this.cBIdEmpleado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdEmpleado.FormattingEnabled = true;
-            this.cBIdEmpleado.Location = new System.Drawing.Point(380, 64);
-            this.cBIdEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cBIdEmpleado.Location = new System.Drawing.Point(379, 61);
+            this.cBIdEmpleado.Margin = new System.Windows.Forms.Padding(4);
             this.cBIdEmpleado.Name = "cBIdEmpleado";
-            this.cBIdEmpleado.Size = new System.Drawing.Size(239, 21);
+            this.cBIdEmpleado.Size = new System.Drawing.Size(203, 24);
             this.cBIdEmpleado.TabIndex = 2;
             // 
             // cBIdProveedor
             // 
             this.cBIdProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIdProveedor.FormattingEnabled = true;
-            this.cBIdProveedor.Location = new System.Drawing.Point(76, 64);
-            this.cBIdProveedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cBIdProveedor.Location = new System.Drawing.Point(78, 60);
+            this.cBIdProveedor.Margin = new System.Windows.Forms.Padding(4);
             this.cBIdProveedor.Name = "cBIdProveedor";
-            this.cBIdProveedor.Size = new System.Drawing.Size(235, 21);
+            this.cBIdProveedor.Size = new System.Drawing.Size(203, 24);
             this.cBIdProveedor.TabIndex = 1;
             // 
             // dGEntregas
             // 
             this.dGEntregas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dGEntregas.Location = new System.Drawing.Point(8, 257);
-            this.dGEntregas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dGEntregas.Location = new System.Drawing.Point(29, 226);
+            this.dGEntregas.Margin = new System.Windows.Forms.Padding(4);
             this.dGEntregas.Name = "dGEntregas";
             this.dGEntregas.RowHeadersWidth = 51;
             this.dGEntregas.RowTemplate.Height = 24;
-            this.dGEntregas.Size = new System.Drawing.Size(784, 245);
+            this.dGEntregas.Size = new System.Drawing.Size(833, 254);
             this.dGEntregas.TabIndex = 0;
             this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 131);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Total";
-            // 
-            // dtpFechaVenta
-            // 
-            this.dtpFechaVenta.Location = new System.Drawing.Point(8, 96);
-            this.dtpFechaVenta.Name = "dtpFechaVenta";
-            this.dtpFechaVenta.Size = new System.Drawing.Size(132, 20);
-            this.dtpFechaVenta.TabIndex = 11;
-            // 
-            // dtpFechaInicioPromo
-            // 
-            this.dtpFechaInicioPromo.Location = new System.Drawing.Point(8, 105);
-            this.dtpFechaInicioPromo.Name = "dtpFechaInicioPromo";
-            this.dtpFechaInicioPromo.Size = new System.Drawing.Size(132, 20);
-            this.dtpFechaInicioPromo.TabIndex = 22;
-            // 
-            // dtpFechaFinalPromo
-            // 
-            this.dtpFechaFinalPromo.Location = new System.Drawing.Point(192, 42);
-            this.dtpFechaFinalPromo.Name = "dtpFechaFinalPromo";
-            this.dtpFechaFinalPromo.Size = new System.Drawing.Size(133, 20);
-            this.dtpFechaFinalPromo.TabIndex = 23;
             // 
             // Form1
             // 
@@ -1730,7 +1871,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(935, 583);
             this.Controls.Add(this.tabVistas);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Abarrotes";
             this.tabVistas.ResumeLayout(false);
