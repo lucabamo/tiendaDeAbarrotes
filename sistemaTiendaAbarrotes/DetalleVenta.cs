@@ -29,7 +29,7 @@ namespace sistemaTiendaAbarrotes
             return table;
         }
 
-        public void insertDetalleVenta(SqlConnection connection, string idVenta, string idPromocion, string idProducto, string cantidad, string subtotal)
+        public void insertDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad, string subtotal)
         {
             string query = "INSERT INTO Transaccion.DetalleVenta (IdVenta, IdPromocion, IdProducto, Cantidad, Subtotal)" +
                 "VALUES (@idVenta, @idPromocion, @idProducto, @cantidad, @subtotal)";
@@ -53,9 +53,9 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void updateDetalleVenta(SqlConnection connection, string idVenta, string idPromocion, string idProducto, string cantidad, string subtotal)
+        public void updateDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad, string subtotal)
         {
-            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @cantidad, SubTotal = @subtotal";
+            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @cantidad, SubTotal = @subtotal WHERE Id";
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@idVenta", idVenta);
@@ -91,6 +91,57 @@ namespace sistemaTiendaAbarrotes
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void consultaProductos(SqlConnection connection, ComboBox producto)
+        {
+            string query = "SELECT IdProducto, Nombre FROM Inventario.Producto";
+            SqlCommand command = new SqlCommand(query, connection);
+
+            DataTable tablaProducto = new DataTable();
+            SqlDataReader reader = command.ExecuteReader();
+
+            tablaProducto.Load(reader);
+            producto.ValueMember = "IdProducto";
+            producto.DisplayMember = "Nombre";
+            producto.DataSource = tablaProducto;
+
+            producto.Text = "";
+            producto.SelectedIndex = -1;
+        }
+
+        public void consultaVentas(SqlConnection connection, ComboBox idVentas)
+        {
+            string query = "SELECT IdVenta FROM Transaccion.Venta";
+            SqlCommand command = new SqlCommand(query, connection);
+
+            DataTable tablaVenta = new DataTable();
+            SqlDataReader reader = command.ExecuteReader();
+
+            tablaVenta.Load(reader);
+            idVentas.ValueMember = "IdVenta";
+            idVentas.DisplayMember = "IdVenta";
+            idVentas.DataSource = tablaVenta;
+
+            idVentas.Text = "";
+            idVentas.SelectedIndex = -1;
+        }
+
+        public void consultaPromociones(SqlConnection connection, ComboBox idPromociones)
+        {
+            string query = "SELECT IdPromocion FROM Transaccion.Promocion";
+            SqlCommand command = new SqlCommand(query, connection);
+
+            DataTable tablaPromocion = new DataTable();
+            SqlDataReader reader = command.ExecuteReader();
+
+            tablaPromocion.Load(reader);
+            idPromociones.ValueMember = "IdPromocion";
+            idPromociones.DisplayMember = "IdPromocion";
+            idPromociones.DataSource = tablaPromocion;
+
+            idPromociones.Text = "";
+            idPromociones.SelectedIndex = -1;
         }
     }
 }

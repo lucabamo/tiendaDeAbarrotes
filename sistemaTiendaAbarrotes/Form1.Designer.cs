@@ -75,6 +75,7 @@
             this.tbNombreProducto = new System.Windows.Forms.TextBox();
             this.btInsertarProducto = new System.Windows.Forms.Button();
             this.tabVenta = new System.Windows.Forms.TabPage();
+            this.cbEmpleadoVentas = new System.Windows.Forms.ComboBox();
             this.dtpFechaVenta = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dgVentas = new System.Windows.Forms.DataGridView();
@@ -84,8 +85,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tbTotal = new System.Windows.Forms.TextBox();
-            this.tbIdEmpleado = new System.Windows.Forms.TextBox();
             this.tabPromocion = new System.Windows.Forms.TabPage();
+            this.cbProductoPromocion = new System.Windows.Forms.ComboBox();
             this.dtpFechaFinalPromo = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicioPromo = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
@@ -97,7 +98,6 @@
             this.btModificarPromocion = new System.Windows.Forms.Button();
             this.btAgregarPromocion = new System.Windows.Forms.Button();
             this.tbDescuento = new System.Windows.Forms.TextBox();
-            this.tbIdProducto = new System.Windows.Forms.TextBox();
             this.tabDetalleVenta = new System.Windows.Forms.TabPage();
             this.label17 = new System.Windows.Forms.Label();
             this.tbIdVenta = new System.Windows.Forms.TextBox();
@@ -111,7 +111,6 @@
             this.btModificarDetalleVenta = new System.Windows.Forms.Button();
             this.btAgregarDetalleVenta = new System.Windows.Forms.Button();
             this.tbSubtotal = new System.Windows.Forms.TextBox();
-            this.tbIdProducto2 = new System.Windows.Forms.TextBox();
             this.tbIdPromocion = new System.Windows.Forms.TextBox();
             this.tabCompra = new System.Windows.Forms.TabPage();
             this.lbFechaCompras = new System.Windows.Forms.Label();
@@ -173,6 +172,9 @@
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
+            this.cbProductoDetalleVenta = new System.Windows.Forms.ComboBox();
+            this.cbIdVentaDetalleVenta = new System.Windows.Forms.ComboBox();
+            this.cbIdPromocionDetalleVenta = new System.Windows.Forms.ComboBox();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGEmpleados)).BeginInit();
@@ -724,6 +726,7 @@
             // tabVenta
             // 
             this.tabVenta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tabVenta.Controls.Add(this.cbEmpleadoVentas);
             this.tabVenta.Controls.Add(this.dtpFechaVenta);
             this.tabVenta.Controls.Add(this.label1);
             this.tabVenta.Controls.Add(this.dgVentas);
@@ -733,7 +736,6 @@
             this.tabVenta.Controls.Add(this.label7);
             this.tabVenta.Controls.Add(this.label6);
             this.tabVenta.Controls.Add(this.tbTotal);
-            this.tabVenta.Controls.Add(this.tbIdEmpleado);
             this.tabVenta.Location = new System.Drawing.Point(4, 25);
             this.tabVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabVenta.Name = "tabVenta";
@@ -742,6 +744,14 @@
             this.tabVenta.TabIndex = 3;
             this.tabVenta.Text = "Ventas";
             this.tabVenta.Enter += new System.EventHandler(this.tabVenta_Enter);
+            // 
+            // cbEmpleadoVentas
+            // 
+            this.cbEmpleadoVentas.FormattingEnabled = true;
+            this.cbEmpleadoVentas.Location = new System.Drawing.Point(29, 53);
+            this.cbEmpleadoVentas.Name = "cbEmpleadoVentas";
+            this.cbEmpleadoVentas.Size = new System.Drawing.Size(205, 24);
+            this.cbEmpleadoVentas.TabIndex = 12;
             // 
             // dtpFechaVenta
             // 
@@ -829,9 +839,9 @@
             this.label6.Location = new System.Drawing.Point(27, 26);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 20);
+            this.label6.Size = new System.Drawing.Size(74, 20);
             this.label6.TabIndex = 3;
-            this.label6.Text = "Id Empleado:";
+            this.label6.Text = "Empleado:";
             // 
             // tbTotal
             // 
@@ -841,17 +851,10 @@
             this.tbTotal.Size = new System.Drawing.Size(203, 22);
             this.tbTotal.TabIndex = 2;
             // 
-            // tbIdEmpleado
-            // 
-            this.tbIdEmpleado.Location = new System.Drawing.Point(31, 51);
-            this.tbIdEmpleado.Margin = new System.Windows.Forms.Padding(4);
-            this.tbIdEmpleado.Name = "tbIdEmpleado";
-            this.tbIdEmpleado.Size = new System.Drawing.Size(203, 22);
-            this.tbIdEmpleado.TabIndex = 0;
-            // 
             // tabPromocion
             // 
             this.tabPromocion.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tabPromocion.Controls.Add(this.cbProductoPromocion);
             this.tabPromocion.Controls.Add(this.dtpFechaFinalPromo);
             this.tabPromocion.Controls.Add(this.dtpFechaInicioPromo);
             this.tabPromocion.Controls.Add(this.label12);
@@ -863,7 +866,6 @@
             this.tabPromocion.Controls.Add(this.btModificarPromocion);
             this.tabPromocion.Controls.Add(this.btAgregarPromocion);
             this.tabPromocion.Controls.Add(this.tbDescuento);
-            this.tabPromocion.Controls.Add(this.tbIdProducto);
             this.tabPromocion.Location = new System.Drawing.Point(4, 25);
             this.tabPromocion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPromocion.Name = "tabPromocion";
@@ -872,6 +874,14 @@
             this.tabPromocion.TabIndex = 4;
             this.tabPromocion.Text = "Promociones";
             this.tabPromocion.Enter += new System.EventHandler(this.tabPromocion_Enter);
+            // 
+            // cbProductoPromocion
+            // 
+            this.cbProductoPromocion.FormattingEnabled = true;
+            this.cbProductoPromocion.Location = new System.Drawing.Point(50, 45);
+            this.cbProductoPromocion.Name = "cbProductoPromocion";
+            this.cbProductoPromocion.Size = new System.Drawing.Size(203, 24);
+            this.cbProductoPromocion.TabIndex = 24;
             // 
             // dtpFechaFinalPromo
             // 
@@ -931,9 +941,9 @@
             this.label11.Location = new System.Drawing.Point(50, 22);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 20);
+            this.label11.Size = new System.Drawing.Size(69, 20);
             this.label11.TabIndex = 18;
-            this.label11.Text = "Id Producto:";
+            this.label11.Text = "Producto:";
             // 
             // dgPromocion
             // 
@@ -991,17 +1001,12 @@
             this.tbDescuento.Size = new System.Drawing.Size(203, 22);
             this.tbDescuento.TabIndex = 12;
             // 
-            // tbIdProducto
-            // 
-            this.tbIdProducto.Location = new System.Drawing.Point(50, 42);
-            this.tbIdProducto.Margin = new System.Windows.Forms.Padding(4);
-            this.tbIdProducto.Name = "tbIdProducto";
-            this.tbIdProducto.Size = new System.Drawing.Size(203, 22);
-            this.tbIdProducto.TabIndex = 10;
-            // 
             // tabDetalleVenta
             // 
             this.tabDetalleVenta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tabDetalleVenta.Controls.Add(this.cbIdPromocionDetalleVenta);
+            this.tabDetalleVenta.Controls.Add(this.cbIdVentaDetalleVenta);
+            this.tabDetalleVenta.Controls.Add(this.cbProductoDetalleVenta);
             this.tabDetalleVenta.Controls.Add(this.label17);
             this.tabDetalleVenta.Controls.Add(this.tbIdVenta);
             this.tabDetalleVenta.Controls.Add(this.label13);
@@ -1014,7 +1019,6 @@
             this.tabDetalleVenta.Controls.Add(this.btModificarDetalleVenta);
             this.tabDetalleVenta.Controls.Add(this.btAgregarDetalleVenta);
             this.tabDetalleVenta.Controls.Add(this.tbSubtotal);
-            this.tabDetalleVenta.Controls.Add(this.tbIdProducto2);
             this.tabDetalleVenta.Controls.Add(this.tbIdPromocion);
             this.tabDetalleVenta.Location = new System.Drawing.Point(4, 25);
             this.tabDetalleVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1039,7 +1043,7 @@
             // 
             // tbIdVenta
             // 
-            this.tbIdVenta.Location = new System.Drawing.Point(47, 35);
+            this.tbIdVenta.Location = new System.Drawing.Point(407, 198);
             this.tbIdVenta.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdVenta.Name = "tbIdVenta";
             this.tbIdVenta.Size = new System.Drawing.Size(203, 22);
@@ -1089,9 +1093,9 @@
             this.label16.Location = new System.Drawing.Point(47, 133);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(84, 20);
+            this.label16.Size = new System.Drawing.Size(69, 20);
             this.label16.TabIndex = 30;
-            this.label16.Text = "Id Producto:";
+            this.label16.Text = "Producto:";
             // 
             // tbCantidad
             // 
@@ -1156,17 +1160,9 @@
             this.tbSubtotal.Size = new System.Drawing.Size(203, 22);
             this.tbSubtotal.TabIndex = 24;
             // 
-            // tbIdProducto2
-            // 
-            this.tbIdProducto2.Location = new System.Drawing.Point(47, 153);
-            this.tbIdProducto2.Margin = new System.Windows.Forms.Padding(4);
-            this.tbIdProducto2.Name = "tbIdProducto2";
-            this.tbIdProducto2.Size = new System.Drawing.Size(203, 22);
-            this.tbIdProducto2.TabIndex = 23;
-            // 
             // tbIdPromocion
             // 
-            this.tbIdPromocion.Location = new System.Drawing.Point(47, 90);
+            this.tbIdPromocion.Location = new System.Drawing.Point(618, 198);
             this.tbIdPromocion.Margin = new System.Windows.Forms.Padding(4);
             this.tbIdPromocion.Name = "tbIdPromocion";
             this.tbIdPromocion.Size = new System.Drawing.Size(203, 22);
@@ -1865,6 +1861,30 @@
             this.dGEntregas.TabIndex = 0;
             this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
             // 
+            // cbProductoDetalleVenta
+            // 
+            this.cbProductoDetalleVenta.FormattingEnabled = true;
+            this.cbProductoDetalleVenta.Location = new System.Drawing.Point(51, 165);
+            this.cbProductoDetalleVenta.Name = "cbProductoDetalleVenta";
+            this.cbProductoDetalleVenta.Size = new System.Drawing.Size(199, 24);
+            this.cbProductoDetalleVenta.TabIndex = 36;
+            // 
+            // cbIdVentaDetalleVenta
+            // 
+            this.cbIdVentaDetalleVenta.FormattingEnabled = true;
+            this.cbIdVentaDetalleVenta.Location = new System.Drawing.Point(51, 44);
+            this.cbIdVentaDetalleVenta.Name = "cbIdVentaDetalleVenta";
+            this.cbIdVentaDetalleVenta.Size = new System.Drawing.Size(199, 24);
+            this.cbIdVentaDetalleVenta.TabIndex = 37;
+            // 
+            // cbIdPromocionDetalleVenta
+            // 
+            this.cbIdPromocionDetalleVenta.FormattingEnabled = true;
+            this.cbIdPromocionDetalleVenta.Location = new System.Drawing.Point(51, 99);
+            this.cbIdPromocionDetalleVenta.Name = "cbIdPromocionDetalleVenta";
+            this.cbIdPromocionDetalleVenta.Size = new System.Drawing.Size(199, 24);
+            this.cbIdPromocionDetalleVenta.TabIndex = 38;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1963,7 +1983,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbTotal;
-        private System.Windows.Forms.TextBox tbIdEmpleado;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -1973,7 +1992,6 @@
         private System.Windows.Forms.Button btModificarPromocion;
         private System.Windows.Forms.Button btAgregarPromocion;
         private System.Windows.Forms.TextBox tbDescuento;
-        private System.Windows.Forms.TextBox tbIdProducto;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox tbIdVenta;
         private System.Windows.Forms.Label label13;
@@ -1986,7 +2004,6 @@
         private System.Windows.Forms.Button btModificarDetalleVenta;
         private System.Windows.Forms.Button btAgregarDetalleVenta;
         private System.Windows.Forms.TextBox tbSubtotal;
-        private System.Windows.Forms.TextBox tbIdProducto2;
         private System.Windows.Forms.TextBox tbIdPromocion;
         private System.Windows.Forms.Button btActualizarProducto;
         private System.Windows.Forms.Label lbCostoVentaProducto;
@@ -2059,6 +2076,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpFechaFinalPromo;
         private System.Windows.Forms.DateTimePicker dtpFechaInicioPromo;
+        private System.Windows.Forms.ComboBox cbEmpleadoVentas;
+        private System.Windows.Forms.ComboBox cbProductoPromocion;
+        private System.Windows.Forms.ComboBox cbProductoDetalleVenta;
+        private System.Windows.Forms.ComboBox cbIdPromocionDetalleVenta;
+        private System.Windows.Forms.ComboBox cbIdVentaDetalleVenta;
     }
 }
 

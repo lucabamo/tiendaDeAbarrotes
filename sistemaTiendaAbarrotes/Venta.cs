@@ -31,7 +31,7 @@ namespace sistemaTiendaAbarrotes
             return table; 
         }
 
-        public void insertVenta(SqlConnection connection,string idEmpleado, DateTime fechaVenta, string total)
+        public void insertVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta, string total)
         {
             string query = "INSERT INTO Transaccion.Venta (IdEmpleado, FechaVenta, Total)" +
                 "VALUES (@idEmpleado, @fechaVenta, @total)";
@@ -53,7 +53,7 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void updateVenta(SqlConnection connection, string idEmpleado, DateTime fechaVenta, string total, string idVenta)
+        public void updateVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta, string total, string idVenta)
         {
             string query = "UPDATE Transaccion.Venta SET IdEmpleado=@idEmpleado, FechaVenta = @fechaVenta, Total = @total WHERE IdVenta = @idVenta";
             SqlCommand command = new SqlCommand(query, connection);
@@ -89,6 +89,23 @@ namespace sistemaTiendaAbarrotes
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void consultaEmpleados(SqlConnection connection, ComboBox empleados)
+        {
+            string consultaEmpleados = "SELECT IdEmpleado, Nombre FROM Empresa.Empleado";
+            SqlCommand command = new SqlCommand(consultaEmpleados, connection);
+            
+            DataTable tablaEmpleados = new DataTable();
+            SqlDataReader reader = command.ExecuteReader();
+                
+            tablaEmpleados.Load(reader);
+            empleados.ValueMember = "IdEmpleado";
+            empleados.DisplayMember = "Nombre";
+            empleados.DataSource = tablaEmpleados;
+
+            empleados.Text = "";
+            empleados.SelectedIndex = -1;
         }
 
         public string IdVenta { get => idVenta; set => idVenta = value; }

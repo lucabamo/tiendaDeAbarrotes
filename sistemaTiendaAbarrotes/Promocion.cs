@@ -32,7 +32,7 @@ namespace sistemaTiendaAbarrotes
             return table;
         }
 
-        public void insertPromocion(SqlConnection connection, string idProducto, DateTime fechaInicio, DateTime fechaFinal, string descuento)
+        public void insertPromocion(SqlConnection connection, Int64 idProducto, DateTime fechaInicio, DateTime fechaFinal, string descuento)
         {
             string query = "INSERT INTO Transaccion.Promocion (IdProducto, FechaInicio, FechaFinal, Descuento)" +
                 "VALUES (@idProducto, @fechaInicio, @fechaFinal, @descuento)";
@@ -55,7 +55,7 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void updatePromocion(SqlConnection connection, string idProducto, DateTime fechaInicio, DateTime fechaFinal, string descuento, string idPromocion)
+        public void updatePromocion(SqlConnection connection, Int64 idProducto, DateTime fechaInicio, DateTime fechaFinal, string descuento, string idPromocion)
         {
             string query = "UPDATE Transaccion.Promocion SET IdProducto=@idProducto, FechaInicio = @fechaInicio, FechaFinal = @fechaFinal, Descuento = @descuento WHERE IdPromocion = @idPromocion";
             SqlCommand command = new SqlCommand(query, connection);
@@ -93,6 +93,23 @@ namespace sistemaTiendaAbarrotes
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void consultaPromocion(SqlConnection connection, ComboBox producto)
+        {
+            string query = "SELECT IdProducto, Nombre FROM Inventario.Producto";
+            SqlCommand command = new SqlCommand(query, connection);
+
+            DataTable tablaProducto = new DataTable();
+            SqlDataReader reader = command.ExecuteReader();
+
+            tablaProducto.Load(reader);
+            producto.ValueMember = "IdProducto";
+            producto.DisplayMember = "Nombre";
+            producto.DataSource = tablaProducto;
+
+            producto.Text = "";
+            producto.SelectedIndex = -1;
         }
 
         public string IdPromocion { get => idPromocion; set => idPromocion = value; }
