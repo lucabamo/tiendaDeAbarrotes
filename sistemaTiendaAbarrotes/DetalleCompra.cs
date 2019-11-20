@@ -15,19 +15,19 @@ namespace sistemaTiendaAbarrotes
         ComboBox cbCompra;
         ComboBox cbProducto;
         TextBox tbCantidad;
-        TextBox tbSubtotal;
         DataGridView dtDetalleCompra;
-        string idDetalleCompra;
+        private string idDetalleCompra;
 
+        public string IdDetalleCompra { get => idDetalleCompra; set => idDetalleCompra = value; }
 
-        public DetalleCompra(SqlConnection con, ComboBox compra, ComboBox producto, TextBox cantidad, TextBox subtotal, DataGridView compras)
+        public DetalleCompra(SqlConnection con, ComboBox compra, ComboBox producto, TextBox cantidad, DataGridView compras)
         {
             conexion = con;
             cbCompra = compra;
             cbProducto = producto;
             tbCantidad = cantidad;
-            tbSubtotal = subtotal;
             dtDetalleCompra = compras;
+            idDetalleCompra = "";
 
             actualizaTabla();
         }
@@ -39,14 +39,12 @@ namespace sistemaTiendaAbarrotes
             Int64 IdCompra = (Int64)Compra.Row.ItemArray[0];
             Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
 
-            string query = "INSERT INTO Transaccion.DetalleCompra (IdCompra, IdProducto, Cantidad, Subtotal) VALUES (@compra, @producto, @cantidad, @subtotal) ";
+            string query = "INSERT INTO Transaccion.DetalleCompra (IdCompra, IdProducto, Cantidad) VALUES (@compra, @producto, @cantidad) ";
 
             SqlCommand comando = new SqlCommand(query, conexion);
             comando.Parameters.AddWithValue("@compra", IdCompra);
             comando.Parameters.AddWithValue("@producto", IdProducto);
             comando.Parameters.AddWithValue("@cantidad", tbCantidad.Text);
-            comando.Parameters.AddWithValue("@subtotal", tbSubtotal.Text);
-
 
             try
             {
@@ -58,6 +56,7 @@ namespace sistemaTiendaAbarrotes
             }
 
             actualizaTabla();
+            resetControles();
         }
 
         public void modificarDetalleCompra()
@@ -69,12 +68,11 @@ namespace sistemaTiendaAbarrotes
                 Int64 IdCompra = (Int64)Compra.Row.ItemArray[0];
                 Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
 
-                string query = "UPDATE Transaccion.Compra SET IdCompra = @compra, IdProducto = @producto, Cantidad = @cantidad, Subtotal = @subtotal WHERE IdDetalleCompra = @idDetalleCompra ";
+                string query = "UPDATE Transaccion.Compra SET IdCompra = @compra, IdProducto = @producto, Cantidad = @cantidad WHERE IdDetalleCompra = @idDetalleCompra ";
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@compra", IdCompra);
                 comando.Parameters.AddWithValue("@producto", IdProducto);
                 comando.Parameters.AddWithValue("@cantidad", tbCantidad.Text);
-                comando.Parameters.AddWithValue("@subtotal", tbSubtotal.Text);
                 comando.Parameters.AddWithValue("@idDetalleCompra", idDetalleCompra);
 
                 try
@@ -87,19 +85,35 @@ namespace sistemaTiendaAbarrotes
                 }
 
                 actualizaTabla();
+                resetControles();
 
-                cbCompra.Text = "";
-                cbCompra.SelectedIndex = -1;
-                cbProducto.Text = "";
-                cbProducto.SelectedIndex = -1;
-                tbCantidad.Text = "";
-                tbSubtotal.Text = "";
+               
             }
             else
                 MessageBox.Show("Debe seleccionar una fila.");
         }
 
-        
+
+        public void deleteDetalleCompra(SqlConnection connection)
+        {
+            string query = "DELETE FROM Transaccion.DetalleCompra WHERE IdDetalleCompra = @id";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@id", idDetalleCompra);
+
+            try
+            {
+                command.ExecuteNonQuery();
+                MessageBox.Show("Se ha eliminado correctamente");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            actualizaTabla();
+            resetControles();
+        }
+
 
         public void actualizaTabla()
         {
@@ -118,8 +132,6 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreCompra()
         {
-            //cbCompra.Items.Clear();
-
             string consultaCompras = "SELECT IdCompra FROM Transaccion.Compra";
             using (var command = new SqlCommand(consultaCompras, conexion))
             {
@@ -139,8 +151,6 @@ namespace sistemaTiendaAbarrotes
 
         public void llenaNombreProducto()
         {
-            //cbProducto.Items.Clear();
-
             string consultaProductos = "SELECT IdProducto, Nombre FROM Inventario.Producto";
             using (var command = new SqlCommand(consultaProductos, conexion))
             {
@@ -167,8 +177,16 @@ namespace sistemaTiendaAbarrotes
             cbCompra.SelectedValue = fila.Cells[0].Value;
             cbProducto.SelectedValue = fila.Cells[1].Value;
             tbCantidad.Text = fila.Cells[2].Value.ToString();
-            tbSubtotal.Text = fila.Cells[3].Value.ToString();
 
+        }
+
+        public void resetControles()
+        {
+            cbCompra.Text = "";
+            cbCompra.SelectedIndex = -1;
+            cbProducto.Text = "";
+            cbProducto.SelectedIndex = -1;
+            tbCantidad.Text = "";
         }
     }
 }

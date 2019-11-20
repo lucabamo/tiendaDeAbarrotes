@@ -23,23 +23,8 @@ namespace sistemaTiendaAbarrotes
         public Form1()
         {
             InitializeComponent();
-            venta = new Venta();
-            promocion = new Promocion();
-            detalleVenta = new DetalleVenta();
             conectar();
-            detalleDevolucion = new DetalleDevolucion(conexion,cbIdDevolucionDetalleDevo,cbIdProductoDetalleDevo,
-                tbCantidadDetalleDevo);
-            entrega = new Entrega(conexion,cBIdProveedor,cBIdDevolucion,cBIdEmpleado,dTFechaEntregaEntregas);
-
-            producto = new Producto(conexion, tbNombreProducto, tbExistenciasProducto, tbCostoProvProducto, tbCostoVentaProducto, dtProducto);
-            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, tbTotalCompras, dtCompras);
-            detalleCompra = new DetalleCompra(conexion, cbCompraDetalleCom, cbProductoDetalleCom, tbCantidadDetalleCom, tbSubtotalDetalleCom, dtDetalleCom);
-            empleado = new Empleado(conexion, tbEmpleadoNombre, tbEmpleadoUsuario, tbEmpleadoPass,
-                tbEmpleadoDomicilio, dTEmpleadoFN);
-            proveedor = new Proveedor(conexion, tbNombreProveedor, tbTelefonoProveedor, tbEmailProveedor,
-                tbRFCProveedor, tbDomicilioFiscal);
-            devolucion = new Devolucion(conexion, cbNombreEmpleadosDevo, cbVentasDevo, tbMotivoDevolucionDevo,
-                dtFechaVentaDevo, tbCantidadDevo);
+            inicializaObjetos();
         }
 
         private void conectar()
@@ -59,6 +44,23 @@ namespace sistemaTiendaAbarrotes
                 MessageBox.Show("No se pudo conectar");
             }
         }
+
+        private void inicializaObjetos()
+        {
+            empleado = new Empleado(conexion, tbEmpleadoNombre, tbEmpleadoUsuario, tbEmpleadoPass, tbEmpleadoDomicilio, dTEmpleadoFN);
+            proveedor = new Proveedor(conexion, tbNombreProveedor, tbTelefonoProveedor, tbEmailProveedor, tbRFCProveedor, tbDomicilioFiscal);
+            producto = new Producto(conexion, tbNombreProducto, tbExistenciasProducto, tbCostoProvProducto, tbCostoVentaProducto, dtProducto);
+            venta = new Venta();
+            promocion = new Promocion();
+            detalleVenta = new DetalleVenta();
+            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, tbTotalCompras, dtCompras);
+            detalleCompra = new DetalleCompra(conexion, cbCompraDetalleCom, cbProductoDetalleCom, tbCantidadDetalleCom, dtDetalleCom);
+            devolucion = new Devolucion(conexion, cbNombreEmpleadosDevo, cbVentasDevo, tbMotivoDevolucionDevo, dtFechaVentaDevo, tbCantidadDevo);
+            detalleDevolucion = new DetalleDevolucion(conexion, cbIdDevolucionDetalleDevo, cbIdProductoDetalleDevo, tbCantidadDetalleDevo);
+            entrega = new Entrega(conexion, cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntregaEntregas);
+
+        }
+
         private void TabVistas_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabVistas.SelectedIndex)
@@ -112,6 +114,7 @@ namespace sistemaTiendaAbarrotes
             detalleDevolucion.accesoIdDevolucion = ID;
             detalleDevolucion.cargaRegistroSeleccionado();
         }
+
         private void btAgregarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
@@ -236,7 +239,7 @@ namespace sistemaTiendaAbarrotes
             Int64 idVenta = (Int64)venta.Row.ItemArray[0];
             Int64 idPromocion = (Int64)promocion.Row.ItemArray[0];
 
-            detalleVenta.insertDetalleVenta(conexion, idVenta, idPromocion, idProducto, tbCantidad.Text, tbSubtotal.Text);
+            detalleVenta.insertDetalleVenta(conexion, idVenta, idPromocion, idProducto, tbCantidad.Text);
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             resetTabDetalleVenta();
             
@@ -252,7 +255,7 @@ namespace sistemaTiendaAbarrotes
             Int64 idVenta = (Int64)venta.Row.ItemArray[0];
             Int64 idPromocion = (Int64)promocion.Row.ItemArray[0];
 
-            detalleVenta.updateDetalleVenta(conexion,idVenta, idPromocion, idProducto, tbCantidad.Text, tbSubtotal.Text);
+            detalleVenta.updateDetalleVenta(conexion,idVenta, idPromocion, idProducto, tbCantidad.Text);
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             resetTabDetalleVenta();
         }
@@ -260,7 +263,7 @@ namespace sistemaTiendaAbarrotes
         private void btEliminarDetalleVenta_Click(object sender, EventArgs e)
         {
             dgDetalleVenta.DataSource = "";
-            detalleVenta.deleteDetalleVenta(conexion, tbIdVenta.Text);
+            detalleVenta.deleteDetalleVenta(conexion);
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             resetTabDetalleVenta();
         }
@@ -269,11 +272,11 @@ namespace sistemaTiendaAbarrotes
         {
             if (e.RowIndex < dgDetalleVenta.Rows.Count - 1 && dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value != null)
             {
-                cbIdVentaDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value;
-                cbIdPromocionDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[1].Value;
-                cbProductoDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[2].Value;
-                tbCantidad.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[3].Value.ToString();
-                tbSubtotal.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[4].Value.ToString();
+                detalleVenta.Id = dgDetalleVenta.Rows[e.RowIndex].Cells[0].Value.ToString();
+                cbIdVentaDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[1].Value;
+                cbIdPromocionDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[2].Value;
+                cbProductoDetalleVenta.SelectedValue = dgDetalleVenta.Rows[e.RowIndex].Cells[3].Value;
+                tbCantidad.Text = dgDetalleVenta.Rows[e.RowIndex].Cells[4].Value.ToString();
             }
         }
 
@@ -288,8 +291,6 @@ namespace sistemaTiendaAbarrotes
 
         private void resetTabDetalleVenta()
         {
-            tbIdVenta.Text = "";
-            tbIdPromocion.Text = "";
             cbProductoDetalleVenta.Text = "";
             cbProductoDetalleVenta.SelectedValue = -1;
             cbIdPromocionDetalleVenta.Text = "";
@@ -297,13 +298,6 @@ namespace sistemaTiendaAbarrotes
             cbIdVentaDetalleVenta.Text = "";
             cbIdVentaDetalleVenta.SelectedValue = -1;
             tbCantidad.Text = "";
-            tbSubtotal.Text = "";
-        }
-
-        
-        private void tabProducto_Click(object sender, EventArgs e)
-        {
-           
         }
 
         private void dtProducto_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -348,6 +342,7 @@ namespace sistemaTiendaAbarrotes
 
         private void dtDetalleCom_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            detalleCompra.IdDetalleCompra = dtDetalleCom.Rows[e.RowIndex].Cells[0].Value.ToString();
             detalleCompra.colocaDetalleCompra(dtDetalleCom.CurrentRow.Index);
         }
 
@@ -359,6 +354,11 @@ namespace sistemaTiendaAbarrotes
         private void btActualizarDetalleCom_Click(object sender, EventArgs e)
         {
             detalleCompra.modificarDetalleCompra();
+        }
+
+        private void btEliminarDetalleCompra_Click(object sender, EventArgs e)
+        {
+            detalleCompra.deleteDetalleCompra(conexion);
         }
 
         private void BAgregarEmpleado_Click(object sender, EventArgs e)
@@ -436,9 +436,20 @@ namespace sistemaTiendaAbarrotes
             devolucion.Consulta(dgDevoluciones);
         }
 
-        private void dgPromocion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void tabCompra_Enter(object sender, EventArgs e)
         {
+            compra.llenaNombreEmpleado();
+        }
 
+        private void tabEmpleado_Enter(object sender, EventArgs e)
+        {
+            empleado.Consulta(dGEmpleados);
+        }
+
+        private void tabDetalleCompra_Enter(object sender, EventArgs e)
+        {
+            detalleCompra.llenaNombreCompra();
+            detalleCompra.llenaNombreProducto();
         }
     }
 }

@@ -11,9 +11,13 @@ namespace sistemaTiendaAbarrotes
 {
     public class DetalleVenta
     {
-       public DetalleVenta()
-        {
+       private string id;
 
+        public string Id { get => id; set => id = value; }
+
+        public DetalleVenta()
+        {
+            id = "";
         }
 
         public DataTable selectDetalleVenta(SqlConnection connection)
@@ -29,18 +33,17 @@ namespace sistemaTiendaAbarrotes
             return table;
         }
 
-        public void insertDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad, string subtotal)
+        public void insertDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad)
         {
-            string query = "INSERT INTO Transaccion.DetalleVenta (IdVenta, IdPromocion, IdProducto, Cantidad, Subtotal)" +
-                "VALUES (@idVenta, @idPromocion, @idProducto, @cantidad, @subtotal)";
+            string query = "INSERT INTO Transaccion.DetalleVenta (IdVenta, IdPromocion, IdProducto, Cantidad)" +
+                "VALUES (@idVenta, @idPromocion, @idProducto, @cantidad)";
 
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@idVenta", idVenta);
             command.Parameters.AddWithValue("@idPromocion", idPromocion);
             command.Parameters.AddWithValue("@idProducto", idProducto);
-            command.Parameters.AddWithValue("@cantidad", cantidad);
-            command.Parameters.AddWithValue("@subtotal", subtotal);
+            command.Parameters.AddWithValue("@cantidad", cantidad);       
 
             try
             {
@@ -53,16 +56,16 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void updateDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad, string subtotal)
+        public void updateDetalleVenta(SqlConnection connection, Int64 idVenta, Int64 idPromocion, Int64 idProducto, string cantidad)
         {
-            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @cantidad, SubTotal = @subtotal WHERE Id";
+            string query = "UPDATE Transaccion.DetalleVenta SET IdVenta = @idVenta, IdPromocion = @idPromocion, IdProducto = @idProducto, Cantidad = @cantidad WHERE IdDetalleVenta = @id";
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@idVenta", idVenta);
             command.Parameters.AddWithValue("@idPromocion", idPromocion);
             command.Parameters.AddWithValue("@idProducto", idProducto);
             command.Parameters.AddWithValue("@cantidad", cantidad);
-            command.Parameters.AddWithValue("@subtotal", subtotal);
+            command.Parameters.AddWithValue("@id", id);
 
             try
             {
@@ -75,11 +78,11 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
-        public void deleteDetalleVenta(SqlConnection connection, string idVenta)
+        public void deleteDetalleVenta(SqlConnection connection)
         {
-            string query = "DELETE FROM Transaccion.DetalleVenta WHERE IdVenta = @IdVenta";
+            string query = "DELETE FROM Transaccion.DetalleVenta WHERE IdDetalleVenta = @id";
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@IdVenta", idVenta);
+            command.Parameters.AddWithValue("@id", id);
 
             try
             {

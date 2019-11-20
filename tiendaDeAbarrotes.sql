@@ -66,15 +66,18 @@ CREATE TABLE Transaccion.Promocion(
 
 --Tabla detalle venta--
 CREATE TABLE Transaccion.DetalleVenta(
+	IdDetalleVenta BIGINT IDENTITY(1,1) NOT NULL,
 	IdVenta BIGINT NOT NULL,
 	IdPromocion BIGINT NOT NULL,
 	IdProducto BIGINT NOT NULL,
 	Cantidad INT NOT NULL,
 	Subtotal REAL, --Usado para calcular subtotal--
+	CONSTRAINT PK_DETALLEVENTA PRIMARY KEY (IdDetalleVenta),
 	CONSTRAINT FK_VENTA2 FOREIGN KEY(IdVenta) REFERENCES Transaccion.Venta(IdVenta),
 	CONSTRAINT FK_PROMOCION FOREIGN KEY(IdPromocion) REFERENCES Transaccion.Promocion(IdPromocion),
 	CONSTRAINT FK_PRODUCTO1 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
+
 
 CREATE TABLE Transaccion.Compra(
 	IdCompra BIGINT IDENTITY(1,1) NOT NULL,
@@ -88,13 +91,17 @@ CREATE TABLE Transaccion.Compra(
 )
 
 CREATE TABLE Transaccion.DetalleCompra(
+	IdDetalleCompra BIGINT IDENTITY(1,1) NOT NULL,
 	IdCompra BIGINT NOT NULL,
 	IdProducto BIGINT NOT NULL,
 	Cantidad INT NOT NULL,
 	Subtotal REAL,
+	CONSTRAINT PK_DETALLECOMPRA PRIMARY KEY (IdDetalleCompra),
 	CONSTRAINT FK_COMPRA1 FOREIGN KEY(IdCompra) REFERENCES Transaccion.Compra(IdCompra),
 	CONSTRAINT FK_PRODUCTO3 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
+
+DROP TABLE Transaccion.DetalleCompra
 
 CREATE TABLE Transaccion.Devolucion(
 	IdDevolucion BIGINT IDENTITY(1,1) NOT NULL,
@@ -180,6 +187,23 @@ BEGIN
 	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto
 END
 
+--Trigger para calcular el subtotal de un detalle de compra a partir del precio del producto y la cantidad
+CREATE TRIGGER Transaccion.calculaSubtotalCompra
+ON Transaccion.DetalleCompra
+AFTER INSERT,UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdCompra AS BIGINT
+	DECLARE @IdProducto AS BIGINT
+	DECLARE @Cantidad AS INT
+	DECLARE @CostoProveedor AS REAL
+	SELECT @IdCompra = Insertada.IdCompra, @IdProducto = Insertada.IdProducto,
+	@Cantidad = Insertada.Cantidad, @CostoProveedor = Producto.CostoProveedor FROM inserted Insertada
+	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
+	UPDATE Transaccion.DetalleCompra SET Subtotal = (@CostoProveedor * @Cantidad)
+	WHERE IdCompra = @IdCompra AND IdProducto = @IdProducto
+END
 --Trigger para actualizar la existencia del producto despu�s de una devoluci�n
 CREATE TRIGGER Transaccion.existenciaProductoDevolucion
 ON Transaccion.Devolucion
@@ -200,14 +224,6 @@ BEGIN
 	WHERE IdProducto = @IdProducto
 END
 
-
-
-INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Park Jimin', 'Seoul', '1995-10-13', null, 'parkChimChim', '12345')
-INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) VALUES ('Jung Hoseok', 'Seoul', '1994-02-18', null, 'J-hope', '12345')
-INSERT INTO Inventario.Producto (Nombre, Existencia, CostroProveedor, CostoVenta) VALUES ('Agua', 2, 3.00, 5.00)
-
-SELECT * FROM Transaccion.Venta;
-SELECT * FROM Empresa.Empleado
 
 ---Trigger para actualizar el inventario cuando se realiza una compra--
 CREATE TRIGGER Transaccion.ActualizarExistenciasCompra
@@ -245,22 +261,18 @@ END
 
 --Trigger para calcular el descuento de una promoción y validar la fecha--
 --CREATE TRIGGER Transaccion.validaPromocion
---ON 
+--ON
 
-SELECT * FROM Inventario.Producto
+--Reglas
+CREATE RULE R_Existencias AS @Existencia >= 0 AND @Existencia <=100
 
-SELECT * FROM Transaccion.DetalleVenta
+EXEC sp_bindrule 'R_Existencias', 'Inventario.Producto.Existencia' 
 
-INSERT INTO Transaccion.DetalleVenta VALUES(1,1,1,10,200)
+CREATE RULE R_Cantidad AS @Cantidad >= 1 AND @Cantidad <= 100
+EXEC sp_bindrule 'R_Cantidad', 'Transaccion.DetalleCompra.Cantidad'
 
-SELECT * FROM Transaccion.DetalleCompra
-INSERT INTO Transaccion.DetalleCompra (IdCompra,IdProducto, Cantidad, Subtotal) VALUES (1,1,6,100)
-SELECT * FROM Transaccion.Compra
+CREATE RULE R_Email AS @Email LIKE '%_@__%.__%'
+EXEC sp_bindrule 'R_Email', 'Empresa.Proveedor.Email'
 
-SELECT * FROM Empresa.Proveedor
-SELECT * FROM Empresa.Empleado
-INSERT INTO Empresa.Proveedor (Nombre, Telefono, Email, RFC, DomicilioFiscal) VALUES ('Kim Namjoon', 252525, 'moonchild@gmail.com', 'sfsfsfsfsac', 'domicilio')
-INSERT INTO Transaccion.Compra (IdProveedor, IdEmpleado, Fecha, Total) VALUES (1,1, '2019-01-01', 100)
-SELECT * FROM Transaccion.Venta
 
-SELECT * FROM Transaccion.Promocion
+
