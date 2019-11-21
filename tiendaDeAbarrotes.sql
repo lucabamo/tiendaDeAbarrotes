@@ -173,6 +173,30 @@ END
 
 DROP TRIGGER Transaccion.validaPromocion
 
+--Trigger para validar la fecha de una promoción--
+CREATE TRIGGER Transaccion.validaFechaPromocion
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+	AS
+	BEGIN 
+		SET NOCOUNT ON
+		DECLARE @IdDetalle AS BIGINT
+		DECLARE @IdPromocion AS BIGINT 
+		DECLARE @Descuento AS REAL
+		DECLARE @FechaInicio AS DATE
+		DECLARE @FechaFinal AS DATE
+		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdPromocion = Insertada.IdPromocion,
+		@Descuento = Promocion.Descuento, @FechaInicio = Promocion.FechaInicio, 
+		@FechaFinal = Promocion.FechaFinal FROM inserted Insertada
+		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
+		
+		IF GETDATE() NOT BETWEEN @FechaInicio AND @FechaFinal 
+			BEGIN
+				UPDATE Transaccion.Promocion SET Descuento = 0
+				WHERE IdPromocion = @IdPromocion 
+			END
+END 
+
 --Trigger para calcular el descuento de una promoción y validar la fecha--
 CREATE TRIGGER Transaccion.validaPromocion
 	ON Transaccion.DetalleVenta
