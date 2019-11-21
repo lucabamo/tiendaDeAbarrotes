@@ -171,12 +171,12 @@ namespace sistemaTiendaAbarrotes
         public void colocaDetalleCompra(int index)
         {
             DataGridViewRow fila = dtDetalleCompra.CurrentRow;
-            idDetalleCompra = index.ToString();
+           // idDetalleCompra = index.ToString();
             fila.Selected = true;
 
-            cbCompra.SelectedValue = fila.Cells[0].Value;
-            cbProducto.SelectedValue = fila.Cells[1].Value;
-            tbCantidad.Text = fila.Cells[2].Value.ToString();
+            cbCompra.SelectedValue = fila.Cells[1].Value;
+            cbProducto.SelectedValue = fila.Cells[2].Value;
+            tbCantidad.Text = fila.Cells[3].Value.ToString();
 
         }
 

@@ -169,7 +169,7 @@ BEGIN
 	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
 END
 
---Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad
+--Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad y el total de una venta
 CREATE TRIGGER Transaccion.calculaSubtotal
 ON Transaccion.DetalleVenta
 AFTER INSERT,UPDATE
@@ -177,15 +177,44 @@ AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @IdVenta AS BIGINT
+	DECLARE @IdDetalle AS BIGINT 
 	DECLARE @IdProducto AS BIGINT
 	DECLARE @Cantidad AS INT
 	DECLARE @CostoVenta AS REAL
-	SELECT @IdVenta = Insertada.IdVenta, @IdProducto = Insertada.IdProducto,
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalVenta AS REAL
+	DECLARE @Subtotal AS REAL
+	SELECT @IdVenta = Insertada.IdVenta, @IdProducto = Insertada.IdProducto, @IdDetalle = Insertada.IdDetalleVenta,
 	@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta FROM inserted Insertada
 	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
 	UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad)
-	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto
+	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
+	SELECT @Subtotal = (@CostoVenta * @Cantidad)
+	SELECT @TotalVenta = Total FROM Transaccion.Venta WHERE IdVenta = @IdVenta
+	SELECT @Resultado = @TotalVenta + @Subtotal
+	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
 END
+
+DROP TRIGGER Transaccion.calculaSubtotal
+
+--Trigger para actualizar el total de la venta despues de eliminar
+CREATE TRIGGER Transaccion.actualizaTotalVenta
+ON Transaccion.DetalleVenta
+AFTER DELETE
+AS 
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdVenta AS BIGINT
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalVenta AS REAL
+	DECLARE @Subtotal AS REAL
+	SELECT @IdVenta = IdVenta, @Subtotal = Subtotal FROM deleted
+    SELECT @TotalVenta = Total FROM Transaccion.Venta WHERE IdVenta = @IdVenta
+	SELECT @Resultado = @TotalVenta - @Subtotal
+	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
+END
+
+DROP TRIGGER Transaccion.actualizaTotalVenta
 
 --Trigger para calcular el subtotal de un detalle de compra a partir del precio del producto y la cantidad
 CREATE TRIGGER Transaccion.calculaSubtotalCompra
@@ -195,15 +224,42 @@ AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @IdCompra AS BIGINT
+	DECLARE @IdDetalle AS BIGINT
 	DECLARE @IdProducto AS BIGINT
 	DECLARE @Cantidad AS INT
 	DECLARE @CostoProveedor AS REAL
-	SELECT @IdCompra = Insertada.IdCompra, @IdProducto = Insertada.IdProducto,
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalCompra AS REAL
+	DECLARE @Subtotal AS REAL
+	SELECT @IdCompra = Insertada.IdCompra, @IdProducto = Insertada.IdProducto, @IdDetalle = Insertada.IdDetalleCompra,
 	@Cantidad = Insertada.Cantidad, @CostoProveedor = Producto.CostoProveedor FROM inserted Insertada
 	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
 	UPDATE Transaccion.DetalleCompra SET Subtotal = (@CostoProveedor * @Cantidad)
-	WHERE IdCompra = @IdCompra AND IdProducto = @IdProducto
+	WHERE IdCompra = @IdCompra AND IdProducto = @IdProducto AND IdDetalleCompra = @IdDetalle
+	SELECT @Subtotal = (@CostoProveedor * @Cantidad)
+	SELECT @TotalCompra = Total FROM Transaccion.Compra WHERE IdCompra = @IdCompra
+	SELECT @Resultado = @TotalCompra + @Subtotal
+	UPDATE Transaccion.Compra SET Total = @Resultado WHERE IdCompra = @IdCompra
 END
+
+DROP TRIGGER Transaccion.calculaSubtotalCompra
+
+CREATE TRIGGER Transaccion.actualizaTotalCompra
+ON Transaccion.DetalleCompra
+AFTER DELETE
+AS 
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdCompra AS BIGINT
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalCompra AS REAL
+	DECLARE @Subtotal AS REAL
+	SELECT @IdCompra = IdCompra, @Subtotal = Subtotal FROM deleted
+    SELECT @TotalCompra = Total FROM Transaccion.Compra WHERE IdCompra = @IdCompra
+	SELECT @Resultado = @TotalCompra - @Subtotal
+	UPDATE Transaccion.Compra SET Total = @Resultado WHERE IdCompra = @IdCompra
+END
+
 --Trigger para actualizar la existencia del producto despu�s de una devoluci�n
 CREATE TRIGGER Transaccion.existenciaProductoDevolucion
 ON Transaccion.Devolucion
@@ -264,7 +320,7 @@ END
 --ON
 
 --Reglas
-CREATE RULE R_Existencias AS @Existencia >= 0 AND @Existencia <=100
+CREATE RULE R_Existencias AS @Existencia BETWEEN 0 AND 100
 
 EXEC sp_bindrule 'R_Existencias', 'Inventario.Producto.Existencia' 
 
@@ -275,4 +331,5 @@ CREATE RULE R_Email AS @Email LIKE '%_@__%.__%'
 EXEC sp_bindrule 'R_Email', 'Empresa.Proveedor.Email'
 
 
-
+SELECT * FROM Transaccion.DetalleCompra
+DELETE FROM Transaccion.DetalleCompra WHERE IdDetalleCompra = 2

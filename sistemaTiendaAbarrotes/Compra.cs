@@ -15,17 +15,15 @@ namespace sistemaTiendaAbarrotes
         ComboBox cbEmpleado;
         ComboBox cbProveedor;
         DateTimePicker dateFechaCompra;
-        TextBox tbTotal;
         DataGridView dtCompras;
         string idCompra;
 
-        public Compra(SqlConnection con, ComboBox empleado, ComboBox proveedor, DateTimePicker fecha, TextBox total, DataGridView compras)
+        public Compra(SqlConnection con, ComboBox empleado, ComboBox proveedor, DateTimePicker fecha, DataGridView compras)
         {
             conexion = con;
             cbEmpleado = empleado;
             cbProveedor = proveedor;
             dateFechaCompra = fecha;
-            tbTotal = total;
             dtCompras = compras;
 
             actualizaTabla();
@@ -45,7 +43,7 @@ namespace sistemaTiendaAbarrotes
             comando.Parameters.AddWithValue("@proveedor", IdProveedor);
             comando.Parameters.AddWithValue("@empleado", IdEmpleado);
             comando.Parameters.AddWithValue("@fecha", FechaCompra);
-            comando.Parameters.AddWithValue("@total", tbTotal.Text);
+            comando.Parameters.AddWithValue("@total", 0);
 
 
             try
@@ -70,12 +68,11 @@ namespace sistemaTiendaAbarrotes
                 Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
                 DateTime FechaCompra = dateFechaCompra.Value.Date;
 
-                string query = "UPDATE Transaccion.Compra SET IdProveedor = @proveedor, IdEmpleado = @empleado, Fecha = @fecha, Total = @total WHERE IdCompra = @idCompra ";
+                string query = "UPDATE Transaccion.Compra SET IdProveedor = @proveedor, IdEmpleado = @empleado, Fecha = @fecha WHERE IdCompra = @idCompra ";
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@proveedor", IdProveedor);
                 comando.Parameters.AddWithValue("@empleado", IdEmpleado);
                 comando.Parameters.AddWithValue("@fecha", FechaCompra);
-                comando.Parameters.AddWithValue("@total", tbTotal.Text);
                 comando.Parameters.AddWithValue("@idCompra", idCompra);
 
                 try
@@ -94,7 +91,7 @@ namespace sistemaTiendaAbarrotes
                 cbProveedor.Text = "";
                 cbProveedor.SelectedIndex = -1;
                 dateFechaCompra.Value = System.DateTime.Now;
-                tbTotal.Text = "";
+              
             }
             else
                 MessageBox.Show("Debe seleccionar una fila.");
@@ -124,7 +121,7 @@ namespace sistemaTiendaAbarrotes
                 cbProveedor.Text = "";
                 cbProveedor.SelectedIndex = -1;
                 dateFechaCompra.Value = System.DateTime.Now;
-                tbTotal.Text = "";
+                
 
             }
             else
@@ -193,7 +190,7 @@ namespace sistemaTiendaAbarrotes
             cbEmpleado.SelectedValue = fila.Cells[1].Value;
             cbProveedor.SelectedValue = fila.Cells[2].Value;
             dateFechaCompra.Value = (DateTime)fila.Cells[3].Value;
-            tbTotal.Text = fila.Cells[4].Value.ToString();
+       
 
         }
     }

@@ -53,7 +53,7 @@ namespace sistemaTiendaAbarrotes
             venta = new Venta();
             promocion = new Promocion();
             detalleVenta = new DetalleVenta();
-            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, tbTotalCompras, dtCompras);
+            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, dtCompras);
             detalleCompra = new DetalleCompra(conexion, cbCompraDetalleCom, cbProductoDetalleCom, tbCantidadDetalleCom, dtDetalleCom);
             devolucion = new Devolucion(conexion, cbNombreEmpleadosDevo, cbVentasDevo, tbMotivoDevolucionDevo, dtFechaVentaDevo, tbCantidadDevo);
             detalleDevolucion = new DetalleDevolucion(conexion, cbIdDevolucionDetalleDevo, cbIdProductoDetalleDevo, tbCantidadDetalleDevo);
@@ -121,7 +121,7 @@ namespace sistemaTiendaAbarrotes
 
             DataRowView Empleado = (DataRowView)cbEmpleadoVentas.SelectedItem;
             Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; 
-            venta.insertVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date, tbTotal.Text);
+            venta.insertVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date);
             dgVentas.DataSource = venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -131,7 +131,7 @@ namespace sistemaTiendaAbarrotes
             dgVentas.DataSource = "";
             DataRowView Empleado = (DataRowView)cbEmpleadoVentas.SelectedItem;
             Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
-            venta.updateVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date, tbTotal.Text, venta.IdVenta);
+            venta.updateVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date);
             dgVentas.DataSource =  venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -139,7 +139,7 @@ namespace sistemaTiendaAbarrotes
         private void btEliminarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
-            venta.deleteVenta(conexion, venta.IdVenta);
+            venta.deleteVenta(conexion);
             dgVentas.DataSource = venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -151,7 +151,6 @@ namespace sistemaTiendaAbarrotes
                 venta.IdVenta = dgVentas.Rows[e.RowIndex].Cells[0].Value.ToString();
                 cbEmpleadoVentas.SelectedValue = dgVentas.Rows[e.RowIndex].Cells[1].Value;
                 dtpFechaVenta.Value = (DateTime)dgVentas.Rows[e.RowIndex].Cells[2].Value;
-                tbTotal.Text = dgVentas.Rows[e.RowIndex].Cells[3].Value.ToString();
             }
         }
 
@@ -167,7 +166,6 @@ namespace sistemaTiendaAbarrotes
         {
             cbEmpleadoVentas.Text = "";
             cbEmpleadoVentas.SelectedIndex = -1;
-            tbTotal.Text = "";
         }
 
         private void btAgregarPromocion_Click(object sender, EventArgs e)
@@ -439,6 +437,8 @@ namespace sistemaTiendaAbarrotes
         private void tabCompra_Enter(object sender, EventArgs e)
         {
             compra.llenaNombreEmpleado();
+            compra.llenaNombreProveedor();
+            compra.actualizaTabla();
         }
 
         private void tabEmpleado_Enter(object sender, EventArgs e)
@@ -450,6 +450,11 @@ namespace sistemaTiendaAbarrotes
         {
             detalleCompra.llenaNombreCompra();
             detalleCompra.llenaNombreProducto();
+        }
+
+        private void tabProducto_Enter(object sender, EventArgs e)
+        {
+            producto.actualizaTabla();
         }
     }
 }

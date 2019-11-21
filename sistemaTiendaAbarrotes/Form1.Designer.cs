@@ -77,14 +77,12 @@
             this.tabVenta = new System.Windows.Forms.TabPage();
             this.cbEmpleadoVentas = new System.Windows.Forms.ComboBox();
             this.dtpFechaVenta = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
             this.dgVentas = new System.Windows.Forms.DataGridView();
             this.btEliminarVenta = new System.Windows.Forms.Button();
             this.btModificarVenta = new System.Windows.Forms.Button();
             this.btAgregarVenta = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tbTotal = new System.Windows.Forms.TextBox();
             this.tabPromocion = new System.Windows.Forms.TabPage();
             this.cbProductoPromocion = new System.Windows.Forms.ComboBox();
             this.dtpFechaFinalPromo = new System.Windows.Forms.DateTimePicker();
@@ -118,13 +116,12 @@
             this.btActualizarCompras = new System.Windows.Forms.Button();
             this.btInsertarCompras = new System.Windows.Forms.Button();
             this.dtCompras = new System.Windows.Forms.DataGridView();
-            this.lbTotalCompras = new System.Windows.Forms.Label();
-            this.tbTotalCompras = new System.Windows.Forms.TextBox();
             this.lbProveedorCompras = new System.Windows.Forms.Label();
             this.cbProveedorCompras = new System.Windows.Forms.ComboBox();
             this.lbEmpleadoCompras = new System.Windows.Forms.Label();
             this.cbEmpleadoCompras = new System.Windows.Forms.ComboBox();
             this.tabDetalleCompra = new System.Windows.Forms.TabPage();
+            this.btEliminarDetalleCompra = new System.Windows.Forms.Button();
             this.dtDetalleCom = new System.Windows.Forms.DataGridView();
             this.btActualizarDetalleCom = new System.Windows.Forms.Button();
             this.btInsertarDetalleCom = new System.Windows.Forms.Button();
@@ -169,7 +166,6 @@
             this.cBIdEmpleado = new System.Windows.Forms.ComboBox();
             this.cBIdProveedor = new System.Windows.Forms.ComboBox();
             this.dGEntregas = new System.Windows.Forms.DataGridView();
-            this.btEliminarDetalleCompra = new System.Windows.Forms.Button();
             this.tabVistas.SuspendLayout();
             this.tabEmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGEmpleados)).BeginInit();
@@ -602,6 +598,7 @@
             this.tabProducto.Size = new System.Drawing.Size(891, 517);
             this.tabProducto.TabIndex = 2;
             this.tabProducto.Text = "Productos";
+            this.tabProducto.Enter += new System.EventHandler(this.tabProducto_Enter);
             // 
             // btEliminarProducto
             // 
@@ -723,14 +720,12 @@
             this.tabVenta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tabVenta.Controls.Add(this.cbEmpleadoVentas);
             this.tabVenta.Controls.Add(this.dtpFechaVenta);
-            this.tabVenta.Controls.Add(this.label1);
             this.tabVenta.Controls.Add(this.dgVentas);
             this.tabVenta.Controls.Add(this.btEliminarVenta);
             this.tabVenta.Controls.Add(this.btModificarVenta);
             this.tabVenta.Controls.Add(this.btAgregarVenta);
             this.tabVenta.Controls.Add(this.label7);
             this.tabVenta.Controls.Add(this.label6);
-            this.tabVenta.Controls.Add(this.tbTotal);
             this.tabVenta.Location = new System.Drawing.Point(4, 25);
             this.tabVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabVenta.Name = "tabVenta";
@@ -750,22 +745,10 @@
             // 
             // dtpFechaVenta
             // 
-            this.dtpFechaVenta.Location = new System.Drawing.Point(279, 51);
+            this.dtpFechaVenta.Location = new System.Drawing.Point(29, 133);
             this.dtpFechaVenta.Name = "dtpFechaVenta";
             this.dtpFechaVenta.Size = new System.Drawing.Size(203, 22);
             this.dtpFechaVenta.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DarkCyan;
-            this.label1.Location = new System.Drawing.Point(30, 103);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Total:";
             // 
             // dgVentas
             // 
@@ -819,7 +802,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.DarkCyan;
-            this.label7.Location = new System.Drawing.Point(278, 28);
+            this.label7.Location = new System.Drawing.Point(27, 100);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(86, 20);
@@ -837,14 +820,6 @@
             this.label6.Size = new System.Drawing.Size(74, 20);
             this.label6.TabIndex = 3;
             this.label6.Text = "Empleado:";
-            // 
-            // tbTotal
-            // 
-            this.tbTotal.Location = new System.Drawing.Point(31, 125);
-            this.tbTotal.Margin = new System.Windows.Forms.Padding(4);
-            this.tbTotal.Name = "tbTotal";
-            this.tbTotal.Size = new System.Drawing.Size(203, 22);
-            this.tbTotal.TabIndex = 2;
             // 
             // tabPromocion
             // 
@@ -1155,8 +1130,6 @@
             this.tabCompra.Controls.Add(this.btActualizarCompras);
             this.tabCompra.Controls.Add(this.btInsertarCompras);
             this.tabCompra.Controls.Add(this.dtCompras);
-            this.tabCompra.Controls.Add(this.lbTotalCompras);
-            this.tabCompra.Controls.Add(this.tbTotalCompras);
             this.tabCompra.Controls.Add(this.lbProveedorCompras);
             this.tabCompra.Controls.Add(this.cbProveedorCompras);
             this.tabCompra.Controls.Add(this.lbEmpleadoCompras);
@@ -1231,24 +1204,6 @@
             this.dtCompras.TabIndex = 6;
             this.dtCompras.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtCompras_CellClick);
             // 
-            // lbTotalCompras
-            // 
-            this.lbTotalCompras.AutoSize = true;
-            this.lbTotalCompras.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTotalCompras.ForeColor = System.Drawing.Color.DarkCyan;
-            this.lbTotalCompras.Location = new System.Drawing.Point(358, 88);
-            this.lbTotalCompras.Name = "lbTotalCompras";
-            this.lbTotalCompras.Size = new System.Drawing.Size(44, 20);
-            this.lbTotalCompras.TabIndex = 5;
-            this.lbTotalCompras.Text = "Total:";
-            // 
-            // tbTotalCompras
-            // 
-            this.tbTotalCompras.Location = new System.Drawing.Point(361, 110);
-            this.tbTotalCompras.Name = "tbTotalCompras";
-            this.tbTotalCompras.Size = new System.Drawing.Size(203, 22);
-            this.tbTotalCompras.TabIndex = 4;
-            // 
             // lbProveedorCompras
             // 
             this.lbProveedorCompras.AutoSize = true;
@@ -1308,6 +1263,17 @@
             this.tabDetalleCompra.TabIndex = 7;
             this.tabDetalleCompra.Text = "Detalle Compras";
             this.tabDetalleCompra.Enter += new System.EventHandler(this.tabDetalleCompra_Enter);
+            // 
+            // btEliminarDetalleCompra
+            // 
+            this.btEliminarDetalleCompra.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btEliminarDetalleCompra.Location = new System.Drawing.Point(774, 61);
+            this.btEliminarDetalleCompra.Name = "btEliminarDetalleCompra";
+            this.btEliminarDetalleCompra.Size = new System.Drawing.Size(75, 40);
+            this.btEliminarDetalleCompra.TabIndex = 17;
+            this.btEliminarDetalleCompra.Text = "Eliminar";
+            this.btEliminarDetalleCompra.UseVisualStyleBackColor = true;
+            this.btEliminarDetalleCompra.Click += new System.EventHandler(this.btEliminarDetalleCompra_Click);
             // 
             // dtDetalleCom
             // 
@@ -1822,17 +1788,6 @@
             this.dGEntregas.TabIndex = 0;
             this.dGEntregas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGEntregas_CellClick);
             // 
-            // btEliminarDetalleCompra
-            // 
-            this.btEliminarDetalleCompra.ForeColor = System.Drawing.Color.DarkCyan;
-            this.btEliminarDetalleCompra.Location = new System.Drawing.Point(774, 61);
-            this.btEliminarDetalleCompra.Name = "btEliminarDetalleCompra";
-            this.btEliminarDetalleCompra.Size = new System.Drawing.Size(75, 40);
-            this.btEliminarDetalleCompra.TabIndex = 17;
-            this.btEliminarDetalleCompra.Text = "Eliminar";
-            this.btEliminarDetalleCompra.UseVisualStyleBackColor = true;
-            this.btEliminarDetalleCompra.Click += new System.EventHandler(this.btEliminarDetalleCompra_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1930,7 +1885,6 @@
         private System.Windows.Forms.Button btAgregarVenta;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tbTotal;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -1961,8 +1915,6 @@
         private System.Windows.Forms.Button btInsertarProducto;
         private System.Windows.Forms.DataGridView dtProducto;
         private System.Windows.Forms.DataGridView dtCompras;
-        private System.Windows.Forms.Label lbTotalCompras;
-        private System.Windows.Forms.TextBox tbTotalCompras;
         private System.Windows.Forms.Label lbProveedorCompras;
         private System.Windows.Forms.ComboBox cbProveedorCompras;
         private System.Windows.Forms.Label lbEmpleadoCompras;
@@ -2015,7 +1967,6 @@
         private System.Windows.Forms.Label lNombreEmpleadoDevolucion;
         private System.Windows.Forms.ComboBox cbNombreEmpleadosDevo;
         private System.Windows.Forms.DateTimePicker dtpFechaVenta;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpFechaFinalPromo;
         private System.Windows.Forms.DateTimePicker dtpFechaInicioPromo;
         private System.Windows.Forms.ComboBox cbEmpleadoVentas;
