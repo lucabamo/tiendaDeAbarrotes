@@ -1,3 +1,6 @@
+--
+DROP DATABASE TiendaAbarrotes
+
 --Script para la base de datos de una tienda de abarrotes--
 CREATE DATABASE TiendaAbarrotes
 USE TiendaAbarrotes
@@ -39,9 +42,7 @@ CREATE TABLE Inventario.Producto(
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(IdProducto),
 )
 
-DROP TABLE Inventario.Producto
-
-
+--DROP TABLE Inventario.Producto
 
 --Tabla Venta--
 CREATE TABLE Transaccion.Venta(
@@ -53,13 +54,14 @@ CREATE TABLE Transaccion.Venta(
 	CONSTRAINT FK_EMPLEADO1 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado)
 )
 
-
+--Tabla de una promoción--
 CREATE TABLE Transaccion.Promocion(
 	IdPromocion BIGINT IDENTITY(1,1) NOT NULL,
 	IdProducto BIGINT NOT NULL,
 	FechaInicio DATE NOT NULL,
 	FechaFinal DATE NOT NULL,
-	Descuento REAL NOT NULL, --Preguntar a la maestra--
+	Descuento REAL NOT NULL, --Se maneja por porcentaje, por ejemplo .10 es el 10 porciente de descuento 
+	--al precio del producto
 	CONSTRAINT PK_PROMOCION PRIMARY KEY(IdPromocion),
 	CONSTRAINT FK_PRODUCTO2 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
@@ -101,7 +103,7 @@ CREATE TABLE Transaccion.DetalleCompra(
 	CONSTRAINT FK_PRODUCTO3 FOREIGN KEY(IdProducto) REFERENCES Inventario.Producto(IdProducto)
 )
 
-DROP TABLE Transaccion.DetalleCompra
+--DROP TABLE Transaccion.DetalleCompra
 
 CREATE TABLE Transaccion.Devolucion(
 	IdDevolucion BIGINT IDENTITY(1,1) NOT NULL,
@@ -169,7 +171,60 @@ BEGIN
 	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
 END
 
---Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad y el total de una venta
+
+DROP TRIGGER Transaccion.validaPromocion
+
+--Trigger para validar la fecha de una promoción--
+CREATE TRIGGER Transaccion.validaFechaPromocion
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+	AS
+	BEGIN 
+		SET NOCOUNT ON
+		DECLARE @IdDetalle AS BIGINT
+		DECLARE @IdPromocion AS BIGINT 
+		DECLARE @Descuento AS REAL
+		DECLARE @FechaInicio AS DATE
+		DECLARE @FechaFinal AS DATE
+		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdPromocion = Insertada.IdPromocion,
+		@Descuento = Promocion.Descuento, @FechaInicio = Promocion.FechaInicio, 
+		@FechaFinal = Promocion.FechaFinal FROM inserted Insertada
+		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
+		
+		IF GETDATE() NOT BETWEEN @FechaInicio AND @FechaFinal 
+			BEGIN
+				UPDATE Transaccion.Promocion SET Descuento = 0
+				WHERE IdPromocion = @IdPromocion 
+			END
+END 
+
+--Trigger para calcular el descuento de una promoción y validar la fecha--
+CREATE TRIGGER Transaccion.validaPromocion
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+	AS
+	BEGIN 
+		SET NOCOUNT ON
+		DECLARE @IdDetalle AS BIGINT
+		DECLARE @IdVenta AS BIGINT
+		DECLARE @IdProducto AS BIGINT
+		DECLARE @IdPromocion AS BIGINT 
+		DECLARE @Cantidad AS INT
+		DECLARE @CostoVenta AS REAL
+		DECLARE @Descuento AS REAL
+		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdVenta = Insertada.IdVenta, 
+		@IdProducto = Insertada.IdProducto, @IdPromocion = Insertada.IdPromocion,
+		@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta, 
+		@Descuento = Promocion.Descuento FROM inserted Insertada
+		INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
+		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
+		UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad - (@Descuento * @CostoVenta * @Cantidad ))
+		WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
+END 
+
+DROP TRIGGER Transaccion.calculaSubtotal
+
+--Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad
 CREATE TRIGGER Transaccion.calculaSubtotal
 ON Transaccion.DetalleVenta
 AFTER INSERT,UPDATE
@@ -215,6 +270,7 @@ BEGIN
 END
 
 DROP TRIGGER Transaccion.actualizaTotalVenta
+DROP TRIGGER Transaccion.calculaSubtotalCompra
 
 --Trigger para calcular el subtotal de un detalle de compra a partir del precio del producto y la cantidad
 CREATE TRIGGER Transaccion.calculaSubtotalCompra
@@ -314,10 +370,6 @@ BEGIN
 	SELECT @Resultado = @Existencias - @Cantidad
 	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
 END
-
---Trigger para calcular el descuento de una promoción y validar la fecha--
---CREATE TRIGGER Transaccion.validaPromocion
---ON
 
 --Reglas
 CREATE RULE R_Existencias AS @Existencia BETWEEN 0 AND 100

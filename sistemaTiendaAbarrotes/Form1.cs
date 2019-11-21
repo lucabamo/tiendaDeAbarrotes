@@ -31,7 +31,8 @@ namespace sistemaTiendaAbarrotes
         {
             string connectionString = null;
             //Cadena de conexión
-            connectionString = "Server=DESKTOP-AP88PFE\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
+            //LAPTOP-M8A5375A
+            connectionString = "Server=LAPTOP-M8A5375A\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
             conexion = new SqlConnection(connectionString);
             try
