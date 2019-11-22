@@ -118,6 +118,7 @@ CREATE TABLE Transaccion.Devolucion(
 )
 
 CREATE TABLE Transaccion.DetalleDevolucion(
+	IdDetalleDevolucion BIGINT IDENTITY(1,1) NOT NULL,
 	IdDevolucion BIGINT NOT NULL,
 	IdProducto BIGINT NOT NULL,
 	Cantidad INT NOT NULL,
@@ -155,75 +156,10 @@ BEGIN
 	WHERE idEmpleado = @ID
 END
 
---Disparador para insertar un detalle devoluci�n despu�s de haber insertado una devoluci�n
-CREATE TRIGGER Transaccion.creaDetalleDevolucion
-ON Transaccion.Devolucion
-AFTER INSERT
-AS 
-BEGIN 
-	SET NOCOUNT ON
-	DECLARE @IdDevolucion AS BIGINT
-	DECLARE @IdProducto AS BIGINT
-	DECLARE @Cantidad AS INT 
-	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto,
-	@Cantidad = DetalleVenta.Cantidad FROM inserted Insertada
-	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
-	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
-END
+--DROP TRIGGER Transaccion.calculaSubtotal
 
 
-DROP TRIGGER Transaccion.validaPromocion
-
---Trigger para validar la fecha de una promoción--
-CREATE TRIGGER Transaccion.validaFechaPromocion
-	ON Transaccion.DetalleVenta
-	AFTER INSERT
-	AS
-	BEGIN 
-		SET NOCOUNT ON
-		DECLARE @IdDetalle AS BIGINT
-		DECLARE @IdPromocion AS BIGINT 
-		DECLARE @Descuento AS REAL
-		DECLARE @FechaInicio AS DATE
-		DECLARE @FechaFinal AS DATE
-		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdPromocion = Insertada.IdPromocion,
-		@Descuento = Promocion.Descuento, @FechaInicio = Promocion.FechaInicio, 
-		@FechaFinal = Promocion.FechaFinal FROM inserted Insertada
-		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
-		
-		IF GETDATE() NOT BETWEEN @FechaInicio AND @FechaFinal 
-			BEGIN
-				UPDATE Transaccion.Promocion SET Descuento = 0
-				WHERE IdPromocion = @IdPromocion 
-			END
-END 
-
---Trigger para calcular el descuento de una promoción y validar la fecha--
-CREATE TRIGGER Transaccion.validaPromocion
-	ON Transaccion.DetalleVenta
-	AFTER INSERT
-	AS
-	BEGIN 
-		SET NOCOUNT ON
-		DECLARE @IdDetalle AS BIGINT
-		DECLARE @IdVenta AS BIGINT
-		DECLARE @IdProducto AS BIGINT
-		DECLARE @IdPromocion AS BIGINT 
-		DECLARE @Cantidad AS INT
-		DECLARE @CostoVenta AS REAL
-		DECLARE @Descuento AS REAL
-		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdVenta = Insertada.IdVenta, 
-		@IdProducto = Insertada.IdProducto, @IdPromocion = Insertada.IdPromocion,
-		@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta, 
-		@Descuento = Promocion.Descuento FROM inserted Insertada
-		INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
-		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
-		UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad - (@Descuento * @CostoVenta * @Cantidad ))
-		WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
-END 
-
-DROP TRIGGER Transaccion.calculaSubtotal
-
+--FINAL TRIGGER--
 --Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad
 CREATE TRIGGER Transaccion.calculaSubtotal
 ON Transaccion.DetalleVenta
@@ -239,18 +175,28 @@ BEGIN
 	DECLARE @Resultado AS REAL
 	DECLARE @TotalVenta AS REAL
 	DECLARE @Subtotal AS REAL
+	DECLARE @Descuento AS REAL
+	DECLARE @IdPromocion AS BIGINT
+	DECLARE @FechaInicio AS DATE
+	DECLARE @FechaFinal AS DATE
 	SELECT @IdVenta = Insertada.IdVenta, @IdProducto = Insertada.IdProducto, @IdDetalle = Insertada.IdDetalleVenta,
-	@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta FROM inserted Insertada
+	@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta,  @IdPromocion = Insertada.IdPromocion,
+	@Descuento = Promocion.Descuento,  @FechaInicio = Promocion.FechaInicio, 
+	@FechaFinal = Promocion.FechaFinal FROM inserted Insertada
 	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
-	UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad)
+	INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
+	IF GETDATE() NOT BETWEEN @FechaInicio AND @FechaFinal 
+	BEGIN
+		UPDATE Transaccion.Promocion SET Descuento = 0
+		WHERE IdPromocion = @IdPromocion 
+	END
+	UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad - (@Descuento * @CostoVenta * @Cantidad ))
 	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
 	SELECT @Subtotal = (@CostoVenta * @Cantidad)
 	SELECT @TotalVenta = Total FROM Transaccion.Venta WHERE IdVenta = @IdVenta
 	SELECT @Resultado = @TotalVenta + @Subtotal
 	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
 END
-
-DROP TRIGGER Transaccion.calculaSubtotal
 
 --Trigger para actualizar el total de la venta despues de eliminar
 CREATE TRIGGER Transaccion.actualizaTotalVenta
@@ -268,9 +214,6 @@ BEGIN
 	SELECT @Resultado = @TotalVenta - @Subtotal
 	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
 END
-
-DROP TRIGGER Transaccion.actualizaTotalVenta
-DROP TRIGGER Transaccion.calculaSubtotalCompra
 
 --Trigger para calcular el subtotal de un detalle de compra a partir del precio del producto y la cantidad
 CREATE TRIGGER Transaccion.calculaSubtotalCompra
@@ -298,8 +241,7 @@ BEGIN
 	UPDATE Transaccion.Compra SET Total = @Resultado WHERE IdCompra = @IdCompra
 END
 
-DROP TRIGGER Transaccion.calculaSubtotalCompra
-
+--Trigger para actualizar inventario al momento de un compra al proveedor
 CREATE TRIGGER Transaccion.actualizaTotalCompra
 ON Transaccion.DetalleCompra
 AFTER DELETE
@@ -316,9 +258,11 @@ BEGIN
 	UPDATE Transaccion.Compra SET Total = @Resultado WHERE IdCompra = @IdCompra
 END
 
+DROP TRIGGER Transaccion.existenciaProductoDevolucion
+
 --Trigger para actualizar la existencia del producto despu�s de una devoluci�n
 CREATE TRIGGER Transaccion.existenciaProductoDevolucion
-ON Transaccion.Devolucion
+ON Transaccion.DetalleDevolucion
 AFTER INSERT,UPDATE
 AS
 BEGIN
@@ -326,14 +270,35 @@ BEGIN
 	DECLARE @IdDevolucion AS BIGINT
 	DECLARE @IdProducto AS BIGINT 
 	DECLARE @Cantidad AS INT
-	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto , 
-	@Cantidad = DetalleDevolucion.Cantidad  FROM inserted Insertada 
-	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
-	INNER JOIN Transaccion.DetalleDevolucion DetalleDevolucion 
-	ON DetalleVenta.IdProducto = DetalleDevolucion.IdProducto 
-	AND Insertada.IdDevolucion = DetalleDevolucion.IdDevolucion
+	DECLARE @Costo AS REAL
+	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = Insertada.IdProducto , 
+	@Cantidad = Insertada.Cantidad, @Costo = producto.CostoVenta  FROM inserted Insertada 
+	INNER JOIN Inventario.Producto AS producto ON Insertada.IdProducto = producto.IdProducto
 	UPDATE Inventario.Producto SET Existencia = Existencia+@Cantidad
 	WHERE IdProducto = @IdProducto
+	UPDATE Transaccion.Devolucion SET Monto = (@Cantidad * @Costo)
+	WHERE IdDevolucion = @IdDevolucion
+END
+
+
+--Actualiza el total devolucion después de eliminar un detalle
+CREATE TRIGGER Transaccion.actualizaTotalDevolucion
+ON Transaccion.DetalleDevolucion
+AFTER DELETE
+AS 
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdDevolucion AS BIGINT
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalDev AS REAL
+	DECLARE @Cantidad AS INT
+	DECLARE @CostoProducto AS INT
+	SELECT @IdDevolucion = detalleDev.IdDevolucion, 
+	@Cantidad = detalleDev.Cantidad, @CostoProducto = producto.CostoVenta FROM deleted AS detalleDev
+	INNER JOIN Inventario.Producto AS producto ON detalleDev.IdProducto = producto.IdProducto
+    SELECT @TotalDev = Monto FROM Transaccion.Devolucion WHERE IdDevolucion = @IdDevolucion
+	SELECT @Resultado = @TotalDev - (@CostoProducto * @Cantidad)
+	UPDATE Transaccion.Devolucion SET Monto = @Resultado WHERE IdDevolucion = @IdDevolucion
 END
 
 
@@ -372,16 +337,119 @@ BEGIN
 END
 
 --Reglas
+--Regla numerica que restringe el número de existencias de un producto
 CREATE RULE R_Existencias AS @Existencia BETWEEN 0 AND 100
 
 EXEC sp_bindrule 'R_Existencias', 'Inventario.Producto.Existencia' 
 
+--Cantidad de producto que se puede comprar
 CREATE RULE R_Cantidad AS @Cantidad >= 1 AND @Cantidad <= 100
 EXEC sp_bindrule 'R_Cantidad', 'Transaccion.DetalleCompra.Cantidad'
 
+--Regla texto para el correo del proveedor
 CREATE RULE R_Email AS @Email LIKE '%_@__%.__%'
 EXEC sp_bindrule 'R_Email', 'Empresa.Proveedor.Email'
 
 
-SELECT * FROM Transaccion.DetalleCompra
-DELETE FROM Transaccion.DetalleCompra WHERE IdDetalleCompra = 2
+------------------EXTRA----------------------------------------------------
+
+DROP TRIGGER Transaccion.validaPromocion
+
+--Trigger para validar la fecha de una promoción--
+CREATE TRIGGER Transaccion.validaFechaPromocion
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+	AS
+	BEGIN 
+		SET NOCOUNT ON
+		DECLARE @IdDetalle AS BIGINT
+		DECLARE @IdPromocion AS BIGINT 
+		DECLARE @Descuento AS REAL
+		DECLARE @FechaInicio AS DATE
+		DECLARE @FechaFinal AS DATE
+		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdPromocion = Insertada.IdPromocion,
+		@Descuento = Promocion.Descuento, @FechaInicio = Promocion.FechaInicio, 
+		@FechaFinal = Promocion.FechaFinal FROM inserted Insertada
+		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion	
+		IF GETDATE() NOT BETWEEN @FechaInicio AND @FechaFinal 
+			BEGIN
+				UPDATE Transaccion.Promocion SET Descuento = 0
+				WHERE IdPromocion = @IdPromocion 
+			END
+END 
+
+--Trigger para calcular el descuento de una promoción y validar la fecha--
+CREATE TRIGGER Transaccion.validaPromocion
+	ON Transaccion.DetalleVenta
+	AFTER INSERT
+	AS
+	BEGIN 
+		SET NOCOUNT ON
+		DECLARE @IdDetalle AS BIGINT
+		DECLARE @IdVenta AS BIGINT
+		DECLARE @IdProducto AS BIGINT
+		DECLARE @IdPromocion AS BIGINT 
+		DECLARE @Cantidad AS INT
+		DECLARE @CostoVenta AS REAL
+		DECLARE @Descuento AS REAL
+		SELECT @IdDetalle = Insertada.IdDetalleVenta, @IdVenta = Insertada.IdVenta, 
+		@IdProducto = Insertada.IdProducto, @IdPromocion = Insertada.IdPromocion,
+		@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta, 
+		@Descuento = Promocion.Descuento FROM inserted Insertada
+		INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
+		INNER JOIN Transaccion.Promocion AS Promocion ON Promocion.IdPromocion = Insertada.IdPromocion
+		UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad - (@Descuento * @CostoVenta * @Cantidad ))
+		WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
+END 
+
+
+--Trigger para calcular el subtotal de un detalle de venta a partir del precio del producto y la cantidad
+CREATE TRIGGER Transaccion.calculaSubtotal
+ON Transaccion.DetalleVenta
+AFTER INSERT,UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdVenta AS BIGINT
+	DECLARE @IdDetalle AS BIGINT 
+	DECLARE @IdProducto AS BIGINT
+	DECLARE @Cantidad AS INT
+	DECLARE @CostoVenta AS REAL
+	DECLARE @Resultado AS REAL
+	DECLARE @TotalVenta AS REAL
+	DECLARE @Subtotal AS REAL
+	SELECT @IdVenta = Insertada.IdVenta, @IdProducto = Insertada.IdProducto, @IdDetalle = Insertada.IdDetalleVenta,
+	@Cantidad = Insertada.Cantidad, @CostoVenta = Producto.CostoVenta FROM inserted Insertada
+	INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = Insertada.IdProducto
+	UPDATE Transaccion.DetalleVenta SET Subtotal = (@CostoVenta * @Cantidad)
+	WHERE IdVenta = @IdVenta AND IdProducto = @IdProducto AND IdDetalleVenta = @IdDetalle
+	SELECT @Subtotal = (@CostoVenta * @Cantidad)
+	SELECT @TotalVenta = Total FROM Transaccion.Venta WHERE IdVenta = @IdVenta
+	SELECT @Resultado = @TotalVenta + @Subtotal
+	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
+END
+
+------------NO SIRVE-------------
+DROP TRIGGER Transaccion.creaDetalleDevolucion
+--Disparador para insertar un detalle devoluci�n despu�s de haber insertado una devoluci�n
+CREATE TRIGGER Transaccion.creaDetalleDevolucion
+ON Transaccion.Devolucion
+AFTER INSERT
+AS 
+BEGIN 
+	SET NOCOUNT ON
+	DECLARE @IdDevolucion AS BIGINT
+	DECLARE @IdProducto AS BIGINT
+	DECLARE @Cantidad AS INT 
+	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto,
+	@Cantidad = DetalleVenta.Cantidad FROM inserted Insertada
+	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
+	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
+END
+
+SELECT DetalleDevolucion.IdDetalleDevolucion,Devolucion.Motivo, Producto.Nombre,
+DetalleDevolucion.Cantidad 
+FROM Transaccion.DetalleDevolucion AS DetalleDevolucion
+INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion 
+INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleDevolucion.IdProducto
+ORDER BY DetalleDevolucion.IdDetalleDevolucion

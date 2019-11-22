@@ -111,8 +111,9 @@ namespace sistemaTiendaAbarrotes
 
         private void DGDetalleDevoluciones_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+   
             string ID = dGDetalleDevoluciones.Rows[e.RowIndex].Cells[0].Value.ToString();
-            detalleDevolucion.accesoIdDevolucion = ID;
+            detalleDevolucion.AccesoIdDetalleDevolucionSeleccionada = ID;
             detalleDevolucion.cargaRegistroSeleccionado();
         }
 
@@ -362,8 +363,15 @@ namespace sistemaTiendaAbarrotes
 
         private void BAgregarEmpleado_Click(object sender, EventArgs e)
         {
-            empleado.Inserta();
-            empleado.Consulta(dGEmpleados);
+            if (tbEmpleadoNombre.Text != "" && tbEmpleadoPass.Text != "" && tbEmpleadoUsuario.Text != ""
+                && tbEmpleadoDomicilio.Text != "")
+            {
+                empleado.Inserta();
+                empleado.Consulta(dGEmpleados);
+            }
+            else {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
         }
 
         private void BEliminarEmpleado_Click(object sender, EventArgs e)
@@ -456,6 +464,38 @@ namespace sistemaTiendaAbarrotes
         private void tabProducto_Enter(object sender, EventArgs e)
         {
             producto.actualizaTabla();
+        }
+
+        private void BInsertaDetalleDev_Click(object sender, EventArgs e)
+        {
+            detalleDevolucion.Inserta();
+            detalleDevolucion.Consulta(dGDetalleDevoluciones);
+        }
+
+        private void CbIdDevolucionDetalleDevo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbIdProductoDetalleDevo.SelectedIndex != -1) {
+                tbCantidadDetalleDevo.Enabled = true;
+            }
+        }
+
+        private void CbIdProductoDetalleDevo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbIdDevolucionDetalleDevo.SelectedIndex != -1) {
+                tbCantidadDetalleDevo.Enabled = true;
+            }
+        }
+
+        private void BEditaDetalleDev_Click(object sender, EventArgs e)
+        {
+            detalleDevolucion.Edita();
+            detalleDevolucion.Consulta(dGDetalleDevoluciones);
+        }
+
+        private void BEliminaDetalleDev_Click(object sender, EventArgs e)
+        {
+            detalleDevolucion.eliminaRegistroSeleccionado();
+            detalleDevolucion.Consulta(dGDetalleDevoluciones);
         }
     }
 }

@@ -19,6 +19,8 @@ namespace sistemaTiendaAbarrotes
         ComboBox cbIdProductoI = new ComboBox();
         TextBox tbCantindadI = new TextBox();
         string IdDevolucionReal = "";
+        string IdDetalleDevolucionSeleccionada = "";
+
 
 
         public DetalleDevolucion (SqlConnection conexion, ComboBox cbIdDevolucion, ComboBox cbIdProducto, TextBox tbCantidad) {
@@ -30,14 +32,20 @@ namespace sistemaTiendaAbarrotes
             tablaDevolucionPura = new DataTable();
             IdDevolucion = "";
         }
+
+        public string AccesoIdDetalleDevolucionSeleccionada
+        {
+            get { return IdDetalleDevolucionSeleccionada; }
+            set { IdDetalleDevolucionSeleccionada = value; }
+        }
         public void Consulta(DataGridView dGDetalleDevoluciones) {
             tablaDevolucion.Clear();
             tablaDevolucionPura.Clear();
-            string consulta = "SELECT Devolucion.Motivo, Producto.Nombre, DetalleVenta.Cantidad " +
-                "FROM Transaccion.DetalleDevolucion AS DetalleDevolucion " +
+            string consulta = "SELECT DetalleDevolucion.IdDetalleDevolucion AS Id,Devolucion.Motivo, Producto.Nombre," +
+                "DetalleDevolucion.Cantidad FROM Transaccion.DetalleDevolucion AS DetalleDevolucion " +
                 "INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion " +
-                "INNER JOIN Transaccion.DetalleVenta AS DetalleVenta ON Devolucion.IdVenta = DetalleVenta.IdVenta " +
-                "INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleVenta.IdProducto";
+                "INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleDevolucion.IdProducto " +
+                "ORDER BY DetalleDevolucion.IdDetalleDevolucion";
 
             string consulta2 = "SELECT * FROM Transaccion.DetalleDevolucion";
 
@@ -72,9 +80,129 @@ namespace sistemaTiendaAbarrotes
         /// </summary>
         public void cargaRegistroSeleccionado()
         {
-            string consulta = "SELECT detalle.IdDevolucion FROM Transaccion.DetalleDevolucion AS detalle " +
-                "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdDevolucion = detalle.IdDevolucion " +
-                "WHERE devolucion.Motivo = " + "\'" + accesoIdDevolucion + "\' ";
+
+            DataRow[] tuplaSeleccionada = tablaDevolucionPura.Select("[IdDetalleDevolucion] = " + IdDetalleDevolucionSeleccionada);
+
+            //Una vez seleccionada la tupla buscamos cada uno de los atributos
+            var Motivo = tuplaSeleccionada[0].ItemArray[1];
+            var Producto = tuplaSeleccionada[0].ItemArray[2];
+            var Cantidad = tuplaSeleccionada[0].ItemArray[3];
+
+            cbIdDevolucionI.SelectedValue = Motivo;
+            cbIdProductoI.SelectedValue = Producto;
+            tbCantindadI.Text = Cantidad.ToString();
+        }
+
+        /// <summary>
+        /// Método para insertar una tupla de la tabla Entrega
+        /// </summary>
+        public void Inserta()
+        {
+            try
+            {
+                //DataRowView es el tipo de dato para leer una tupla que se inserto en algún lugar con anterioridad
+                DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+                DataRowView Producto = (DataRowView)cbIdProductoI.SelectedItem;
+                Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
+                Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
+                var Cantidad = tbCantindadI.Text;
+                string query = "";
+                query = "INSERT INTO Transaccion.DetalleDevolucion (IdDevolucion, IdProducto, Cantidad) " +
+                        "VALUES (@IdDevolucion, @IdProducto,@Cantidad)";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IdDevolucion", IdDevolucion);
+                comando.Parameters.AddWithValue("@IdProducto", IdProducto);
+                comando.Parameters.AddWithValue("@Cantidad", Cantidad);
+                try
+                {
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Inserción correcta");
+                    limpiaFormulario();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Hubo un error en la inserción");
+                }
+                limpiaFormulario();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
+        }
+
+        public void Edita()
+        {
+            try
+            {
+                //DataRowView es el tipo de dato para leer una tupla que se inserto en algún lugar con anterioridad
+                DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+                DataRowView Producto = (DataRowView)cbIdProductoI.SelectedItem;
+                Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
+                Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
+                var Cantidad = tbCantindadI.Text;
+                string queryEdita = "UPDATE Transaccion.DetalleDevolucion SET IdDevolucion = @IdDevolucion, " +
+                    "IdProducto = @IdProducto, Cantidad = @Cantidad " +
+                    "WHERE IdDetalleDevolucion = " + IdDetalleDevolucionSeleccionada;
+
+                SqlCommand comando = new SqlCommand(queryEdita, conexion);
+                comando.Parameters.AddWithValue("@IdDevolucion", IdDevolucion);
+                comando.Parameters.AddWithValue("@IdProducto", IdProducto);
+                comando.Parameters.AddWithValue("@Cantidad", Cantidad);
+                try
+                {
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Edición correcta");
+                    limpiaFormulario();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Hubo un error en la edición");
+                }
+                limpiaFormulario();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
+        }
+
+        /// <summary>
+        /// Método para la eliminación de un registro que ha sido seleccionado.
+        /// </summary>
+        public void eliminaRegistroSeleccionado()
+        {
+            if (IdDetalleDevolucionSeleccionada != "")
+            {
+                string queryElimina = "DELETE FROM Transaccion.DetalleDevolucion WHERE IdDetalleDevolucion = " +
+                    "" + IdDetalleDevolucionSeleccionada;
+                SqlCommand comando = new SqlCommand(queryElimina, conexion);
+                try
+                {
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Eliminación exitosa");
+                    limpiaFormulario();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR" + e.Message);
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Es necesario seleccionar un registro para eliminar");
+            }
+
+        }
+
+        public void cantidadDeProductosComprados()
+        {
+            string consulta = "SELECT detalleVenta.Cantidad FROM Transaccion.DetalleVenta AS detalleVenta " +
+                "INNER JOIN Transaccion.Venta AS venta ON venta.IdVenta = detalleVenta.IdVenta" +
+                "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleVenta.IdVenta " +
+                "WHERE detalleVenta.IdProducto =";
             using (var command = new SqlCommand(consulta, conexion))
             {
                 DataTable tablaAux = new DataTable();
@@ -121,11 +249,6 @@ namespace sistemaTiendaAbarrotes
 
         private void llenaProductos(ComboBox cbProductos)
         {
-            /*string consultaProductos = "SELECT producto.IdProducto, producto.Nombre FROM Inventario.Producto AS producto " +
-               "INNER JOIN Transaccion.DetalleDevolucion AS detalle ON detalle.IdProducto = producto.IdProducto " +
-               "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdDevolucion = detalle.IdDevolucion " +
-               "INNER JOIN Transaccion.DetalleVenta AS detalleVenta ON detalleVenta.IdVenta = devolucion.IdVenta" +
-               "WHERE devolucion.IdDevolucion = " + IdDevolucionReal;*/
             string consultaProductos = "SELECT IdProducto, Nombre FROM Inventario.Producto";
 
             using (var command = new SqlCommand(consultaProductos, conexion))
@@ -142,6 +265,18 @@ namespace sistemaTiendaAbarrotes
             }
             cbProductos.Text = "";
             cbProductos.SelectedIndex = -1;
+        }
+        /// <summary>
+        /// Método para limpiar el formulario donde se reciben los datos de una entrega
+        /// </summary>
+        private void limpiaFormulario()
+        {
+            cbIdDevolucionI.Text = "";
+            cbIdDevolucionI.SelectedIndex = -1;
+            cbIdProductoI.Text = "";
+            cbIdProductoI.SelectedIndex = -1;
+            tbCantindadI.Text = "";
+            tbCantindadI.Enabled = false;
         }
     }
 }
