@@ -31,28 +31,34 @@ namespace sistemaTiendaAbarrotes
 
         public void insertarCompra()
         {
-            DataRowView Proveedor = (DataRowView)cbProveedor.SelectedItem;
-            DataRowView Empleado = (DataRowView)cbEmpleado.SelectedItem;
-            Int64 IdProveedor = (Int64)Proveedor.Row.ItemArray[0];
-            Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
-            DateTime FechaCompra = dateFechaCompra.Value.Date;
-
-            string query = "INSERT INTO Transaccion.Compra (IdProveedor, IdEmpleado, Fecha, Total) VALUES (@proveedor, @empleado, @fecha, @total) ";
-
-            SqlCommand comando = new SqlCommand(query, conexion);
-            comando.Parameters.AddWithValue("@proveedor", IdProveedor);
-            comando.Parameters.AddWithValue("@empleado", IdEmpleado);
-            comando.Parameters.AddWithValue("@fecha", FechaCompra);
-            comando.Parameters.AddWithValue("@total", 0);
-
-
             try
             {
-                comando.ExecuteNonQuery();
+                DataRowView Proveedor = (DataRowView)cbProveedor.SelectedItem;
+                DataRowView Empleado = (DataRowView)cbEmpleado.SelectedItem;
+                Int64 IdProveedor = (Int64)Proveedor.Row.ItemArray[0];
+                Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
+                DateTime FechaCompra = dateFechaCompra.Value.Date;
+
+                string query = "INSERT INTO Transaccion.Compra (IdProveedor, IdEmpleado, Fecha, Total) VALUES (@proveedor, @empleado, @fecha, @total) ";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@proveedor", IdProveedor);
+                comando.Parameters.AddWithValue("@empleado", IdEmpleado);
+                comando.Parameters.AddWithValue("@fecha", FechaCompra);
+                comando.Parameters.AddWithValue("@total", 0);
+
+
+                try
+                {
+                    comando.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch (Exception ex) {
+                MessageBox.Show("Es necesario insertar todos los campos");
             }
 
             actualizaTabla();

@@ -20,7 +20,7 @@ namespace sistemaTiendaAbarrotes
         TextBox tbCantindadI = new TextBox();
         string IdDevolucionReal = "";
         string IdDetalleDevolucionSeleccionada = "";
-
+        string numeroMaximoDeProductosADevolver;
 
 
         public DetalleDevolucion (SqlConnection conexion, ComboBox cbIdDevolucion, ComboBox cbIdProducto, TextBox tbCantidad) {
@@ -31,12 +31,19 @@ namespace sistemaTiendaAbarrotes
             tablaDevolucion = new DataTable();
             tablaDevolucionPura = new DataTable();
             IdDevolucion = "";
+            numeroMaximoDeProductosADevolver = "";
         }
 
         public string AccesoIdDetalleDevolucionSeleccionada
         {
             get { return IdDetalleDevolucionSeleccionada; }
             set { IdDetalleDevolucionSeleccionada = value; }
+        }
+
+        public string accesoNumeroMaximoADevolver
+        {
+            get { return numeroMaximoDeProductosADevolver; }
+            set { numeroMaximoDeProductosADevolver = value; }
         }
         public void Consulta(DataGridView dGDetalleDevoluciones) {
             tablaDevolucion.Clear();
@@ -65,7 +72,7 @@ namespace sistemaTiendaAbarrotes
             dGDetalleDevoluciones.DataSource = tablaDevolucion;
 
             llenaMotivoDevoluciones(cbIdDevolucionI);
-            llenaProductos(cbIdProductoI);
+           // llenaProductos(cbIdProductoI);
         }
 
         public string accesoIdDevolucion {
@@ -139,8 +146,8 @@ namespace sistemaTiendaAbarrotes
                 //DataRowView es el tipo de dato para leer una tupla que se inserto en algún lugar con anterioridad
                 DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
                 DataRowView Producto = (DataRowView)cbIdProductoI.SelectedItem;
-                Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
-                Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
+                Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; 
+                Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; 
                 var Cantidad = tbCantindadI.Text;
                 string queryEdita = "UPDATE Transaccion.DetalleDevolucion SET IdDevolucion = @IdDevolucion, " +
                     "IdProducto = @IdProducto, Cantidad = @Cantidad " +
@@ -197,12 +204,19 @@ namespace sistemaTiendaAbarrotes
 
         }
 
-        public void cantidadDeProductosComprados()
+        public bool cantidadDeProductosComprados()
         {
-            string consulta = "SELECT detalleVenta.Cantidad FROM Transaccion.DetalleVenta AS detalleVenta " +
-                "INNER JOIN Transaccion.Venta AS venta ON venta.IdVenta = detalleVenta.IdVenta" +
-                "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleVenta.IdVenta " +
-                "WHERE detalleVenta.IdProducto =";
+            DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+            DataRowView Producto = (DataRowView)cbIdProductoI.SelectedItem;
+            Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0];
+            Int64 IdProducto = (Int64)Producto.Row.ItemArray[0];
+
+            string consulta = "SELECT DISTINCT detalleventa.Cantidad " +
+                "FROM Inventario.Producto AS producto " +
+                "INNER JOIN Transaccion.DetalleVenta AS detalleventa ON detalleventa.IdProducto = producto.IdProducto " +
+                "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleventa.IdVenta " +
+                "WHERE devolucion.IdDevolucion = " + IdDevolucion + " AND " + "producto.IdProducto = " + IdProducto;
+
             using (var command = new SqlCommand(consulta, conexion))
             {
                 DataTable tablaAux = new DataTable();
@@ -210,20 +224,28 @@ namespace sistemaTiendaAbarrotes
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     tablaAux.Load(reader);
-                    var am = tablaAux.Rows[0];
-                    IdDevolucionReal = am.ItemArray[0].ToString();
+                    var cantidadDeProductos = tablaAux.Rows[0];
+                    accesoNumeroMaximoADevolver = cantidadDeProductos.ItemArray[0].ToString();
                 }
             }
-            DataRow[] tuplaSeleccionada = tablaDevolucionPura.Select("[IdDevolucion] = " + IdDevolucionReal);
 
-            //Una vez seleccionada la tupla buscamos cada uno de los atributos
-            var Motivo = tuplaSeleccionada[0].ItemArray[0];
-            var Producto = tuplaSeleccionada[0].ItemArray[1];
-            var Cantidad = tuplaSeleccionada[0].ItemArray[2];
-
-            cbIdDevolucionI.SelectedValue = Motivo;
-            cbIdProductoI.SelectedValue = Producto;
-            tbCantindadI.Text = Cantidad.ToString();
+            //Número menor a 0
+            if (Convert.ToInt32(tbCantindadI.Text) < 0)
+            {
+                return false;
+            }
+            //Número a devolver mayor a los que se compraron, no es válido
+            else if (Convert.ToInt32(tbCantindadI.Text) > Convert.ToInt32(accesoNumeroMaximoADevolver))
+            {
+                return false;
+            }
+            else if (Convert.ToInt32(tbCantindadI.Text) < Convert.ToInt32(accesoNumeroMaximoADevolver))
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         private void llenaMotivoDevoluciones(ComboBox cbMotivoDevolucion)
@@ -247,9 +269,21 @@ namespace sistemaTiendaAbarrotes
             cbMotivoDevolucion.SelectedIndex = -1;
         }
 
-        private void llenaProductos(ComboBox cbProductos)
+        /// <summary>
+        /// Método para que se muestren los productos de la venta con los que la devolución se relaciona
+        /// </summary>
+        /// <param name="cbProductos"></param>
+        public void llenaProductos(ComboBox cbProductos)
         {
-            string consultaProductos = "SELECT IdProducto, Nombre FROM Inventario.Producto";
+            DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
+            Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0];
+
+            string consultaProductos = "SELECT DISTINCT producto.IdProducto, producto.Nombre " +
+            "FROM Inventario.Producto AS producto " +
+            "INNER JOIN Transaccion.DetalleVenta AS detalleventa ON detalleventa.IdProducto = producto.IdProducto " +
+            "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleventa.IdVenta " +
+            "WHERE devolucion.IdDevolucion = " + IdDevolucion +
+            " ORDER BY producto.IdProducto";
 
             using (var command = new SqlCommand(consultaProductos, conexion))
             {
@@ -266,6 +300,11 @@ namespace sistemaTiendaAbarrotes
             cbProductos.Text = "";
             cbProductos.SelectedIndex = -1;
         }
+
+        public void calculaMaximoDevolucion() {
+
+        }
+
         /// <summary>
         /// Método para limpiar el formulario donde se reciben los datos de una entrega
         /// </summary>

@@ -343,7 +343,7 @@ CREATE RULE R_Existencias AS @Existencia BETWEEN 0 AND 100
 EXEC sp_bindrule 'R_Existencias', 'Inventario.Producto.Existencia' 
 
 --Cantidad de producto que se puede comprar
-CREATE RULE R_Cantidad AS @Cantidad >= 1 AND @Cantidad <= 100
+CREATE RULE R_Cantidad AS @Cantidad BETWEEN 1 AND 100
 EXEC sp_bindrule 'R_Cantidad', 'Transaccion.DetalleCompra.Cantidad'
 
 --Regla texto para el correo del proveedor
@@ -453,3 +453,20 @@ FROM Transaccion.DetalleDevolucion AS DetalleDevolucion
 INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion 
 INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleDevolucion.IdProducto
 ORDER BY DetalleDevolucion.IdDetalleDevolucion
+
+SELECT detalleVenta.IdDetalleVenta,detalleVenta.Cantidad FROM Transaccion.DetalleVenta AS detalleVenta 
+INNER JOIN Transaccion.Venta AS venta ON venta.IdVenta = detalleVenta.IdVenta
+INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleVenta.IdVenta 
+WHERE detalleVenta.IdProducto = 2 AND venta.IdVenta = 2
+
+
+
+SELECT * FROM Transaccion.DetalleVenta
+SELECT * FROM Transaccion.DetalleDevolucion
+SELECT * FROM Transaccion.Devolucion
+
+SELECT DISTINCT producto.IdProducto, producto.Nombre FROM Inventario.Producto AS producto 
+INNER JOIN Transaccion.DetalleDevolucion AS detalledev ON detalledev.IdProducto = producto.IdProducto
+WHERE detalledev.IdDevolucion = 1
+ORDER BY producto.IdProducto
+	
