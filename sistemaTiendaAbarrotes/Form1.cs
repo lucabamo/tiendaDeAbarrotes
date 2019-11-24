@@ -32,7 +32,7 @@ namespace sistemaTiendaAbarrotes
             string connectionString = null;
             //Cadena de conexión
             //LAPTOP-M8A5375A
-            connectionString = "Server=LAPTOP-M8A5375A\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
+            connectionString = "Server=DESKTOP-AP88PFE\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
             conexion = new SqlConnection(connectionString);
             try
@@ -329,14 +329,17 @@ namespace sistemaTiendaAbarrotes
             dgDetalleVenta.DataSource = "";
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             detalleVenta.consultaProductos(conexion, cbProductoDetalleVenta);
-            detalleVenta.consultaPromociones(conexion, cbIdPromocionDetalleVenta);
             detalleVenta.consultaVentas(conexion, cbIdVentaDetalleVenta);
+            cbProductoDetalleVenta.SelectedText = "";
+            cbProductoDetalleVenta.SelectedIndex = -1;
+            cbIdPromocionDetalleVenta.Enabled = false;
         }
 
         private void resetTabDetalleVenta()
         {
             cbProductoDetalleVenta.Text = "";
             cbProductoDetalleVenta.SelectedValue = -1;
+            cbIdPromocionDetalleVenta.Enabled = false;
             cbIdPromocionDetalleVenta.Text = "";
             cbIdPromocionDetalleVenta.SelectedValue = -1;
             cbIdVentaDetalleVenta.Text = "";
@@ -581,6 +584,18 @@ namespace sistemaTiendaAbarrotes
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.')) {
                 e.Handled = true;
+            }
+        }
+
+        private void cbProductoDetalleVenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbProductoDetalleVenta.SelectedIndex != -1)
+            {
+                cbIdPromocionDetalleVenta.Enabled = true;
+                DataRowView producto = (DataRowView)cbProductoDetalleVenta.SelectedItem;
+                Int64 idProducto = (Int64)producto.Row.ItemArray[0];
+
+                detalleVenta.consultaPromociones(conexion, cbIdPromocionDetalleVenta, idProducto);
             }
         }
     }

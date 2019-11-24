@@ -130,10 +130,11 @@ namespace sistemaTiendaAbarrotes
             idVentas.SelectedIndex = -1;
         }
 
-        public void consultaPromociones(SqlConnection connection, ComboBox idPromociones)
+        public void consultaPromociones(SqlConnection connection, ComboBox idPromociones, Int64 idProducto)
         {
-            string query = "SELECT IdPromocion FROM Transaccion.Promocion";
+            string query = "SELECT Promocion.IdPromocion FROM Transaccion.Promocion  JOIN Inventario.Producto ON Promocion.IdProducto = Producto.IdProducto WHERE Producto.IdProducto = @IdProducto";
             SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@IdProducto", idProducto);
 
             DataTable tablaPromocion = new DataTable();
             SqlDataReader reader = command.ExecuteReader();
