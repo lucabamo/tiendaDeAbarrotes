@@ -436,9 +436,12 @@ namespace sistemaTiendaAbarrotes
 
         private void DGEmpleados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string ID = dGEmpleados.Rows[e.RowIndex].Cells[0].Value.ToString();
-            empleado.AccesoIdEmpleadoSeleccionado = ID;
-            empleado.cargaRegistroSeleccionado();
+            if (e.RowIndex != -1)
+            {
+                string ID = dGEmpleados.Rows[e.RowIndex].Cells[0].Value.ToString();
+                empleado.AccesoIdEmpleadoSeleccionado = ID;
+                empleado.cargaRegistroSeleccionado();
+            }
         }
 
         private void BEditarEmpleado_Click(object sender, EventArgs e)
@@ -596,6 +599,15 @@ namespace sistemaTiendaAbarrotes
                 Int64 idProducto = (Int64)producto.Row.ItemArray[0];
 
                 detalleVenta.consultaPromociones(conexion, cbIdPromocionDetalleVenta, idProducto);
+            }
+        }
+
+        private void dGEmpleados_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dGEmpleados.Columns[e.ColumnIndex].Index == 6 && e.Value != null)
+            {
+                dGEmpleados.Rows[e.RowIndex].Tag = e.Value;
+                e.Value = new String('*', e.Value.ToString().Length);
             }
         }
     }
