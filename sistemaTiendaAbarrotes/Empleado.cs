@@ -185,7 +185,6 @@ namespace sistemaTiendaAbarrotes
             tbNombre.Text = "";
             tbPassword.Text = "";
             tbUsuario.Text = "";
-            dtFechaNacimiento.Value = System.DateTime.Now;
         }
 
     }
