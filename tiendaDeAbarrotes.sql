@@ -29,7 +29,9 @@ CREATE TABLE Empresa.Proveedor(
 	Email VARCHAR(200) NOT NULL,
 	RFC VARCHAR(100) NOT NULL,
 	DomicilioFiscal VARCHAR(200) NOT NULL,
-	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor)
+	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor),
+	CONSTRAINT UQ_EMAIL UNIQUE (Email),
+	CONSTRAINT UQ_RFC   UNIQUE (RFC)
 )
 
 ALTER TABLE Empresa.Proveedor ADD CONSTRAINT UQ_EMAIL UNIQUE(Email)
@@ -353,6 +355,18 @@ BEGIN
 	DECLARE @IdDevolucion AS INT
 	SELECT @IdDevolucion = IdDevolucion FROM inserted
 	UPDATE Transaccion.Devolucion SET Entregada = 1 WHERE IdDevolucion = @IdDevolucion
+
+--Trigger para insertar una promocion default cuando insertas un producto
+CREATE TRIGGER Inventario.CreaPromocionDefault
+ON Inventario.Producto
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdProducto AS INT
+	SELECT @IdProducto = IdProducto FROM inserted
+	INSERT INTO Transaccion.Promocion (IdProducto, FechaInicio, FechaFinal, Descuento) 
+	VALUES (@IdProducto, GETDATE(), GETDATE(), 0)
 END
 
 --Reglas
@@ -450,3 +464,10 @@ END
 
 
 
+SELECT DISTINCT producto.IdProducto, producto.Nombre FROM Inventario.Producto AS producto 
+INNER JOIN Transaccion.DetalleDevolucion AS detalledev ON detalledev.IdProducto = producto.IdProducto
+WHERE detalledev.IdDevolucion = 1
+ORDER BY producto.IdProducto
+
+SELECT * FROM Empresa.Empleado WHERE IdEmpleado = 3
+	
