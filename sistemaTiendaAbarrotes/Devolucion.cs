@@ -127,8 +127,8 @@ namespace sistemaTiendaAbarrotes
                 var cantidad = "0";
                 DateTime fechaDevolucion = dtFechaDevolucion.Value.Date;
                 string query = "";
-                query = "INSERT INTO Transaccion.Devolucion (IdEmpleado, IdVenta, Fecha, Motivo, Monto) " +
-                        "VALUES (@IdEmpleado, @IdVenta,@fechaDevolucion,@motivoDev, @cantidad)";
+                query = "INSERT INTO Transaccion.Devolucion (IdEmpleado, IdVenta, Fecha, Motivo, Monto, Entregada) " +
+                        "VALUES (@IdEmpleado, @IdVenta,@fechaDevolucion,@motivoDev, @cantidad, 0)";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@IdEmpleado", IdEmpleado);

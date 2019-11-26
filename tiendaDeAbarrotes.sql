@@ -32,6 +32,11 @@ CREATE TABLE Empresa.Proveedor(
 	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor)
 )
 
+ALTER TABLE Empresa.Proveedor ADD CONSTRAINT UQ_EMAIL UNIQUE(Email)
+ALTER TABLE Empresa.Proveedor ADD CONSTRAINT UQ_RFC UNIQUE(RFC)
+
+
+
 --Tabla Producto--
 CREATE TABLE Inventario.Producto(
 	IdProducto BIGINT IDENTITY(1,1) NOT NULL,
@@ -70,10 +75,10 @@ CREATE TABLE Transaccion.Promocion(
 CREATE TABLE Transaccion.DetalleVenta(
 	IdDetalleVenta BIGINT IDENTITY(1,1) NOT NULL,
 	IdVenta BIGINT NOT NULL,
-	IdPromocion BIGINT NOT NULL,
+	IdPromocion BIGINT,
 	IdProducto BIGINT NOT NULL,
 	Cantidad INT NOT NULL,
-	Subtotal REAL, --Usado para calcular subtotal--
+	Subtotal REAL NOT NULL, --Usado para calcular subtotal--
 	CONSTRAINT PK_DETALLEVENTA PRIMARY KEY (IdDetalleVenta),
 	CONSTRAINT FK_VENTA2 FOREIGN KEY(IdVenta) REFERENCES Transaccion.Venta(IdVenta),
 	CONSTRAINT FK_PROMOCION FOREIGN KEY(IdPromocion) REFERENCES Transaccion.Promocion(IdPromocion),
@@ -112,6 +117,7 @@ CREATE TABLE Transaccion.Devolucion(
 	Fecha DATE NOT NULL,
 	Motivo VARCHAR(300) NOT NULL,
 	Monto REAL NOT NULL,
+	Entregada BIT NOT NULL,
 	CONSTRAINT PK_DEVOLUCION PRIMARY KEY(IdDevolucion),
 	CONSTRAINT FK_EMPLEADO3 FOREIGN KEY(IdEmpleado) REFERENCES Empresa.Empleado(IdEmpleado),
 	CONSTRAINT FK_VENTA3 FOREIGN KEY(IdVenta) REFERENCES Transaccion.Venta(IdVenta),
@@ -334,6 +340,19 @@ BEGIN
 	SELECT @Existencias = Existencia FROM Inventario.Producto WHERE IdProducto = @ID
 	SELECT @Resultado = @Existencias - @Cantidad
 	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
+END
+
+--Trigger para marcar una devolución como entregada
+CREATE TRIGGER Transaccion.EntregaDevolucion
+	ON Transaccion.Entrega
+	AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdEntrega AS BIGINT
+	DECLARE @IdDevolucion AS INT
+	SELECT @IdDevolucion = IdDevolucion FROM inserted
+	UPDATE Transaccion.Devolucion SET Entregada = 1 WHERE IdDevolucion = @IdDevolucion
 END
 
 --Reglas

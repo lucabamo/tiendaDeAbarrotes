@@ -70,7 +70,7 @@ namespace sistemaTiendaAbarrotes
         }
 
         private void llenaMotivosDevolucion(ComboBox cbDevoluciones) {
-            string consultaDevoluciones = "SELECT IdDevolucion, Motivo FROM Transaccion.Devolucion";
+            string consultaDevoluciones = "SELECT IdDevolucion, Motivo FROM Transaccion.Devolucion WHERE Entregada = 0";
             using (var command = new SqlCommand(consultaDevoluciones, conexion))
             {
                 DataTable tablaDevolucion = new DataTable();

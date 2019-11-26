@@ -179,39 +179,29 @@ namespace sistemaTiendaAbarrotes
 
         private void btAgregarPromocion_Click(object sender, EventArgs e)
         {
-            if (tbDescuento.Text != "")
+            if (cBDescuentos.Text == "")
             {
-                double descuento = Convert.ToDouble(tbDescuento.Text);
-                if (descuento > 1 || descuento < -1)
-                {
-                    MessageBox.Show("Valor del descuento no válida");
-                }
-                else
-                {
-                    try
-                    {
-                        dgPromocion.DataSource = "";
-
-                        DataRowView producto = (DataRowView)cbProductoPromocion.SelectedItem;
-                        Int64 idProducto = (Int64)producto.Row.ItemArray[0];
-
-                        promocion.insertPromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text);
-                        dgPromocion.DataSource = promocion.selectPromocion(conexion);
-                        resetTabPromocion();
-                    }
-
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Es necesario insertar todos los campos");
-                        dgPromocion.DataSource = promocion.selectPromocion(conexion);
-                    }
-                }
+                cBDescuentos.Text = "0.0";
             }
-            else {
-                MessageBox.Show("Inserte un porcentaje de descuento");
+            try
+            {
+                dgPromocion.DataSource = "";
+
+                DataRowView producto = (DataRowView)cbProductoPromocion.SelectedItem;
+                Int64 idProducto = (Int64)producto.Row.ItemArray[0];
+
+                promocion.insertPromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, cBDescuentos.Text);
+                dgPromocion.DataSource = promocion.selectPromocion(conexion);
+                resetTabPromocion();
             }
 
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Es necesario insertar todos los campos");
+                dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            }
+                
+            
         }
 
         private void btModificarPromocion_Click(object sender, EventArgs e)
@@ -222,8 +212,9 @@ namespace sistemaTiendaAbarrotes
             Int64 idProducto = (Int64)producto.Row.ItemArray[0];
 
 
-            promocion.updatePromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text, promocion.IdPromocion);
+            promocion.updatePromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, cBDescuentos.Text, promocion.IdPromocion);
             dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            cBDescuentos.Text = "";
             resetTabPromocion();
         }
 
@@ -243,7 +234,16 @@ namespace sistemaTiendaAbarrotes
                 cbProductoPromocion.SelectedValue = dgPromocion.Rows[e.RowIndex].Cells[1].Value;
                 dtpFechaInicioPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[2].Value;
                 dtpFechaFinalPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[3].Value;
-                tbDescuento.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                string desc = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                if (desc == "0")
+                {
+                    cBDescuentos.Text = "0.0";
+
+                }
+                else {
+                    cBDescuentos.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                }
+
             }
         }
 
@@ -258,7 +258,7 @@ namespace sistemaTiendaAbarrotes
         {
             cbProductoPromocion.Text = "";
             cbProductoPromocion.SelectedValue = -1;
-            tbDescuento.Text = "";
+            cBDescuentos.Text = "";
         }
 
         private void btAgregarDetalleVenta_Click(object sender, EventArgs e)
