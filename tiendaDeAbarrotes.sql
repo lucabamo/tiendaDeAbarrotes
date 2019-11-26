@@ -338,6 +338,20 @@ BEGIN
 	UPDATE Inventario.Producto SET Existencia = @Resultado WHERE IdProducto = @ID
 END
 
+
+--Trigger para insertar una promocion default cuando insertas un producto
+CREATE TRIGGER Inventario.CreaPromocionDefault
+ON Inventario.Producto
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdProducto AS INT
+	SELECT @IdProducto = IdProducto FROM inserted
+	INSERT INTO Transaccion.Promocion (IdProducto, FechaInicio, FechaFinal, Descuento) 
+	VALUES (@IdProducto, GETDATE(), GETDATE(), 0)
+END
+
 --Reglas
 --Regla numerica que restringe el número de existencias de un producto
 CREATE RULE R_Existencias AS @Existencia BETWEEN 0 AND 100
