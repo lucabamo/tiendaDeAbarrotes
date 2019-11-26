@@ -239,7 +239,7 @@ namespace sistemaTiendaAbarrotes
             {
                 return false;
             }
-            else if (Convert.ToInt32(tbCantindadI.Text) < Convert.ToInt32(accesoNumeroMaximoADevolver))
+            else if (Convert.ToInt32(tbCantindadI.Text) <= Convert.ToInt32(accesoNumeroMaximoADevolver))
             {
                 return true;
             }

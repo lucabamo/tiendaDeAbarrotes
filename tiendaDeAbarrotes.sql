@@ -431,41 +431,7 @@ BEGIN
 	UPDATE Transaccion.Venta SET Total = @Resultado WHERE IdVenta = @IdVenta
 END
 
-------------NO SIRVE-------------
-DROP TRIGGER Transaccion.creaDetalleDevolucion
---Disparador para insertar un detalle devoluci�n despu�s de haber insertado una devoluci�n
-CREATE TRIGGER Transaccion.creaDetalleDevolucion
-ON Transaccion.Devolucion
-AFTER INSERT
-AS 
-BEGIN 
-	SET NOCOUNT ON
-	DECLARE @IdDevolucion AS BIGINT
-	DECLARE @IdProducto AS BIGINT
-	DECLARE @Cantidad AS INT 
-	SELECT @IdDevolucion = Insertada.IdDevolucion, @IdProducto = DetalleVenta.IdProducto,
-	@Cantidad = DetalleVenta.Cantidad FROM inserted Insertada
-	INNER JOIN Transaccion.DetalleVenta DetalleVenta ON Insertada.IdVenta = DetalleVenta.IdVenta
-	INSERT INTO Transaccion.DetalleDevolucion VALUES(@IdDevolucion,@IdProducto,@Cantidad)
-END
 
-SELECT DetalleDevolucion.IdDetalleDevolucion,Devolucion.Motivo, Producto.Nombre,
-DetalleDevolucion.Cantidad 
-FROM Transaccion.DetalleDevolucion AS DetalleDevolucion
-INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion 
-INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleDevolucion.IdProducto
-ORDER BY DetalleDevolucion.IdDetalleDevolucion
-
-SELECT detalleVenta.IdDetalleVenta,detalleVenta.Cantidad FROM Transaccion.DetalleVenta AS detalleVenta 
-INNER JOIN Transaccion.Venta AS venta ON venta.IdVenta = detalleVenta.IdVenta
-INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleVenta.IdVenta 
-WHERE detalleVenta.IdProducto = 2 AND venta.IdVenta = 2
-
-
-
-SELECT * FROM Transaccion.DetalleVenta
-SELECT * FROM Transaccion.DetalleDevolucion
-SELECT * FROM Transaccion.Devolucion
 
 SELECT DISTINCT producto.IdProducto, producto.Nombre FROM Inventario.Producto AS producto 
 INNER JOIN Transaccion.DetalleDevolucion AS detalledev ON detalledev.IdProducto = producto.IdProducto
