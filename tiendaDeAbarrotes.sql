@@ -29,7 +29,9 @@ CREATE TABLE Empresa.Proveedor(
 	Email VARCHAR(200) NOT NULL,
 	RFC VARCHAR(100) NOT NULL,
 	DomicilioFiscal VARCHAR(200) NOT NULL,
-	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor)
+	CONSTRAINT PK_PROVEEDOR PRIMARY KEY(IdProveedor),
+	CONSTRAINT UQ_EMAIL UNIQUE (Email),
+	CONSTRAINT UQ_RFC   UNIQUE (RFC)
 )
 
 --Tabla Producto--
@@ -469,4 +471,6 @@ SELECT DISTINCT producto.IdProducto, producto.Nombre FROM Inventario.Producto AS
 INNER JOIN Transaccion.DetalleDevolucion AS detalledev ON detalledev.IdProducto = producto.IdProducto
 WHERE detalledev.IdDevolucion = 1
 ORDER BY producto.IdProducto
+
+SELECT * FROM Empresa.Empleado WHERE IdEmpleado = 3
 	
