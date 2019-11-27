@@ -51,7 +51,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Hubo un error en la inserción");
             }
         }
 
@@ -73,7 +73,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Hubo un error en la modificación");
             }
         }
 
@@ -91,7 +91,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("No se pudo eliminar");
             }
         }
 

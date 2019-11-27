@@ -43,6 +43,8 @@ namespace sistemaTiendaAbarrotes
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaEmpleado);
             dGEmpleado.DataSource = tablaEmpleado;
+            //dGEmpleado.Columns[6].Visible = false;
+            
         }
 
         public string AccesoIdEmpleadoSeleccionado
@@ -105,7 +107,7 @@ namespace sistemaTiendaAbarrotes
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR" + e.Message);
+                    MessageBox.Show("No se pudo eliminar");
 
                 }
             }
@@ -185,7 +187,6 @@ namespace sistemaTiendaAbarrotes
             tbNombre.Text = "";
             tbPassword.Text = "";
             tbUsuario.Text = "";
-            dtFechaNacimiento.Value = System.DateTime.Now;
         }
 
     }

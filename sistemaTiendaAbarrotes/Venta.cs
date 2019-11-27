@@ -31,7 +31,7 @@ namespace sistemaTiendaAbarrotes
             return table; 
         }
 
-        public void insertVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta, string total)
+        public void insertVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta)
         {
             string query = "INSERT INTO Transaccion.Venta (IdEmpleado, FechaVenta, Total)" +
                 "VALUES (@idEmpleado, @fechaVenta, @total)";
@@ -40,8 +40,8 @@ namespace sistemaTiendaAbarrotes
 
             command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
             command.Parameters.AddWithValue("@fechaVenta", fechaVenta);
-            command.Parameters.AddWithValue("@total", total);
-
+            command.Parameters.AddWithValue("@total", 0);
+         
             try
             {
                 command.ExecuteNonQuery();
@@ -49,17 +49,16 @@ namespace sistemaTiendaAbarrotes
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Hubo un error en la inserción");
             }
         }
 
-        public void updateVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta, string total, string idVenta)
+        public void updateVenta(SqlConnection connection, Int64 idEmpleado, DateTime fechaVenta)
         {
-            string query = "UPDATE Transaccion.Venta SET IdEmpleado=@idEmpleado, FechaVenta = @fechaVenta, Total = @total WHERE IdVenta = @idVenta";
+            string query = "UPDATE Transaccion.Venta SET IdEmpleado=@idEmpleado, FechaVenta = @fechaVenta WHERE IdVenta = @idVenta";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
             command.Parameters.AddWithValue("@fechaVenta", fechaVenta);
-            command.Parameters.AddWithValue("@total", total);
             command.Parameters.AddWithValue("@idVenta", idVenta);
 
             try
@@ -69,11 +68,11 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Hubo un error en la modificación");
             }
         }
 
-        public void deleteVenta(SqlConnection connection, string idVenta)
+        public void deleteVenta(SqlConnection connection)
         {
             string query = "DELETE FROM Transaccion.Venta WHERE IdVenta = @idVenta";
             SqlCommand command = new SqlCommand(query, connection);
@@ -87,7 +86,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("No se pudo eliminar");
             }
         }
 

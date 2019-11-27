@@ -34,29 +34,40 @@ namespace sistemaTiendaAbarrotes
 
         public void insertarDetalleCompra()
         {
-            DataRowView Compra = (DataRowView)cbCompra.SelectedItem;
-            DataRowView Producto = (DataRowView)cbProducto.SelectedItem;
-            Int64 IdCompra = (Int64)Compra.Row.ItemArray[0];
-            Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
-
-            string query = "INSERT INTO Transaccion.DetalleCompra (IdCompra, IdProducto, Cantidad) VALUES (@compra, @producto, @cantidad) ";
-
-            SqlCommand comando = new SqlCommand(query, conexion);
-            comando.Parameters.AddWithValue("@compra", IdCompra);
-            comando.Parameters.AddWithValue("@producto", IdProducto);
-            comando.Parameters.AddWithValue("@cantidad", tbCantidad.Text);
-
             try
             {
-                comando.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+
+                DataRowView Compra = (DataRowView)cbCompra.SelectedItem;
+                DataRowView Producto = (DataRowView)cbProducto.SelectedItem;
+                Int64 IdCompra = (Int64)Compra.Row.ItemArray[0];
+                Int64 IdProducto = (Int64)Producto.Row.ItemArray[0]; ;
+
+                string query = "INSERT INTO Transaccion.DetalleCompra (IdCompra, IdProducto, Cantidad) VALUES (@compra, @producto, @cantidad) ";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@compra", IdCompra);
+                comando.Parameters.AddWithValue("@producto", IdProducto);
+                comando.Parameters.AddWithValue("@cantidad", tbCantidad.Text);
+
+                try
+                {
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Inserción correcta");
+                    resetControles();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hubo un error en la inserción");
+                }
             }
 
+            catch (Exception ex) {
+                MessageBox.Show("Es necesario insertar todos los campos");
+            }
+
+
             actualizaTabla();
-            resetControles();
         }
 
         public void modificarDetalleCompra()
@@ -81,7 +92,7 @@ namespace sistemaTiendaAbarrotes
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Hubo un error en la modificación");
                 }
 
                 actualizaTabla();
@@ -108,7 +119,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("No se puede eliminar");
             }
             actualizaTabla();
             resetControles();
@@ -171,12 +182,12 @@ namespace sistemaTiendaAbarrotes
         public void colocaDetalleCompra(int index)
         {
             DataGridViewRow fila = dtDetalleCompra.CurrentRow;
-            idDetalleCompra = index.ToString();
+           // idDetalleCompra = index.ToString();
             fila.Selected = true;
 
-            cbCompra.SelectedValue = fila.Cells[0].Value;
-            cbProducto.SelectedValue = fila.Cells[1].Value;
-            tbCantidad.Text = fila.Cells[2].Value.ToString();
+            cbCompra.SelectedValue = fila.Cells[1].Value;
+            cbProducto.SelectedValue = fila.Cells[2].Value;
+            tbCantidad.Text = fila.Cells[3].Value.ToString();
 
         }
 

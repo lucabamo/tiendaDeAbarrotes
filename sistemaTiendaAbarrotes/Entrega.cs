@@ -70,7 +70,7 @@ namespace sistemaTiendaAbarrotes
         }
 
         private void llenaMotivosDevolucion(ComboBox cbDevoluciones) {
-            string consultaDevoluciones = "SELECT IdDevolucion, Motivo FROM Transaccion.Devolucion";
+            string consultaDevoluciones = "SELECT IdDevolucion, Motivo FROM Transaccion.Devolucion WHERE Entregada = 0";
             using (var command = new SqlCommand(consultaDevoluciones, conexion))
             {
                 DataTable tablaDevolucion = new DataTable();
@@ -153,6 +153,7 @@ namespace sistemaTiendaAbarrotes
                 try
                 {
                     comando.ExecuteNonQuery();
+                    obtenProductosEntrega(obtenUltimaEntrega());
                     MessageBox.Show("Inserción correcta");
                 }
                 catch (Exception e)
@@ -165,6 +166,69 @@ namespace sistemaTiendaAbarrotes
             {
                 MessageBox.Show("Todos los campos son necesarios");
             }
+        }
+
+        private Int64 obtenUltimaEntrega() {
+
+            Int64 id = 0;
+
+            string query = "";
+            query = "SELECT TOP 1 IdEntrega FROM Transaccion.Entrega ORDER BY IdEntrega DESC";
+            SqlCommand comando = new SqlCommand(query, conexion);
+
+            object result = comando.ExecuteScalar();
+            if (result != null) {
+                id = (Int64)result;
+            }
+            return id;
+        }
+
+        private void obtenProductosEntrega(Int64 idEntrega) {
+
+            DataTable tablaProductos;
+
+            tablaProductos = new DataTable();
+
+            string consulta = "SELECT producto.IdProducto, producto.Existencia, detalle.Cantidad, entrega.IdEntrega FROM Inventario.Producto AS producto " +
+                "INNER JOIN Transaccion.DetalleDevolucion AS detalle ON detalle.IdProducto = producto.IdProducto " +
+                "INNER JOIN Transaccion.Entrega AS entrega ON entrega.IdDevolucion = detalle.IdDevolucion " +
+                "AND entrega.IdEntrega = @IdEntrega";
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@IdEntrega", idEntrega);
+
+
+            SqlDataAdapter adaptador = new SqlDataAdapter(comando);
+            adaptador.Fill(tablaProductos);
+
+            DataRow[] dr = tablaProductos.Select("IdEntrega = " + idEntrega.ToString());
+
+            foreach (DataRow row in dr)
+            {
+                Int64 idproducto = row.Field<Int64>("IdProducto");
+                int existencia = row.Field<int>("Existencia");
+                int cantidadDevueltos = row.Field<int>("Cantidad");
+                int existenciaActual = existencia - cantidadDevueltos;
+                actualizaProducto(idproducto, existenciaActual);
+            }
+
+        }
+
+        private void actualizaProducto(Int64 idProd, int existencia) {
+            string query = "UPDATE Inventario.Producto SET Existencia = @existencia WHERE IdProducto = @idProd ";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.Parameters.AddWithValue("@existencia", existencia);
+            comando.Parameters.AddWithValue("@idProd", idProd);
+
+            try
+            {
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hubo un error en la modificación del producto");
+            }
+
         }
 
         /// <summary>

@@ -31,6 +31,7 @@ namespace sistemaTiendaAbarrotes
         {
             string connectionString = null;
             //Cadena de conexión
+            //LAPTOP-M8A5375A
             connectionString = "Server=DESKTOP-AP88PFE\\SQLEXPRESS; Database = TiendaAbarrotes; Trusted_Connection = true;";
 
             conexion = new SqlConnection(connectionString);
@@ -53,12 +54,11 @@ namespace sistemaTiendaAbarrotes
             venta = new Venta();
             promocion = new Promocion();
             detalleVenta = new DetalleVenta();
-            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, tbTotalCompras, dtCompras);
+            compra = new Compra(conexion, cbEmpleadoCompras, cbProveedorCompras, dateCompras, dtCompras);
             detalleCompra = new DetalleCompra(conexion, cbCompraDetalleCom, cbProductoDetalleCom, tbCantidadDetalleCom, dtDetalleCom);
             devolucion = new Devolucion(conexion, cbNombreEmpleadosDevo, cbVentasDevo, tbMotivoDevolucionDevo, dtFechaVentaDevo, tbCantidadDevo);
             detalleDevolucion = new DetalleDevolucion(conexion, cbIdDevolucionDetalleDevo, cbIdProductoDetalleDevo, tbCantidadDetalleDevo);
             entrega = new Entrega(conexion, cBIdProveedor, cBIdDevolucion, cBIdEmpleado, dTFechaEntregaEntregas);
-
         }
 
         private void TabVistas_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,6 +75,7 @@ namespace sistemaTiendaAbarrotes
                     devolucion.Consulta(dgDevoluciones);
                     break;
                 case 9:
+                    cbIdDevolucionDetalleDevo.SelectedIndex = -1;
                     detalleDevolucion.Consulta(dGDetalleDevoluciones);
                     break;
                 case 10:
@@ -110,20 +111,28 @@ namespace sistemaTiendaAbarrotes
 
         private void DGDetalleDevoluciones_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+   
             string ID = dGDetalleDevoluciones.Rows[e.RowIndex].Cells[0].Value.ToString();
-            detalleDevolucion.accesoIdDevolucion = ID;
+            detalleDevolucion.AccesoIdDetalleDevolucionSeleccionada = ID;
             detalleDevolucion.cargaRegistroSeleccionado();
         }
 
         private void btAgregarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
+            try
+            {
+                DataRowView Empleado = (DataRowView)cbEmpleadoVentas.SelectedItem;
+                Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0];
+                venta.insertVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date);
+                dgVentas.DataSource = venta.selectVentas(conexion);
+                resetTabVentas();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Es necesario insertar todos los campos");
+                dgVentas.DataSource = venta.selectVentas(conexion);
+            }
 
-            DataRowView Empleado = (DataRowView)cbEmpleadoVentas.SelectedItem;
-            Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; 
-            venta.insertVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date, tbTotal.Text);
-            dgVentas.DataSource = venta.selectVentas(conexion);
-            resetTabVentas();
         }
 
         private void btModificarVenta_Click(object sender, EventArgs e)
@@ -131,7 +140,7 @@ namespace sistemaTiendaAbarrotes
             dgVentas.DataSource = "";
             DataRowView Empleado = (DataRowView)cbEmpleadoVentas.SelectedItem;
             Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
-            venta.updateVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date, tbTotal.Text, venta.IdVenta);
+            venta.updateVenta(conexion, IdEmpleado, dtpFechaVenta.Value.Date);
             dgVentas.DataSource =  venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -139,7 +148,7 @@ namespace sistemaTiendaAbarrotes
         private void btEliminarVenta_Click(object sender, EventArgs e)
         {
             dgVentas.DataSource = "";
-            venta.deleteVenta(conexion, venta.IdVenta);
+            venta.deleteVenta(conexion);
             dgVentas.DataSource = venta.selectVentas(conexion);
             resetTabVentas();
         }
@@ -151,7 +160,6 @@ namespace sistemaTiendaAbarrotes
                 venta.IdVenta = dgVentas.Rows[e.RowIndex].Cells[0].Value.ToString();
                 cbEmpleadoVentas.SelectedValue = dgVentas.Rows[e.RowIndex].Cells[1].Value;
                 dtpFechaVenta.Value = (DateTime)dgVentas.Rows[e.RowIndex].Cells[2].Value;
-                tbTotal.Text = dgVentas.Rows[e.RowIndex].Cells[3].Value.ToString();
             }
         }
 
@@ -167,19 +175,33 @@ namespace sistemaTiendaAbarrotes
         {
             cbEmpleadoVentas.Text = "";
             cbEmpleadoVentas.SelectedIndex = -1;
-            tbTotal.Text = "";
         }
 
         private void btAgregarPromocion_Click(object sender, EventArgs e)
         {
-            dgPromocion.DataSource = "";
+            if (cBDescuentos.Text == "")
+            {
+                cBDescuentos.Text = "0.0";
+            }
+            try
+            {
+                dgPromocion.DataSource = "";
 
-            DataRowView producto = (DataRowView)cbProductoPromocion.SelectedItem;
-            Int64 idProducto = (Int64)producto.Row.ItemArray[0];
+                DataRowView producto = (DataRowView)cbProductoPromocion.SelectedItem;
+                Int64 idProducto = (Int64)producto.Row.ItemArray[0];
 
-            promocion.insertPromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text);
-            dgPromocion.DataSource = promocion.selectPromocion(conexion);
-            resetTabPromocion();
+                promocion.insertPromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, cBDescuentos.Text);
+                dgPromocion.DataSource = promocion.selectPromocion(conexion);
+                resetTabPromocion();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Es necesario insertar todos los campos");
+                dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            }
+                
+            
         }
 
         private void btModificarPromocion_Click(object sender, EventArgs e)
@@ -190,8 +212,9 @@ namespace sistemaTiendaAbarrotes
             Int64 idProducto = (Int64)producto.Row.ItemArray[0];
 
 
-            promocion.updatePromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, tbDescuento.Text, promocion.IdPromocion);
+            promocion.updatePromocion(conexion, idProducto, dtpFechaInicioPromo.Value.Date, dtpFechaFinalPromo.Value.Date, cBDescuentos.Text, promocion.IdPromocion);
             dgPromocion.DataSource = promocion.selectPromocion(conexion);
+            cBDescuentos.Text = "";
             resetTabPromocion();
         }
 
@@ -211,7 +234,16 @@ namespace sistemaTiendaAbarrotes
                 cbProductoPromocion.SelectedValue = dgPromocion.Rows[e.RowIndex].Cells[1].Value;
                 dtpFechaInicioPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[2].Value;
                 dtpFechaFinalPromo.Value = (DateTime)dgPromocion.Rows[e.RowIndex].Cells[3].Value;
-                tbDescuento.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                string desc = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                if (desc == "0")
+                {
+                    cBDescuentos.Text = "0.0";
+
+                }
+                else {
+                    cBDescuentos.Text = dgPromocion.Rows[e.RowIndex].Cells[4].Value.ToString();
+                }
+
             }
         }
 
@@ -226,23 +258,35 @@ namespace sistemaTiendaAbarrotes
         {
             cbProductoPromocion.Text = "";
             cbProductoPromocion.SelectedValue = -1;
-            tbDescuento.Text = "";
+            cBDescuentos.Text = "";
         }
 
         private void btAgregarDetalleVenta_Click(object sender, EventArgs e)
         {
-            dgDetalleVenta.DataSource = "";
-            DataRowView producto = (DataRowView)cbProductoDetalleVenta.SelectedItem;
-            DataRowView venta = (DataRowView)cbIdVentaDetalleVenta.SelectedItem;
-            DataRowView promocion = (DataRowView)cbIdPromocionDetalleVenta.SelectedItem;
-            Int64 idProducto = (Int64)producto.Row.ItemArray[0];
-            Int64 idVenta = (Int64)venta.Row.ItemArray[0];
-            Int64 idPromocion = (Int64)promocion.Row.ItemArray[0];
+            try
+            {
+                dgDetalleVenta.DataSource = "";
+                DataRowView producto = (DataRowView)cbProductoDetalleVenta.SelectedItem;
+                DataRowView venta = (DataRowView)cbIdVentaDetalleVenta.SelectedItem;
+                DataRowView promocion = (DataRowView)cbIdPromocionDetalleVenta.SelectedItem;
+                Int64 idPromocion;
+                if (promocion == null)
+                {
+                    idPromocion = 1;
+                }
+                else {
+                    idPromocion = (Int64)promocion.Row.ItemArray[0];
+                }
+                Int64 idProducto = (Int64)producto.Row.ItemArray[0];
+                Int64 idVenta = (Int64)venta.Row.ItemArray[0];
+                detalleVenta.insertDetalleVenta(conexion, idVenta, idPromocion, idProducto, tbCantidad.Text);
+                dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
+                resetTabDetalleVenta();
+            }
 
-            detalleVenta.insertDetalleVenta(conexion, idVenta, idPromocion, idProducto, tbCantidad.Text);
-            dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
-            resetTabDetalleVenta();
-            
+            catch (Exception ex) {
+                MessageBox.Show("Es necesario insertar todos los valores");
+            }
         }
 
         private void btModificarDetalleVenta_Click(object sender, EventArgs e)
@@ -285,14 +329,17 @@ namespace sistemaTiendaAbarrotes
             dgDetalleVenta.DataSource = "";
             dgDetalleVenta.DataSource = detalleVenta.selectDetalleVenta(conexion);
             detalleVenta.consultaProductos(conexion, cbProductoDetalleVenta);
-            detalleVenta.consultaPromociones(conexion, cbIdPromocionDetalleVenta);
             detalleVenta.consultaVentas(conexion, cbIdVentaDetalleVenta);
+            cbProductoDetalleVenta.SelectedText = "";
+            cbProductoDetalleVenta.SelectedIndex = -1;
+            cbIdPromocionDetalleVenta.Enabled = false;
         }
 
         private void resetTabDetalleVenta()
         {
             cbProductoDetalleVenta.Text = "";
             cbProductoDetalleVenta.SelectedValue = -1;
+            cbIdPromocionDetalleVenta.Enabled = false;
             cbIdPromocionDetalleVenta.Text = "";
             cbIdPromocionDetalleVenta.SelectedValue = -1;
             cbIdVentaDetalleVenta.Text = "";
@@ -307,7 +354,14 @@ namespace sistemaTiendaAbarrotes
 
         private void btInsertarProducto_Click(object sender, EventArgs e)
         {
-            producto.insertarProducto();
+            if (tbCostoProvProducto.Text != "" && tbCostoVentaProducto.Text != "" && tbNombreProducto.Text != ""
+                && tbExistenciasProducto.Text != "")
+            {
+                producto.insertarProducto();
+            }
+            else {
+                MessageBox.Show("Es necesario llenar todos los campos");
+            }
         }
 
         private void btActualizarProducto_Click(object sender, EventArgs e)
@@ -363,8 +417,15 @@ namespace sistemaTiendaAbarrotes
 
         private void BAgregarEmpleado_Click(object sender, EventArgs e)
         {
-            empleado.Inserta();
-            empleado.Consulta(dGEmpleados);
+            if (tbEmpleadoNombre.Text != "" && tbEmpleadoPass.Text != "" && tbEmpleadoUsuario.Text != ""
+                && tbEmpleadoDomicilio.Text != "")
+            {
+                empleado.Inserta();
+                empleado.Consulta(dGEmpleados);
+            }
+            else {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
         }
 
         private void BEliminarEmpleado_Click(object sender, EventArgs e)
@@ -375,9 +436,12 @@ namespace sistemaTiendaAbarrotes
 
         private void DGEmpleados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string ID = dGEmpleados.Rows[e.RowIndex].Cells[0].Value.ToString();
-            empleado.AccesoIdEmpleadoSeleccionado = ID;
-            empleado.cargaRegistroSeleccionado();
+            if (e.RowIndex != -1)
+            {
+                string ID = dGEmpleados.Rows[e.RowIndex].Cells[0].Value.ToString();
+                empleado.AccesoIdEmpleadoSeleccionado = ID;
+                empleado.cargaRegistroSeleccionado();
+            }
         }
 
         private void BEditarEmpleado_Click(object sender, EventArgs e)
@@ -388,8 +452,15 @@ namespace sistemaTiendaAbarrotes
 
         private void BAgregarProveedor_Click(object sender, EventArgs e)
         {
-            proveedor.Inserta();
-            proveedor.Consulta(dgProveedores);
+            if (tbNombreProveedor.Text != "" && tbRFCProveedor.Text != "" && tbTelefonoProveedor.Text != "" &&
+                tbEmailProveedor.Text != "")
+            {
+                proveedor.Inserta();
+                proveedor.Consulta(dgProveedores);
+            }
+            else {
+                MessageBox.Show("Todos los campos son necesarios");
+            }
         }
 
         private void DgProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -439,6 +510,8 @@ namespace sistemaTiendaAbarrotes
         private void tabCompra_Enter(object sender, EventArgs e)
         {
             compra.llenaNombreEmpleado();
+            compra.llenaNombreProveedor();
+            compra.actualizaTabla();
         }
 
         private void tabEmpleado_Enter(object sender, EventArgs e)
@@ -450,6 +523,92 @@ namespace sistemaTiendaAbarrotes
         {
             detalleCompra.llenaNombreCompra();
             detalleCompra.llenaNombreProducto();
+        }
+
+        private void tabProducto_Enter(object sender, EventArgs e)
+        {
+            producto.actualizaTabla();
+        }
+
+        private void BInsertaDetalleDev_Click(object sender, EventArgs e)
+        {
+            if (tbCantidadDetalleDevo.Text != "")
+            {
+                bool detalleValida = detalleDevolucion.cantidadDeProductosComprados();
+                if (detalleValida)
+                {
+                    detalleDevolucion.Inserta();
+                    detalleDevolucion.Consulta(dGDetalleDevoluciones);
+                }
+                else
+                {
+                    MessageBox.Show("La cantidad de devoluciones no es válida");
+                }
+            }
+            else {
+                MessageBox.Show("Inserte una cantidad a devolver válida");
+            }
+
+        }
+        bool primeraVez = true;
+
+        private void CbIdDevolucionDetalleDevo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (cbIdDevolucionDetalleDevo.SelectedIndex != -1) {
+                detalleDevolucion.llenaProductos(cbIdProductoDetalleDevo);
+            }
+
+            if (cbIdProductoDetalleDevo.SelectedIndex != -1) {
+                tbCantidadDetalleDevo.Enabled = true;
+            }
+        }
+
+        private void CbIdProductoDetalleDevo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbIdDevolucionDetalleDevo.SelectedIndex != -1) {
+                tbCantidadDetalleDevo.Enabled = true;
+            }
+        }
+
+        private void BEditaDetalleDev_Click(object sender, EventArgs e)
+        {
+            detalleDevolucion.Edita();
+            detalleDevolucion.Consulta(dGDetalleDevoluciones);
+        }
+
+        private void BEliminaDetalleDev_Click(object sender, EventArgs e)
+        {
+            detalleDevolucion.eliminaRegistroSeleccionado();
+            detalleDevolucion.Consulta(dGDetalleDevoluciones);
+        }
+
+        private void TbTelefonoProveedor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.')) {
+                e.Handled = true;
+            }
+        }
+
+        private void cbProductoDetalleVenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbProductoDetalleVenta.SelectedIndex != -1)
+            {
+                cbIdPromocionDetalleVenta.Enabled = true;
+                DataRowView producto = (DataRowView)cbProductoDetalleVenta.SelectedItem;
+                Int64 idProducto = (Int64)producto.Row.ItemArray[0];
+
+                detalleVenta.consultaPromociones(conexion, cbIdPromocionDetalleVenta, idProducto);
+            }
+        }
+
+        private void dGEmpleados_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dGEmpleados.Columns[e.ColumnIndex].Index == 6 && e.Value != null)
+            {
+                dGEmpleados.Rows[e.RowIndex].Tag = e.Value;
+                e.Value = new String('*', e.Value.ToString().Length);
+            }
         }
     }
 }
