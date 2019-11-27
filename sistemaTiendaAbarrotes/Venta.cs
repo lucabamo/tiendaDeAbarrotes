@@ -107,6 +107,6 @@ namespace sistemaTiendaAbarrotes
             empleados.SelectedIndex = -1;
         }
 
-        public string IdVenta { get => idVenta; set => idVenta = value; }
+        public string IdVenta { get { return idVenta; } set { idVenta = value; } }
     }
 }

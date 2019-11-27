@@ -112,6 +112,6 @@ namespace sistemaTiendaAbarrotes
             producto.SelectedIndex = -1;
         }
 
-        public string IdPromocion { get => idPromocion; set => idPromocion = value; }
+        public string IdPromocion { get { return idPromocion; } set { idPromocion = value; } }
     }
 }

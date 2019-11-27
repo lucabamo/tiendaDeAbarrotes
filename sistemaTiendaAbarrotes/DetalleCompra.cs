@@ -18,7 +18,7 @@ namespace sistemaTiendaAbarrotes
         DataGridView dtDetalleCompra;
         private string idDetalleCompra;
 
-        public string IdDetalleCompra { get => idDetalleCompra; set => idDetalleCompra = value; }
+        public string IdDetalleCompra { get { return idDetalleCompra; } set { idDetalleCompra = value; } }
 
         public DetalleCompra(SqlConnection con, ComboBox compra, ComboBox producto, TextBox cantidad, DataGridView compras)
         {

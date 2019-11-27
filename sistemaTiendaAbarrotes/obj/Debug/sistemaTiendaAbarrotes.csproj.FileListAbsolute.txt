@@ -21,3 +21,9 @@ C:\Users\Karla Rosas\Documents\K2\UASLP\9NO SEMESTRE\BASES\Proyecto SQL Server\t
 C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe.config
 C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.exe
 C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.pdb
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csprojResolveAssemblyReference.cache
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Form1.resources
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.Properties.Resources.resources
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\obj\Debug\sistemaTiendaAbarrotes.csproj.GenerateResource.Cache
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.exe
+C:\Users\Sonia Hernandez\Documents\9no SEMESTRE\ADMIN BD\PROYECTO\tiendaDeAbarrotes\sistemaTiendaAbarrotes\bin\Debug\sistemaTiendaAbarrotes.pdb

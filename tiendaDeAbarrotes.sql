@@ -266,7 +266,7 @@ BEGIN
 	UPDATE Transaccion.Compra SET Total = @Resultado WHERE IdCompra = @IdCompra
 END
 
-DROP TRIGGER Transaccion.existenciaProductoDevolucion
+--DROP TRIGGER Transaccion.existenciaProductoDevolucion
 
 --Trigger para actualizar la existencia del producto despu�s de una devoluci�n
 CREATE TRIGGER Transaccion.existenciaProductoDevolucion
@@ -355,6 +355,7 @@ BEGIN
 	DECLARE @IdDevolucion AS INT
 	SELECT @IdDevolucion = IdDevolucion FROM inserted
 	UPDATE Transaccion.Devolucion SET Entregada = 1 WHERE IdDevolucion = @IdDevolucion
+END
 
 --Trigger para insertar una promocion default cuando insertas un producto
 CREATE TRIGGER Inventario.CreaPromocionDefault

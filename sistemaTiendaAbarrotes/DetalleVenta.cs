@@ -13,7 +13,7 @@ namespace sistemaTiendaAbarrotes
     {
        private string id;
 
-        public string Id { get => id; set => id = value; }
+        public string Id { get { return id; } set { id = value; } }
 
         public DetalleVenta()
         {
@@ -52,6 +52,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception ex)
             {
+               //MessageBox.Show(ex.ToString());
                MessageBox.Show("Hubo un error en la inserción");
             }
         }
