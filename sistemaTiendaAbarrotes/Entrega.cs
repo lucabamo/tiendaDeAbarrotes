@@ -9,8 +9,10 @@ using System.Windows.Forms;
 
 namespace sistemaTiendaAbarrotes
 {
+    // Clase para las operaciones de Entrega
     class Entrega
     {
+        // Variables
         SqlConnection conexion;
         DataTable tablaEntrega;
         DataTable tablaEntregaPura; //Donde no se muestran nombres si no IDs
@@ -20,6 +22,7 @@ namespace sistemaTiendaAbarrotes
         ComboBox cbIdEmpleadoI;
         DateTimePicker dtFechaEntregaI;
 
+        // Constructor de la clase, recibe la conexion y los controles del formulario
         public Entrega(SqlConnection conexion, ComboBox cbIdProveedor, ComboBox cbIdDevolucion, 
             ComboBox cbIdEmpleado, DateTimePicker dtFechaEntrega) {
             this.conexion = conexion;
@@ -32,15 +35,20 @@ namespace sistemaTiendaAbarrotes
             IdEntregaSeleccionada = "";
         }
 
+        // Regresa el Id de la entrega
         public string AccesoIdEntregaSeleccionada {
             get { return IdEntregaSeleccionada; }
             set { IdEntregaSeleccionada = value; }
         }
 
+        // Metodo que len ala tabla de entrega
         public void Consulta(DataGridView dGEntrega)
         {
+            // Limpia las tablas 
             tablaEntrega.Clear();
             tablaEntregaPura.Clear();
+
+            // Genera una consulta uniendo las tablas Entrega, Proveedor, Devolucion y Empleado
             string consulta = "SELECT IdEntrega,Proveedor.Nombre AS Nombre_Proveedor," +
                 "Empleado.Nombre AS Nombre_Empleado, Devolucion.Motivo AS Motivo_Devolución, " +
                 "FechaEntrega FROM Transaccion.Entrega Entrega " +
@@ -50,14 +58,19 @@ namespace sistemaTiendaAbarrotes
             string consultaDos = "SELECT * FROM Transaccion.Entrega";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
+
+            // Llena las tablas
             adaptador.Fill(tablaEntrega);
             comando = new SqlCommand(consultaDos, conexion);
             adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaEntregaPura);
             dGEntrega.DataSource = tablaEntrega;
+
+            // Llena los combo box con los datos
             llenaComboBox();
         }
 
+        // Metodo que llena los combo box necesarios
         private void llenaComboBox() {
             try {
                 llenaNombreProveedor(cbIdProveedorI);
@@ -69,7 +82,11 @@ namespace sistemaTiendaAbarrotes
             }    
         }
 
-        private void llenaMotivosDevolucion(ComboBox cbDevoluciones) {
+
+        // Metodo que llena el combo box de motivos de devolucion
+        private void llenaMotivosDevolucion(ComboBox cbDevoluciones)
+        {
+            // Genera la consulta SQL
             string consultaDevoluciones = "SELECT IdDevolucion, Motivo FROM Transaccion.Devolucion WHERE Entregada = 0";
             using (var command = new SqlCommand(consultaDevoluciones, conexion))
             {
@@ -77,18 +94,23 @@ namespace sistemaTiendaAbarrotes
                 // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Despliega los motivos de devolucion y guarda el Id para su manejo interno
                     tablaDevolucion.Load(reader);
                     cbDevoluciones.ValueMember = "IdDevolucion";
                     cbDevoluciones.DisplayMember = "Motivo";
                     cbDevoluciones.DataSource = tablaDevolucion;       
                 }
             }
+            // Limpia el elemento seleccionado
             cbDevoluciones.Text = "";
             cbDevoluciones.SelectedIndex = -1;
         }
    
-        private void llenaNombreProveedor(ComboBox cbProveedores) {
 
+        // Metodo que llena el combo box de proveedores
+        private void llenaNombreProveedor(ComboBox cbProveedores)
+        {
+            // Genera la consulta SQL
             string consultaProveedores = "SELECT IdProveedor,Nombre FROM Empresa.Proveedor";
 
             using (var command = new SqlCommand(consultaProveedores, conexion))
@@ -97,18 +119,24 @@ namespace sistemaTiendaAbarrotes
                 // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Despliega el nombre del proveedor y guarda el Id para su manejo interno
                     tablaProveedor.Load(reader);
                     cbProveedores.ValueMember = "IdProveedor";
                     cbProveedores.DisplayMember = "Nombre";
                     cbProveedores.DataSource = tablaProveedor;
                 }
             }
+
+            // Limpia el elemento seleccionado
             cbProveedores.Text = "";
             cbProveedores.SelectedIndex = -1;
         }
 
+
+        // Metodo que llena el combo box de empleados
         private void llenaNombreEmpleado(ComboBox cbEmpleados)
         {
+            // Genera la consulta SQL
             string consultaEmpleados = "SELECT IdEmpleado,Nombre FROM Empresa.Empleado";
             using (var command = new SqlCommand(consultaEmpleados, conexion))
             {
@@ -116,12 +144,14 @@ namespace sistemaTiendaAbarrotes
                 // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Despliega el nombre del empleado y guarda el Id para su manejo interno
                     tablaEmpleado.Load(reader);
                     cbEmpleados.ValueMember = "IdEmpleado";
                     cbEmpleados.DisplayMember = "Nombre";
                     cbEmpleados.DataSource = tablaEmpleado;
                 }
             }
+            // Limpia el elemento seleccionado
             cbEmpleados.Text = "";
             cbEmpleados.SelectedIndex = -1;
         }
@@ -141,10 +171,13 @@ namespace sistemaTiendaAbarrotes
                 Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0]; ;
                 Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
                 DateTime FechaEntrega = dtFechaEntregaI.Value.Date;
+                
+                // Genera la consulta SQL
                 string query = "";
                 query = "INSERT INTO Transaccion.Entrega (IdProveedor, IdDevolucion, IdEmpleado, FechaEntrega) " +
                         "VALUES (@IdProveedor, @IdDevolucion,@IdEmpleado,@FechaEntrega)";
 
+                // Envia la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@IdProveedor", IdProveedor);
                 comando.Parameters.AddWithValue("@IdDevolucion", IdDevolucion);
@@ -152,6 +185,7 @@ namespace sistemaTiendaAbarrotes
                 comando.Parameters.AddWithValue("@FechaEntrega", FechaEntrega);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     obtenProductosEntrega(obtenUltimaEntrega());
                     MessageBox.Show("Inserción correcta");
@@ -168,6 +202,7 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
+        // Metodo para obtener la ultima entrega que se realizo
         private Int64 obtenUltimaEntrega() {
 
             Int64 id = 0;
@@ -180,24 +215,29 @@ namespace sistemaTiendaAbarrotes
             if (result != null) {
                 id = (Int64)result;
             }
+            // Regresa el Id de la entrega
             return id;
         }
 
+        // Metodo para obtener los productos a entregar
         private void obtenProductosEntrega(Int64 idEntrega) {
 
             DataTable tablaProductos;
 
             tablaProductos = new DataTable();
 
+            // Genera la consulta SQL
             string consulta = "SELECT producto.IdProducto, producto.Existencia, detalle.Cantidad, entrega.IdEntrega FROM Inventario.Producto AS producto " +
                 "INNER JOIN Transaccion.DetalleDevolucion AS detalle ON detalle.IdProducto = producto.IdProducto " +
                 "INNER JOIN Transaccion.Entrega AS entrega ON entrega.IdDevolucion = detalle.IdDevolucion " +
                 "AND entrega.IdEntrega = @IdEntrega";
+
+            // Envia la consulta a la base de datos
             SqlCommand comando = new SqlCommand(consulta, conexion);
 
             comando.Parameters.AddWithValue("@IdEntrega", idEntrega);
 
-
+            // Llena una tabla con los productos 
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaProductos);
 
@@ -214,8 +254,13 @@ namespace sistemaTiendaAbarrotes
 
         }
 
+
+        // Metodo para actualizar la existencia de un producto cuando se regresa al proveedor
         private void actualizaProducto(Int64 idProd, int existencia) {
+            // Genera la consulta SQL
             string query = "UPDATE Inventario.Producto SET Existencia = @existencia WHERE IdProducto = @idProd ";
+
+            // Manda la consulta a la base de datos
             SqlCommand comando = new SqlCommand(query, conexion);
             comando.Parameters.AddWithValue("@existencia", existencia);
             comando.Parameters.AddWithValue("@idProd", idProd);
@@ -237,10 +282,14 @@ namespace sistemaTiendaAbarrotes
         public void eliminaRegistroSeleccionado() {
             if (IdEntregaSeleccionada != "")
             {
+                // Genera la consulta SQL
                 string queryElimina = "DELETE FROM Transaccion.Entrega WHERE IdEntrega = " + IdEntregaSeleccionada;
+
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryElimina, conexion);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
                     limpiaFormulario();
@@ -271,10 +320,12 @@ namespace sistemaTiendaAbarrotes
                 Int64 IdEmpleado = (Int64)Empleado.Row.ItemArray[0]; ;
                 DateTime FechaEntrega = dtFechaEntregaI.Value.Date;
 
+                // Genera la consulta SQL
                 string queryEdita = "UPDATE Transaccion.Entrega SET IdProveedor = @IdProveedor, " +
                     "IdDevolucion = @IdDevolucion, IdEmpleado = @IdEmpleado, FechaEntrega = @FechaEntrega " +
                     "WHERE IdEntrega = " + IdEntregaSeleccionada;
 
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryEdita, conexion);
 
                 comando.Parameters.AddWithValue("@IdProveedor", IdProveedor);
@@ -283,6 +334,7 @@ namespace sistemaTiendaAbarrotes
                 comando.Parameters.AddWithValue("@FechaEntrega", FechaEntrega);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Edición correcta");
                     limpiaFormulario();

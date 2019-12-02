@@ -9,8 +9,10 @@ using System.Data;
 
 namespace sistemaTiendaAbarrotes
 {
+    // Clase para las operaciones de devolucion
     class Devolucion
     {
+        // Variables
         SqlConnection conexion;
         DataTable tablaDevolucion;
         DataTable tablaDevolucionPura;
@@ -21,6 +23,8 @@ namespace sistemaTiendaAbarrotes
         TextBox tbCantidad;
         DateTimePicker dtFechaDevolucion;
 
+
+        // Constructor de la clase, recibe la conexion y los controles 
         public Devolucion(SqlConnection conexion ,ComboBox nombreEmpleado, ComboBox venta, TextBox motivoDevolucion, 
             DateTimePicker fechaDevolucion, TextBox cantidad ) {
             tablaDevolucion = new DataTable();
@@ -34,14 +38,17 @@ namespace sistemaTiendaAbarrotes
             dtFechaDevolucion = fechaDevolucion;
         }
 
+        // Regresa el Id de la devolucion
         public string AccesoIDevolucionSeleccionada
         {
             get { return IdDevolucionSeleccionada; }
             set { IdDevolucionSeleccionada = value; }
         }
 
+        // Metodo que llena el comobo box con los empleados disponibles
         private void llenaNombreEmpleados(ComboBox cbNombreEmpleados)
         {
+            // Genera la consulta SQL
             string consultaEmpleados = "SELECT IdEmpleado, Nombre FROM Empresa.Empleado";
             using (var command = new SqlCommand(consultaEmpleados, conexion))
             {
@@ -49,18 +56,24 @@ namespace sistemaTiendaAbarrotes
                 // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Despliega el nombre del empleado y guarda su Id para uso interno
                     tablaEmpleados.Load(reader);
                     cbNombreEmpleado.ValueMember = "IdEmpleado";
                     cbNombreEmpleado.DisplayMember = "Nombre";
                     cbNombreEmpleado.DataSource = tablaEmpleados;
                 }
             }
+
+            // Limpi el empleado seleccionado
             cbNombreEmpleado.Text = "";
             cbNombreEmpleado.SelectedIndex = -1;
         }
 
+
+        // Metodo para llenar el combo box de las ventas 
         private void llenaVentas(ComboBox cbVentas)
         {
+            // Genera consulta SQL
             string consultaVentas = "SELECT IdVenta FROM Transaccion.Venta";
             using (var command = new SqlCommand(consultaVentas, conexion))
             {
@@ -68,16 +81,21 @@ namespace sistemaTiendaAbarrotes
                 // Process results
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Despliega las ventas disponibles
                     tablaVentas.Load(reader);
                     cbVentas.ValueMember = "IdVenta";
                     cbVentas.DisplayMember = "IdVenta";
                     cbVentas.DataSource = tablaVentas;
                 }
             }
+
+            // Limpia el elemento seleccionado
             cbVentas.Text = "";
             cbVentas.SelectedIndex = -1;
         }
 
+
+        // Metodo para llenar los combo box
         private void llenaComboBox()
         {
             try
@@ -91,10 +109,15 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
+
+        // Metodo para llenar la tabla de devolucion 
         public void Consulta(DataGridView dgDevolucion)
         {
+            // Limpia las tablas
             tablaDevolucion.Clear();
             tablaDevolucionPura.Clear();
+
+            // Genera una consulta entre las tablas Devolucion, Empleado y Venta
             string consulta = "SELECT IdDevolucion,Empleado.Nombre AS Nombre_Empleado," +
                 "Devolucion.IdVenta, Fecha, Motivo, Monto " +
                 "Monto FROM Transaccion.Devolucion Devolucion " +
@@ -103,11 +126,15 @@ namespace sistemaTiendaAbarrotes
             string consultaDos = "SELECT * FROM Transaccion.Devolucion";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
+
+            // Llena las tablas con la informacion condultada
             adaptador.Fill(tablaDevolucion);
             comando = new SqlCommand(consultaDos, conexion);
             adaptador = new SqlDataAdapter(comando);
             adaptador.Fill(tablaDevolucionPura);
             dgDevolucion.DataSource = tablaDevolucion;
+
+            // Llena los comb box
             llenaComboBox();
         }
 
@@ -130,6 +157,7 @@ namespace sistemaTiendaAbarrotes
                 query = "INSERT INTO Transaccion.Devolucion (IdEmpleado, IdVenta, Fecha, Motivo, Monto, Entregada) " +
                         "VALUES (@IdEmpleado, @IdVenta,@fechaDevolucion,@motivoDev, @cantidad, 0)";
 
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@IdEmpleado", IdEmpleado);
                 comando.Parameters.AddWithValue("@IdVenta", IdVenta);
@@ -138,6 +166,7 @@ namespace sistemaTiendaAbarrotes
                 comando.Parameters.AddWithValue("@cantidad", cantidad);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Inserción correcta");
                 }
@@ -145,6 +174,7 @@ namespace sistemaTiendaAbarrotes
                 {
                     MessageBox.Show("Hubo un error en la inserción");
                 }
+                // Limpia los controles de texto
                 limpiaFormulario();
             }
             catch (Exception exception)
@@ -171,6 +201,7 @@ namespace sistemaTiendaAbarrotes
             var Motivo = tuplaSeleccionada[0].ItemArray[4];
             var Monto = tuplaSeleccionada[0].ItemArray[5];
 
+            // Carga en cada campo el valor seleccionado
             cbNombreEmpleado.SelectedValue = IdEmpleado;
             cbVenta.SelectedValue = IdVenta;
             tbCantidad.Text = Monto.ToString();
@@ -178,6 +209,8 @@ namespace sistemaTiendaAbarrotes
             dtFechaDevolucion.Value = Fecha;
         }
 
+
+        // Metodo para modificar una tupla seleccionada de la tabla devolucion
         public void editaRegistroSeleccionado()
         {
             try
@@ -191,11 +224,13 @@ namespace sistemaTiendaAbarrotes
                 var cantidad = tbCantidad.Text;
                 DateTime fechaDevolucion = dtFechaDevolucion.Value.Date;
 
+                // Genea consulta SQL
                 string queryEdita = "UPDATE Transaccion.Devolucion SET IdEmpleado = @IdEmpleado, " +
                     "IdVenta = @IdVenta, Fecha = @fechaDevolucion, Motivo = @motivoDev," +
                     "Monto = @cantidad " +
                     "WHERE IdDevolucion = " + IdDevolucionSeleccionada;
 
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryEdita, conexion);
 
                 comando.Parameters.AddWithValue("@IdEmpleado", IdEmpleado);
@@ -206,6 +241,7 @@ namespace sistemaTiendaAbarrotes
 
                 try
                 {
+                    // Ejecuta la consulta
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Edición correcta");
                     limpiaFormulario();
@@ -229,10 +265,14 @@ namespace sistemaTiendaAbarrotes
         {
             if (IdDevolucionSeleccionada != "")
             {
+                // Genera consulta SQL
                 string queryElimina = "DELETE FROM Transaccion.Devolucion WHERE IdDevolucion = " + IdDevolucionSeleccionada;
+
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryElimina, conexion);
                 try
                 {
+                    // Ejecuta la iinstruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
                     limpiaFormulario();

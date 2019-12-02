@@ -9,8 +9,10 @@ using System.Windows.Forms;
 
 namespace sistemaTiendaAbarrotes
 {
+    // Clase para las operaciones de detalle devolucion
     class DetalleDevolucion
     {
+        // Variables
         SqlConnection conexion;
         DataTable tablaDevolucion;
         DataTable tablaDevolucionPura;
@@ -22,7 +24,7 @@ namespace sistemaTiendaAbarrotes
         string IdDetalleDevolucionSeleccionada = "";
         string numeroMaximoDeProductosADevolver;
 
-
+        // Constructor de la clase, recibe como parametro los controles y la conexion
         public DetalleDevolucion (SqlConnection conexion, ComboBox cbIdDevolucion, ComboBox cbIdProducto, TextBox tbCantidad) {
             this.conexion = conexion;
             cbIdDevolucionI = cbIdDevolucion;
@@ -34,26 +36,36 @@ namespace sistemaTiendaAbarrotes
             numeroMaximoDeProductosADevolver = "";
         }
 
+
+        // Regresa el Id de el detalle devolucion que esta seleccionado 
         public string AccesoIdDetalleDevolucionSeleccionada
         {
             get { return IdDetalleDevolucionSeleccionada; }
             set { IdDetalleDevolucionSeleccionada = value; }
         }
 
+
+        // Regresa el numero de productos que se pueden devolver
         public string accesoNumeroMaximoADevolver
         {
             get { return numeroMaximoDeProductosADevolver; }
             set { numeroMaximoDeProductosADevolver = value; }
         }
+
+        // Metodo para llenar la tabla con los detalles de devolucion existentes
         public void Consulta(DataGridView dGDetalleDevoluciones) {
+            // Limpia las tablas
             tablaDevolucion.Clear();
             tablaDevolucionPura.Clear();
+
+            // Genera una consulta para combinar las tablas Detalle Devolucion, Devolucion y Producto
             string consulta = "SELECT DetalleDevolucion.IdDetalleDevolucion AS Id,Devolucion.Motivo, Producto.Nombre," +
                 "DetalleDevolucion.Cantidad FROM Transaccion.DetalleDevolucion AS DetalleDevolucion " +
                 "INNER JOIN Transaccion.Devolucion Devolucion ON Devolucion.IdDevolucion = DetalleDevolucion.IdDevolucion " +
                 "INNER JOIN Inventario.Producto AS Producto ON Producto.IdProducto = DetalleDevolucion.IdProducto " +
                 "ORDER BY DetalleDevolucion.IdDetalleDevolucion";
 
+            // Consulta todos los detalles devolucion
             string consulta2 = "SELECT * FROM Transaccion.DetalleDevolucion";
 
             SqlCommand comando = new SqlCommand(consulta, conexion);
@@ -71,10 +83,12 @@ namespace sistemaTiendaAbarrotes
 
             dGDetalleDevoluciones.DataSource = tablaDevolucion;
 
+            // Llena los motivos de la devolucion
             llenaMotivoDevoluciones(cbIdDevolucionI);
            // llenaProductos(cbIdProductoI);
         }
 
+        // Regresa el Id de la devolucion a la que pertenece
         public string accesoIdDevolucion {
             get { return IdDevolucion; }
             set { IdDevolucion = value; }
@@ -139,6 +153,8 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
+
+        // Metodo para modificar una tupla de detalle devolucion
         public void Edita()
         {
             try
@@ -153,12 +169,14 @@ namespace sistemaTiendaAbarrotes
                     "IdProducto = @IdProducto, Cantidad = @Cantidad " +
                     "WHERE IdDetalleDevolucion = " + IdDetalleDevolucionSeleccionada;
 
+                // Manda la instruccion a la base de datos
                 SqlCommand comando = new SqlCommand(queryEdita, conexion);
                 comando.Parameters.AddWithValue("@IdDevolucion", IdDevolucion);
                 comando.Parameters.AddWithValue("@IdProducto", IdProducto);
                 comando.Parameters.AddWithValue("@Cantidad", Cantidad);
                 try
                 {
+                    // Ejecuta la sentencia SQL
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Edición correcta");
                     limpiaFormulario();
@@ -171,6 +189,7 @@ namespace sistemaTiendaAbarrotes
             }
             catch (Exception exception)
             {
+                // Manda mensaje si algun campo esta vacio
                 MessageBox.Show("Todos los campos son necesarios");
             }
         }
@@ -182,11 +201,13 @@ namespace sistemaTiendaAbarrotes
         {
             if (IdDetalleDevolucionSeleccionada != "")
             {
+                // Genera la consulta SQL
                 string queryElimina = "DELETE FROM Transaccion.DetalleDevolucion WHERE IdDetalleDevolucion = " +
                     "" + IdDetalleDevolucionSeleccionada;
                 SqlCommand comando = new SqlCommand(queryElimina, conexion);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
                     limpiaFormulario();
@@ -199,24 +220,31 @@ namespace sistemaTiendaAbarrotes
             }
             else
             {
+                // Manda mensaje si ninguna tupla se ha seleccionado
                 MessageBox.Show("Es necesario seleccionar un registro para eliminar");
             }
 
         }
 
+
+        // Metodo para consultar la cantidad de productos que se hicieron en una compra
+        // para saber la cantidad max a devolver
         public bool cantidadDeProductosComprados()
         {
+            // Obtiene los datos seleccionados
             DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
             DataRowView Producto = (DataRowView)cbIdProductoI.SelectedItem;
             Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0];
             Int64 IdProducto = (Int64)Producto.Row.ItemArray[0];
 
+            // Genera la consulta SQL
             string consulta = "SELECT DISTINCT detalleventa.Cantidad " +
                 "FROM Inventario.Producto AS producto " +
                 "INNER JOIN Transaccion.DetalleVenta AS detalleventa ON detalleventa.IdProducto = producto.IdProducto " +
                 "INNER JOIN Transaccion.Devolucion AS devolucion ON devolucion.IdVenta = detalleventa.IdVenta " +
                 "WHERE devolucion.IdDevolucion = " + IdDevolucion + " AND " + "producto.IdProducto = " + IdProducto;
 
+            // Despliega los datos en una tabla auxiliar
             using (var command = new SqlCommand(consulta, conexion))
             {
                 DataTable tablaAux = new DataTable();
@@ -248,11 +276,14 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
+
+        // Metodo que llena el combo box de los motivos de devolucion
         private void llenaMotivoDevoluciones(ComboBox cbMotivoDevolucion)
         {
-
+            // Genera la consulta SQL
             string consultaDevoluciones = "SELECT IdDevolucion,Motivo FROM Transaccion.Devolucion";
 
+            // Despliega el motivo de devolucion y guarda su Id para el manejo interno
             using (var command = new SqlCommand(consultaDevoluciones, conexion))
             {
                 DataTable tablaDevoluciones = new DataTable();
@@ -265,6 +296,8 @@ namespace sistemaTiendaAbarrotes
                     cbMotivoDevolucion.DataSource = tablaDevoluciones;
                 }
             }
+
+            // Limpia el valor seleccionado
             cbMotivoDevolucion.Text = "";
             cbMotivoDevolucion.SelectedIndex = -1;
         }
@@ -278,6 +311,7 @@ namespace sistemaTiendaAbarrotes
             DataRowView Devolucion = (DataRowView)cbIdDevolucionI.SelectedItem;
             Int64 IdDevolucion = (Int64)Devolucion.Row.ItemArray[0];
 
+            // Genera la instruccion SQL
             string consultaProductos = "SELECT DISTINCT producto.IdProducto, producto.Nombre " +
             "FROM Inventario.Producto AS producto " +
             "INNER JOIN Transaccion.DetalleVenta AS detalleventa ON detalleventa.IdProducto = producto.IdProducto " +
@@ -285,6 +319,7 @@ namespace sistemaTiendaAbarrotes
             "WHERE devolucion.IdDevolucion = " + IdDevolucion +
             " ORDER BY producto.IdProducto";
 
+            // Despliega el nombre de los productos y guarda su Id para el manejo interno
             using (var command = new SqlCommand(consultaProductos, conexion))
             {
                 DataTable tablaProductos = new DataTable();
@@ -297,6 +332,8 @@ namespace sistemaTiendaAbarrotes
                     cbProductos.DataSource = tablaProductos;
                 }
             }
+
+            // Limpia el elemento seleccionado
             cbProductos.Text = "";
             cbProductos.SelectedIndex = -1;
         }

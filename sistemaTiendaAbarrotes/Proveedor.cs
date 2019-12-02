@@ -10,8 +10,10 @@ using System.Data;
 
 namespace sistemaTiendaAbarrotes
 {
-    class Proveedor
+    // Clase para las operaciones de proveedor
+    public class Proveedor
     {
+        // Variables
         SqlConnection conexion;
         DataTable tablaProveedor;
         string IdProveedorSeleccionado;
@@ -21,6 +23,7 @@ namespace sistemaTiendaAbarrotes
         TextBox tbRFC;
         TextBox tbDomicilio;
 
+        // Constructor de la clase, recibe la conecion y los controles del formulario
         public Proveedor(SqlConnection conexion, TextBox nombre, TextBox telefono, TextBox email,
             TextBox rfc, TextBox domicilio)
         {
@@ -34,35 +37,48 @@ namespace sistemaTiendaAbarrotes
             IdProveedorSeleccionado = "";
         }
 
+
+        // Regresa el Id del proveedor
         public string AccesoIdProveedorSeleccionado
         {
             get { return IdProveedorSeleccionado; }
             set { IdProveedorSeleccionado = value; }
         }
 
+
+        // Metodo que llena la tabla de proveedores
         public void Consulta(DataGridView dgProveedor)
         {
             tablaProveedor.Clear();
+            // Genera la consulta SQL
             string consulta = "SELECT * FROM Empresa.Proveedor";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptador = new SqlDataAdapter(comando);
+
+            // Llena la tabla
             adaptador.Fill(tablaProveedor);
             dgProveedor.DataSource = tablaProveedor;
         }
 
+
+        // Metodo que inserta un proveedor en la tabla
         public void Inserta()
         {
             try
             {
+                // Obtiene los valores de los campos
                 string nombre = tbNombre.Text;
                 string telefono = tbTelefono.Text;
                 string email = tbEmail.Text;
                 string rfc = tbRFC.Text;
                 string domicilio = tbDomicilio.Text;
+
+                // Genera la consulta SQl
                 string query = "";
                 query = "INSERT INTO Empresa.Proveedor (Nombre, Telefono, Email, RFC, DomicilioFiscal) " +
                         "VALUES (@nombre, @telefono,@email,@rfc, @domicilio)";
 
+                // Envia la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@nombre", nombre);
                 comando.Parameters.AddWithValue("@domicilio", domicilio);
@@ -72,6 +88,7 @@ namespace sistemaTiendaAbarrotes
 
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Inserción correcta");
                     limpiaFormulario();
@@ -87,6 +104,7 @@ namespace sistemaTiendaAbarrotes
             }
         }
 
+        // Metodo que carga los valores de un registro a los controles de texto
         public void cargaRegistroSeleccionado()
         {
             //Se toma la tupla seleccionada buscando dentro de la tablaEntrega con un Select buscando en el atributo
@@ -103,6 +121,7 @@ namespace sistemaTiendaAbarrotes
 
             //cbIdProveedorI.SelectedValue = cbIdProveedorI.Items.IndexOf(IdEmpleado.ToString());
 
+            // Llena cada control con el valor que le corresponde
             tbNombre.Text = (string)Nombre;
             tbDomicilio.Text = (string)Domicilio;
             tbTelefono.Text = (string)Telefono;
@@ -110,21 +129,26 @@ namespace sistemaTiendaAbarrotes
             tbRFC.Text = (string)RFC;
         }
 
+
+        // Metodo que modifica una tupla de proveedor
         public void editaRegistroSeleccionado()
         {
             try
             {
+                // Obtiene los nuevos valores
                 string nombre = tbNombre.Text;
                 string telefono = tbTelefono.Text;
                 string email = tbEmail.Text;
                 string rfc = tbRFC.Text;
                 string domicilio = tbDomicilio.Text;
 
+                // Genera la consulta SQL
                 string queryEdita = "UPDATE Empresa.Proveedor SET Nombre = @nombre, " +
                     "Telefono = @telefono, Email = @email, RFC = @rfc," +
                     "DomicilioFiscal = @domicilio " +
                     "WHERE IdProveedor = " + IdProveedorSeleccionado;
 
+                // Envia la consulta a la base datos
                 SqlCommand comando = new SqlCommand(queryEdita, conexion);
 
                 comando.Parameters.AddWithValue("@nombre", nombre);
@@ -135,6 +159,7 @@ namespace sistemaTiendaAbarrotes
 
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Edición correcta");
                     limpiaFormulario();
@@ -156,13 +181,17 @@ namespace sistemaTiendaAbarrotes
         /// </summary>
         public void eliminaRegistroSeleccionado()
         {
+            // Valida que se haya seleccionado un registro
             if (IdProveedorSeleccionado != "")
             {
+                // Genera la consulta SQl
                 string queryElimina = "DELETE FROM Empresa.Proveedor WHERE IdProveedor = " 
                     + IdProveedorSeleccionado;
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryElimina, conexion);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
                     limpiaFormulario();
@@ -180,7 +209,7 @@ namespace sistemaTiendaAbarrotes
 
         }
 
-
+        // Metodo que limpia los controles de texto
         private void limpiaFormulario()
         {
             tbDomicilio.Text = "";

@@ -10,8 +10,10 @@ using System.Data;
 
 namespace sistemaTiendaAbarrotes
 {
-    class Empleado
+    // Clase para las operaciones de empleado
+    public class Empleado
     {
+        // Variables
         SqlConnection conexion;
         DataTable tablaEmpleado;
         string IdEmpleadoSeleccionado;
@@ -21,6 +23,7 @@ namespace sistemaTiendaAbarrotes
         TextBox tbPassword;
         TextBox tbDomicilio;
 
+        // Constructor de la clase, recibe la conexion y los controles del formulario
         public Empleado(SqlConnection conexion,TextBox nombre, TextBox usuario, TextBox password, TextBox domicilio,
             DateTimePicker dtFechaNacimiento)
         {
@@ -35,6 +38,8 @@ namespace sistemaTiendaAbarrotes
 
         }
 
+
+        // Metodo que llena la tabla de empleados
         public void Consulta(DataGridView dGEmpleado)
         {
             tablaEmpleado.Clear();
@@ -47,25 +52,32 @@ namespace sistemaTiendaAbarrotes
             
         }
 
+        // Regresa el Id del empleado 
         public string AccesoIdEmpleadoSeleccionado
         {
             get { return IdEmpleadoSeleccionado; }
             set { IdEmpleadoSeleccionado = value; }
         }
 
+
+        // Metodo que inserta un empleado a la tabla
         public void Inserta()
         {
             try
             {
+                // Obtiene los valores de los controles
                 string nombre = tbNombre.Text;
                 string usuario = tbUsuario.Text;
                 string password = tbPassword.Text;
                 string domicilio = tbDomicilio.Text;
                 DateTime fechaNac = dtFechaNacimiento.Value.Date;
+
+                // Genera la consulta SQL
                 string query = "";
                 query = "INSERT INTO Empresa.Empleado (Nombre, Domicilio, FechaNac, Edad, Usuario, Contrasenia) " +
                         "VALUES (@nombre, @domicilio,@fechaNac,NULL, @usuario, @password)";
 
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@nombre", nombre);
                 comando.Parameters.AddWithValue("@domicilio", domicilio);
@@ -75,6 +87,7 @@ namespace sistemaTiendaAbarrotes
 
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Inserción correcta");
                     limpiaFormulario();
@@ -97,10 +110,14 @@ namespace sistemaTiendaAbarrotes
         {
             if (IdEmpleadoSeleccionado != "")
             {
+                // Genera la consulta SQL
                 string queryElimina = "DELETE FROM Empresa.Empleado WHERE IdEmpleado = " + IdEmpleadoSeleccionado;
+
+                // Manda la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryElimina, conexion);
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Eliminación exitosa");
                     limpiaFormulario();
@@ -118,6 +135,8 @@ namespace sistemaTiendaAbarrotes
 
         }
 
+
+        // Metodo que carga los valores de un registro en los controles de texto
         public void cargaRegistroSeleccionado()
         {
             //Se toma la tupla seleccionada buscando dentro de la tablaEntrega con un Select buscando en el atributo
@@ -140,21 +159,27 @@ namespace sistemaTiendaAbarrotes
             dtFechaNacimiento.Value = fechaNac;
         }
 
+
+        // Metodo que modifica una tupla de la tabla empleado
         public void editaRegistroSeleccionado()
         {
             try
             {
+                // Obtiene los datos del registro
                 string nombre = tbNombre.Text;
                 string usuario = tbUsuario.Text;
                 string password = tbPassword.Text;
                 string domicilio = tbDomicilio.Text;
                 DateTime fechaNac = dtFechaNacimiento.Value.Date;
 
+                // Genera la consulta SQL
                 string queryEdita = "UPDATE Empresa.Empleado SET Nombre = @nombre, " +
                     "Domicilio = @domicilio, FechaNac = @fechaNac, Usuario = @usuario," +
                     "Contrasenia = @password " +
                     "WHERE IdEmpleado = " + IdEmpleadoSeleccionado;
 
+
+                // Envia la consulta a la base de datos
                 SqlCommand comando = new SqlCommand(queryEdita, conexion);
 
                 comando.Parameters.AddWithValue("@nombre", nombre);
@@ -165,6 +190,7 @@ namespace sistemaTiendaAbarrotes
 
                 try
                 {
+                    // Ejecuta la instruccion
                     comando.ExecuteNonQuery();
                     MessageBox.Show("Edición correcta");
                     limpiaFormulario();
@@ -181,6 +207,7 @@ namespace sistemaTiendaAbarrotes
 
         }
 
+        // Metodo que limpia los controles de texto
         private void limpiaFormulario()
         {
             tbDomicilio.Text = "";
